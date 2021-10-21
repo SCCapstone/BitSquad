@@ -1,7 +1,6 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '~@angular/material' as mat;
+@use "~@angular/material" as mat;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -12,24 +11,25 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$SourceControl-primary: mat.define-palette(mat.$indigo-palette);
-$SourceControl-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$BitSquad-primary: mat.define-palette(mat.$gray-palette, 800);
+$BitSquad-accent: mat.define-palette(mat.$green-palette, A400);
 
 // The warn palette is optional (defaults to red).
-$SourceControl-warn: mat.define-palette(mat.$red-palette);
+$BitSquad-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$SourceControl-theme: mat.define-light-theme((
-  color: (
-    primary: $SourceControl-primary,
-    accent: $SourceControl-accent,
-    warn: $SourceControl-warn,
+$BitSquad-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $BitSquad-primary,
+      accent: $BitSquad-accent,
+      warn: $BitSquad-warn,
+    ),
   )
-));
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($SourceControl-theme);
-
+@include mat.all-component-themes($BitSquad-theme);
