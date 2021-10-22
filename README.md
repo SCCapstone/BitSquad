@@ -66,3 +66,4 @@ Explain how to run the automated tests.
 # Authors
 
 Kelli Alan alankelli64@gmail.com
+Patterson Howell pattersonhowell12@gmail.com
