@@ -1,41 +1,37 @@
 # BitSquad
-# Project Name
+# Screen Time Limiter
 
-This first paragraph should be a short description of the app. You can add links
-to your wiki pages that have more detailed descriptions.
+The Screen Time Limiter is a web application built using the Angular framework. All users can set up timers and create schedules for gaming applications. Browser notifications alert users when time is up. Windows users can download the desktop app which will kill the specified process automatically when a process reaches its specified limit for the day. Lastly, users can view graphs that show how much time they spent gaming overall, and per application.
 
-Your audience for the Readme.md are other developers who are joining your team.
-Specifically, the file should contain detailed instructions that any developer
-can follow to install, compile, run, and test your project. These are not only
-useful to new developers, but also to you when you have to re-install everything
-because your old laptop crashed. Also, the teachers of this class will be
-following your instructions.
+[Architecture](https://github.com/SCCapstone/BitSquad/wiki/Architecture)
+
 
 ## External Requirements
 
-List all the stuff the reader will need to install in order to get you app to 
-run in their laptop. For example:
+In order to build this project you first need to install:
 
-In order to build this project you first have to install:
+[Node.js](https://nodejs.org/en/download)
 
-* [Node.js](https://nodejs.org/en/)
-* [MongoDB](https://www.mongodb.com/)
+* Check that installation was successful. You should receive a version number after executing each of the these commands:
+>* node -v
+>* npm -v 
 
-If possible, list the actual commands you used to install these, so the reader
-can just cut-n-paste the commands and get everything setup.
+* Make sure npm is up to date:
+>* npm install -g npm
 
-You only need to add instructions for the OS you are using.
+
+
 
 ## Setup
 
-Here you list all the one-time things the developer needs to do after cloning
-your repo. Sometimes there is no need for this section, but some apps require
-some first-time configuration from the developer, for example: setting up a
-database for running your webapp locally.
+After cloning the repo, you must add the Angular build kit to the directory where you cloned the project. The build kit is part of node-modules.
+
+ng add node-modules
 
 ## Running
+To open on localhost port 4200:
 
-Specify the commands for a developer to run the app from the cloned repo.
+ng serve --open
 
 # Deployment
 
@@ -66,4 +62,4 @@ Explain how to run the automated tests.
 
 # Authors
 
-Your names and emails
+Kelli Alan alankelli64@gmail.com
