@@ -4,6 +4,9 @@
 The Screen Time Limiter is a web application built using the Angular framework. All users can set up timers and create schedules for gaming applications. Browser notifications alert users when time is up. Windows users can download the desktop app which will kill the specified process automatically when a process reaches its specified limit for the day. Lastly, users can view graphs that show how much time they spent gaming overall, and per application.
 
 [Architecture](https://github.com/SCCapstone/BitSquad/wiki/Architecture)
+[TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)
+[HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html)
+
 
 
 ## External Requirements
