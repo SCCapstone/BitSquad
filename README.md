@@ -67,3 +67,4 @@ Explain how to run the automated tests.
 
 Kelli Alan alankelli64@gmail.com
 Patterson Howell pattersonhowell12@gmail.com
+Branavan Kalapathy kalapatb@email.sc.edu
