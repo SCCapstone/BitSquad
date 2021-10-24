@@ -20,7 +20,7 @@ In order to build this project you first need to install:
 
 * Check that installation was successful. You should receive a version number after executing each of the these commands:
 >* node -v
->* npm -v 
+>* npm -v
 
 * Make sure npm is up to date:
 >* npm install -g npm
@@ -41,9 +41,9 @@ ng serve --open
 
 # Deployment
 
-Webapps need a deployment section that explains how to get it deployed on the 
+Webapps need a deployment section that explains how to get it deployed on the
 Internet. These should be detailed enough so anyone can re-deploy if needed
-. Note that you **do not put passwords in git**. 
+. Note that you **do not put passwords in git**.
 
 Mobile apps will also sometimes need some instructions on how to build a
 "release" version, maybe how to sign it, and how to run that binary in an
@@ -51,7 +51,7 @@ emulator or in a physical phone.
 
 # Testing
 
-In 492 you will write automated tests. When you do you will need to add a 
+In 492 you will write automated tests. When you do you will need to add a
 section that explains how to run them.
 
 The unit tests are in `/test/unit`.
@@ -72,3 +72,4 @@ Explain how to run the automated tests.
 * Patterson Howell pattersonhowell12@gmail.com
 * Branavan Kalapathy kalapatb@email.sc.edu
 * zhiquan xie zhiquan@email.sc.edu
+* William DesMarteau desmartw@email.sc.edu
