@@ -32,12 +32,16 @@ In order to build this project you first need to install:
 
 After cloning the repo, you must add the Angular build kit to the directory where you cloned the project. The build kit is part of node-modules.
 
-ng add node-modules
+>ng add node-modules
+
+You will also need Firebase dependencies.
+
+>ng add @angular/fire
 
 ## Running
 To open on localhost port 4200:
 
-ng serve --open
+>ng serve --open
 
 # Deployment
 
