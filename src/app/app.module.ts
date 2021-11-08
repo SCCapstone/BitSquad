@@ -6,7 +6,11 @@ import { AppComponent } from './app.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { RegisterComponent } from './register/register.component';
 import { initializeApp } from "firebase/app";
-import {getAnalytics} from 'firebase/analytics'
+import {getAnalytics} from 'firebase/analytics';
+import { ManualUserHomeComponent } from './manual-user-home/manual-user-home.component';
+import { ProcessTableComponent } from './process-table/process-table.component';
+import {MatTableModule} from '@angular/material/table';
+
 const firebaseConfig = {
   apiKey: "AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c",
   authDomain: "bitsquad-5f2bf.firebaseapp.com",
@@ -22,11 +26,14 @@ const app = initializeApp(firebaseConfig);
     AppComponent,
     SignInComponent,
     RegisterComponent,
+    ManualUserHomeComponent,
+    ProcessTableComponent,
     ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
