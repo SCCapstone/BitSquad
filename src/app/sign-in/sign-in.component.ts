@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { AccountService } from '../account-service.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -13,7 +14,7 @@ export class SignInComponent implements OnInit {
     email: ['', Validators.required],
     password: ['',Validators.required]
   });
-  constructor(private fb: FormBuilder, private accountService: AccountService) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -27,6 +28,7 @@ signInWithEmailAndPassword(auth, this.signInForm.value.email, this.signInForm.va
     alert(user.email)
     this.accountService.setCurrentUser(this.signInForm.value.email)
     this.currentUser = this.accountService.getCurrentUserEmail()
+    this.router.navigate(['process-table']);
     // ...
   })
   .catch((error) => {
