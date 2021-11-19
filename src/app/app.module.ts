@@ -9,7 +9,9 @@ import { initializeApp } from "firebase/app";
 import {getAnalytics} from 'firebase/analytics';
 import { ManualUserHomeComponent } from './manual-user-home/manual-user-home.component';
 import { ProcessTableComponent } from './process-table/process-table.component';
+import { TimerStartComponent} from './timer-start/timer-start.component';
 import {MatTableModule} from '@angular/material/table';
+import { CountdownModule } from 'ngx-countdown';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c",
@@ -28,12 +30,14 @@ const app = initializeApp(firebaseConfig);
     RegisterComponent,
     ManualUserHomeComponent,
     ProcessTableComponent,
+    TimerStartComponent,
     ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    CountdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
