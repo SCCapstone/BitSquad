@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { AccountService } from '../account-service.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -13,7 +15,8 @@ export class RegisterComponent implements OnInit {
     email: ['', Validators.required],
     password: ['',Validators.required]
   });
-  constructor(private fb: FormBuilder, private accountService: AccountService) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService
+    ,private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -26,7 +29,7 @@ createUserWithEmailAndPassword(auth, this.registerForm.value.email, this.registe
     this.accountService.setCurrentUser(this.registerForm.value.email)
     alert("register and login success!")
     this.currentUser = this.accountService.getCurrentUserEmail()
-    // ...
+    this.router.navigate(['user-page']);
   })
   .catch((error) => {
     const errorCode = error.code;

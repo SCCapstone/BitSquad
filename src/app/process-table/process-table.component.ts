@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PROCESSES } from 'src/db-data';
-
+import { AccountService } from '../account-service.service';
 
 @Component({
   selector: 'process-table',
@@ -8,14 +8,15 @@ import { PROCESSES } from 'src/db-data';
   styleUrls: ['./process-table.component.scss']
 })
 export class ProcessTableComponent implements OnInit {
-
+  user = "";
   dataArray: any [] = PROCESSES;
   columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings'];
   limit:number = 0;
 
-  constructor() { }
+  constructor(private accountService: AccountService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
+    this.user = this.accountService.getCurrentUserEmail();
   }
 
   getHours(value:number): number {
