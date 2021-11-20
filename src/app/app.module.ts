@@ -8,8 +8,10 @@ import { RegisterComponent } from './register/register.component';
 import { initializeApp } from "firebase/app";
 import {getAnalytics} from 'firebase/analytics';
 import { ProcessTableComponent } from './process-table/process-table.component';
+import { TimerStartComponent} from './timer-start/timer-start.component';
 import {MatTableModule} from '@angular/material/table';
-import { MainComponent } from './main/main.component';
+import { CountdownModule } from 'ngx-countdown';
+import { UserPageComponent } from './user-page/user-page.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c",
@@ -26,15 +28,16 @@ const app = initializeApp(firebaseConfig);
     AppComponent,
     SignInComponent,
     RegisterComponent,
-
     ProcessTableComponent,
-      MainComponent,
+    TimerStartComponent,
+    UserPageComponent
     ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    CountdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]

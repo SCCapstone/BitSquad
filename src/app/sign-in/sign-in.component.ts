@@ -28,7 +28,7 @@ signInWithEmailAndPassword(auth, this.signInForm.value.email, this.signInForm.va
     alert(user.email)
     this.accountService.setCurrentUser(this.signInForm.value.email)
     this.currentUser = this.accountService.getCurrentUserEmail()
-    this.router.navigate(['process-table']);
+    this.router.navigate(['user-page']);
     // ...
   })
   .catch((error) => {

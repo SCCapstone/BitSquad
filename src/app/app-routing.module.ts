@@ -5,12 +5,17 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { RegisterComponent } from './register/register.component';
 import { ProcessTableComponent } from './process-table/process-table.component';
 import { MainComponent } from './main/main.component';
+import { importType } from '@angular/compiler/src/output/output_ast';
+import { TimerStartComponent } from './timer-start/timer-start.component';
+import { UserPageComponent } from './user-page/user-page.component';
 // to enable routing, add route here
 const routes: Routes = [
   {path: 'sign-in', component:SignInComponent},
   {path:'register', component: RegisterComponent},
   {path:'process-table',component:ProcessTableComponent},
-  {path: 'main',component:MainComponent}
+  {path: 'main',component:MainComponent},
+  {path: 'user-page', component:UserPageComponent},
+  {path: 'timer-start', component:TimerStartComponent}
 ];
 
 @NgModule({
