@@ -10,7 +10,7 @@ import { AccountService } from '../account-service.service';
 export class ProcessTableComponent implements OnInit {
   user = "";
   dataArray: any [] = PROCESSES;
-  columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings'];
+  columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings', 'actions'];
   limit:number = 0;
 
   constructor(private accountService: AccountService) { }
@@ -30,6 +30,10 @@ export class ProcessTableComponent implements OnInit {
 
   getMinutes(value:number): number {
     return value % 60;
+  }
+
+  onAddProcess() {
+
   }
 
 
