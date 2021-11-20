@@ -7,12 +7,6 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-<<<<<<< HEAD
-export class AppComponent {
-  title = 'research';
-
-  
-=======
 
 export class AppComponent implements OnInit{
   constructor(private router: Router){}
@@ -21,5 +15,4 @@ export class AppComponent implements OnInit{
     console.log("navigated to main")
     this.router.navigate(['main'])
   }
->>>>>>> origin/crab
 }
