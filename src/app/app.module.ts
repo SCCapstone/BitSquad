@@ -7,11 +7,18 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { RegisterComponent } from './register/register.component';
 import { initializeApp } from "firebase/app";
 import {getAnalytics} from 'firebase/analytics';
+<<<<<<< HEAD
 import { ManualUserHomeComponent } from './manual-user-home/manual-user-home.component';
+=======
+>>>>>>> origin/crab
 import { ProcessTableComponent } from './process-table/process-table.component';
 import { TimerStartComponent} from './timer-start/timer-start.component';
 import {MatTableModule} from '@angular/material/table';
 import { CountdownModule } from 'ngx-countdown';
+<<<<<<< HEAD
+=======
+import { UserPageComponent } from './user-page/user-page.component';
+>>>>>>> origin/crab
 
 const firebaseConfig = {
   apiKey: "AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c",
@@ -28,9 +35,15 @@ const app = initializeApp(firebaseConfig);
     AppComponent,
     SignInComponent,
     RegisterComponent,
+<<<<<<< HEAD
     ManualUserHomeComponent,
     ProcessTableComponent,
     TimerStartComponent,
+=======
+    ProcessTableComponent,
+    TimerStartComponent,
+    UserPageComponent
+>>>>>>> origin/crab
     ],
   imports: [
     BrowserModule,
