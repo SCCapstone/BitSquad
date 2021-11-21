@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-process-form',
+  selector: 'process-form',
   templateUrl: './process-form.component.html',
   styleUrls: ['./process-form.component.scss']
 })
 export class ProcessFormComponent implements OnInit {
-
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
   }
 
+  onSetLimit() {
+    this.router.navigate(['user-page']);
+  }
 }

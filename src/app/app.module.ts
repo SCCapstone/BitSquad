@@ -12,6 +12,11 @@ import { TimerStartComponent } from './timer-start/timer-start.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+
+
 import { CountdownModule } from 'ngx-countdown';
 import { UserPageComponent } from './user-page/user-page.component';
 import { ProcessFormComponent } from './process-form/process-form.component';
@@ -43,7 +48,11 @@ const app = initializeApp(firebaseConfig);
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatInputModule,
     CountdownModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent],
