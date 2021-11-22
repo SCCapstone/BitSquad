@@ -1,34 +1,34 @@
 <mat-card class="add-process-page">
   <mat-card-title>Add Process</mat-card-title>
-  
+
   <mat-card-content>
-    <form class="add-process-form">
-      
-      <mat-form-field>
-        <input matInput type="text" placeholder="Process Name">
-      </mat-form-field>
-      
-      <br>
+    <form [formGroup]="processForm" (ngSubmit)='onSubmit()' novalidate>
 
       <mat-form-field>
-        <input matInput type="number" placeholder="Time Limit">
-        <mat-hint>Hours</mat-hint>
-      </mat-form-field>
-      
-      <mat-form-field>
-        <input matInput type="number">
-        <mat-hint>Minutes</mat-hint>
+        <label> Process Name </label>
+        <input matInput type="text" formControlName='processName' class = 'form-control' required>
       </mat-form-field>
 
       <br>
+
+      <mat-form-field>
+        <label> Time Limit </label>
+        <input matInput type="text" formControlName='timeLimit' class = 'form-control' required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <label> Warnings </label>
+        <input matInput type="number[]" formControlName='warnings' class = 'form-control' required>
+      </mat-form-field>
+
       <br>
       <br>
-      <button mat-raised-button color="accent" 
-        (click)="onSetLimit()">Set limit</button>
+      <br>
+      <button mat-raised-button color="accent"
+        (click)="onSubmit()">Create Process</button>
 
     </form>
   </mat-card-content>
-</mat-card>
 
- 
-  
+
+</mat-card>

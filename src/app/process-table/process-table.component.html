@@ -1,20 +1,46 @@
 <div>
   <h2>Current user: {{user}}</h2>
 </div>
-<mat-table [dataSource]="dataArray">
-  <!--Process Column-->
-  <ng-container matColumnDef="processName">
-    <mat-header-cell *matHeaderCellDef>Process Name</mat-header-cell>>
-    <mat-cell *matCellDef="let process">{{ process.processName }}</mat-cell
-    >>
+<!-- <div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope='col'> Process ID  </th>
+        <th scope='col'> Name </th>
+        <th scope='col'> Time Limit </th>
+        <th scope='col'>  Warnings  </th>
+    </thead>
+  </table>
+  <tbody>
+    <tr *ngFor="let process of Process; let i = index">
+      <th scope='row'></th>
+      <td>{{process.id}}</td>
+      <td>{{process.processName}}</td>
+      <td>{{process.timeLimit}} seconds </td>
+      <td> {{process.warnings}}</td>
+
+    <td>
+      <span (click)= 'removeProcess(process)' class='btn btn-danger'> Delete</span>
+    </td>
+      </tr>
+  </tbody>
+
+
+</div> -->
+
+<mat-table [dataSource]="Process">
+  <!-- Process Column -->
+ <ng-container matColumnDef="processName">
+    <mat-header-cell *matHeaderCellDef>Process Name from DB </mat-header-cell>>
+    <mat-cell *matCellDef="let process of Process; let i = index">{{ process.processName }}</mat-cell>>
   </ng-container>
 
   <ng-container matColumnDef="timeLimit">
     <mat-header-cell *matHeaderCellDef>Time Limit</mat-header-cell>>
-    <mat-cell *matCellDef="let process"
-      >{{ getHours(process.timeLimit) }} hrs
-      {{ getMinutes(process.timeLimit) }} mins</mat-cell
-    >
+    <mat-cell *matCellDef="let process">
+      {{ getHours(process.timeLimit) }} hrs
+      {{ getMinutes(process.timeLimit) }} mins
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="warnings">
@@ -42,6 +68,6 @@
     </mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+   <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
   <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
 </mat-table>
