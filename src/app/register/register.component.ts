@@ -27,7 +27,6 @@ createUserWithEmailAndPassword(auth, this.registerForm.value.email, this.registe
     // Signed in 
     const user = userCredential.user;
     this.accountService.setCurrentUser(this.registerForm.value.email)
-    alert("register and login success!")
     this.currentUser = this.accountService.getCurrentUserEmail()
     this.router.navigate(['user-page']);
   })
