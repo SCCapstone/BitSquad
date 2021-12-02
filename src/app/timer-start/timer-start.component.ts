@@ -42,6 +42,10 @@ export class TimerStartComponent implements OnInit {
   {
       this.realTime = val
   }
+  resetToZero()
+  {
+    this.realTime = 0;
+  }
   getTime(val:string)
   {
     console.warn(val)
@@ -56,9 +60,12 @@ export class TimerStartComponent implements OnInit {
   }
 
   handleEvent1(event: { action: string; }){
-    if(event.action === 'notify'){
+    if(event.action === 'done'){
       console.log('Hi!');
       this.status = 'PLEASE PREPARE TO EXIT GAME';
+    }
+    else {
+      this.status = 'ENJOY YOUR TIME';
     }
   }
 
