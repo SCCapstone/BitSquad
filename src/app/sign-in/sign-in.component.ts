@@ -23,9 +23,7 @@ export class SignInComponent implements OnInit {
 signInWithEmailAndPassword(auth, this.signInForm.value.email, this.signInForm.value.password)
   .then((userCredential) => {
     // Signed in 
-    alert("signed in")
     const user = userCredential.user;
-    alert(user.email)
     this.accountService.setCurrentUser(this.signInForm.value.email)
     this.currentUser = this.accountService.getCurrentUserEmail()
     this.router.navigate(['user-page']);
