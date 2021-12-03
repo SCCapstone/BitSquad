@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { CountdownComponent } from 'ngx-countdown';
-
+import { ProcessService } from '../Services/process.service';
 
 
 @Component({
@@ -30,10 +30,10 @@ export class TimerStartComponent implements OnInit {
     this.dT = this.realTime
   }
 
-  changeTime2(val:number)
+  changeTime2()
   {
+    this.realTime = this.processService.getTimer(); // get timer from service
       console.log(this.realTime)
-      this.realTime = val
       console.log("called changeTime2");
       console.log(this.realTime);
   }
@@ -47,7 +47,7 @@ export class TimerStartComponent implements OnInit {
     return parseInt(val)
   }
 
-  constructor() { 
+  constructor(private processService: ProcessService) { 
     this.title = 'Capstone';
     this.displayVal=0;
     this.displayTime='';
@@ -58,7 +58,6 @@ export class TimerStartComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
   }
 
   handleEvent1(event: { action: string; }){

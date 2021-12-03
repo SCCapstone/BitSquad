@@ -11,14 +11,14 @@ import { TimerStartComponent} from '../timer-start/timer-start.component';
   styleUrls: ['./process-table.component.scss']
 })
 export class ProcessTableComponent implements OnInit{
-  timer = new TimerStartComponent;
   user = "";
   Process: Process[] = [];
   columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings', 'actions'];
 
   limit:number = 0;
 
-  constructor (private accountService: AccountService, private processService: ProcessService, ) { 
+  constructor (private accountService: AccountService, private processService: ProcessService,
+     ) { 
 
   }
 
@@ -55,7 +55,9 @@ export class ProcessTableComponent implements OnInit{
   }
 
   onStart(time:number): void {
-    this.timer.changeTime2(time);
+    this.processService.setTimer(time) 
+    //this.timerStart.changeTime2();
+    // set timer value to the service
   }
 
 

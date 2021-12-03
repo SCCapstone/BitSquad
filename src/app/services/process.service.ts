@@ -9,7 +9,7 @@ import {Process} from '../model/process';
 })
 export class ProcessService {
   private afsPath = '/Processes';
-
+  timer = 0;
   constructor(private afs: AngularFirestore) {}
 
   getProcessDoc(id: any) {
@@ -28,7 +28,13 @@ export class ProcessService {
       error => reject(error));
       })
     }
-
+    setTimer(time: any){
+      this.timer = time
+      console.log("setTime"+this.timer)
+    }
+    getTimer(){
+      return this.timer
+    }
     deleteProcess(p: Process) {
       return this.afs.collection(this.afsPath).doc(p.id).delete();
     }
