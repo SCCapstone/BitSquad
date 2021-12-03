@@ -18,18 +18,10 @@ export class TimerStartComponent implements OnInit {
   displayVal=0;
   displayTime='';
   dT = 0;
-  realTime=0;
+  realTime=-1;
   status ='TIME TO PLAY';
 
-  getValue(val:string)
-  {
-    console.warn(val)
-    this.displayVal=this.getVowelCount(val) 
-  }
-  getVowelCount(val:string)
-  {
-    return (val.match(/[aeiou]/gi) || []).length;
-  }
+  
   changeTime(val:string)
   {
     console.warn(val)
@@ -56,13 +48,17 @@ export class TimerStartComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    
   }
 
   handleEvent1(event: { action: string; }){
-    if(event.action === 'done'){
-      console.log('Hi!');
-      this.status = 'PLEASE PREPARE TO EXIT GAME';
+    if(event.action == 'done'){
+    
+      if(this.status == 'ENJOY YOUR TIME')
+      {
+        alert("EXITING NOW");
+      }
+      this.status = 'TIME IS UP';
     }
     else {
       this.status = 'ENJOY YOUR TIME';

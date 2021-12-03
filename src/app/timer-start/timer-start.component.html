@@ -12,7 +12,7 @@
     <button (click)="changeTime(box2.value)">Start Session</button>
     <p>Your timer is starting from {{dT}} seconds...</p>
     
-    <h1><countdown #cd [config]="{leftTime: realTime, notify: 1}" (event)="handleEvent1($event)"></countdown></h1>
+    <h1><countdown #cd [config]="{leftTime: realTime, notify: 5}" (event)="handleEvent1($event)"></countdown></h1>
 
     <button (click)="cd.pause()">Pause</button>
     <button (click)="cd.resume()">Resume</button>
