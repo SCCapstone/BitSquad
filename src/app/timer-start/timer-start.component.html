@@ -1,17 +1,7 @@
 <body style="background-color:rgb(25, 230, 6);">
     <h1>Start a Process Timer</h1>
   
-    
-    <h2>What is your time limit? (in seconds) </h2>
-    <input type="text" 
-      #box2
-      placeholder="Enter Time"
-      name="username"
-    />
-    
-    <button (click)="changeTime(box2.value)">Start Session</button>
-    <p>Your timer is starting from {{dT}} seconds...</p>
-    
+    <!--start button from process table must start the timer-->
     <h1><countdown #cd [config]="{leftTime: realTime, notify: 5}" (event)="handleEvent1($event)"></countdown></h1>
 
     <button (click)="cd.pause()">Pause</button>

@@ -32,7 +32,10 @@ export class TimerStartComponent implements OnInit {
 
   changeTime2(val:number)
   {
+      console.log(this.realTime)
       this.realTime = val
+      console.log("called changeTime2");
+      console.log(this.realTime);
   }
   resetToZero()
   {
@@ -44,7 +47,14 @@ export class TimerStartComponent implements OnInit {
     return parseInt(val)
   }
 
-  constructor() { }
+  constructor() { 
+    this.title = 'Capstone';
+    this.displayVal=0;
+    this.displayTime='';
+    this.dT = 0;
+    this.realTime=-1;
+    this.status ='TIME TO PLAY';
+  }
 
 
   ngOnInit(): void {
