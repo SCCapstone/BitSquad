@@ -1,13 +1,4 @@
 {
-  "targets": {
-    "bitsquad-5f2bf": {
-      "hosting": {
-        "SourceControl": [
-          "bitsquad-5f2bf"
-        ]
-      }
-    }
-  },
   "projects": {
     "default": "bitsquad-5f2bf"
   }

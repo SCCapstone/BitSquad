@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { CountdownComponent } from 'ngx-countdown';
-
+import { ProcessService } from '../services/process.service';
 
 
 @Component({
@@ -18,18 +18,10 @@ export class TimerStartComponent implements OnInit {
   displayVal=0;
   displayTime='';
   dT = 0;
-  realTime=0;
+  realTime=-1;
   status ='TIME TO PLAY';
 
-  getValue(val:string)
-  {
-    console.warn(val)
-    this.displayVal=this.getVowelCount(val) 
-  }
-  getVowelCount(val:string)
-  {
-    return (val.match(/[aeiou]/gi) || []).length;
-  }
+  
   changeTime(val:string)
   {
     console.warn(val)
@@ -38,9 +30,16 @@ export class TimerStartComponent implements OnInit {
     this.dT = this.realTime
   }
 
-  changeTime2(val:number)
+  changeTime2()
   {
-      this.realTime = val
+    this.realTime = this.processService.getTimer(); // get timer from service
+      console.log(this.realTime)
+      console.log("called changeTime2");
+      console.log(this.realTime);
+  }
+  resetToZero()
+  {
+    this.realTime = 0;
   }
   getTime(val:string)
   {
@@ -48,17 +47,30 @@ export class TimerStartComponent implements OnInit {
     return parseInt(val)
   }
 
-  constructor() { }
+  constructor(private processService: ProcessService) { 
+    this.title = 'Capstone';
+    this.displayVal=0;
+    this.displayTime='';
+    this.dT = 0;
+    this.realTime=-1;
+    this.status ='TIME TO PLAY';
+  }
 
 
   ngOnInit(): void {
-
   }
 
   handleEvent1(event: { action: string; }){
-    if(event.action === 'notify'){
-      console.log('Hi!');
-      this.status = 'PLEASE PREPARE TO EXIT GAME';
+    if(event.action == 'done'){
+    
+      if(this.status == 'ENJOY YOUR TIME')
+      {
+        alert("EXITING NOW");
+      }
+      this.status = 'TIME IS UP';
+    }
+    else {
+      this.status = 'ENJOY YOUR TIME';
     }
   }
 

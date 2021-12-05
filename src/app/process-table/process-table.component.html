@@ -1,16 +1,21 @@
 <div>
   <h2>Current user: {{user}}</h2>
 </div>
-<mat-table [dataSource]="dataArray">
-  <!--Process Column-->
-  <ng-container matColumnDef="processName">
-    <mat-header-cell *matHeaderCellDef>Process Name</mat-header-cell>>
-    <mat-cell *matCellDef="let process">{{ process.processName }}</mat-cell>>
+
+
+<mat-table [dataSource]="Process">
+  <!-- Process Column -->
+ <ng-container matColumnDef="processName">
+    <mat-header-cell *matHeaderCellDef>Process Name from DB </mat-header-cell>>
+    <mat-cell *matCellDef="let process of Process; let i = index">{{ process.processName }}</mat-cell>>
   </ng-container>
 
   <ng-container matColumnDef="timeLimit">
     <mat-header-cell *matHeaderCellDef>Time Limit</mat-header-cell>>
-    <mat-cell *matCellDef="let process">{{getHours(process.timeLimit)}} hrs {{getMinutes(process.timeLimit)}} mins</mat-cell>
+    <mat-cell *matCellDef="let process">
+      {{ getHours(process.timeLimit) }} hrs
+      {{ getMinutes(process.timeLimit) }} mins
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="warnings">
@@ -18,7 +23,28 @@
     <mat-cell *matCellDef="let process">{{ process.warnings }}</mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>>
+    <mat-cell *matCellDef="let process">
+      <button mat-button (click) = 'onStart(process.timeLimit)' class="table-button" mat-raised-button color="accent">
+        <mat-icon class="table-icon">check_box</mat-icon>
+        Select
+      </button>
+
+      <button mat-button class="table-button" mat-raised-button color="primary">
+        <mat-icon class="table-icon">edit</mat-icon>
+        Edit
+      </button>
+
+      <button mat-button class="table-button" mat-raised-button color="warn">
+        <mat-icon class="table-icon">delete</mat-icon>
+        Delete
+      </button>
+    </mat-cell>
+  </ng-container>
+
+   <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
   <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
 </mat-table>
 
+<timer-start></timer-start>

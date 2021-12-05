@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccountService } from '../account-service.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -7,9 +8,13 @@ import { Router } from '@angular/router';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private acctService: AccountService){}
 
   ngOnInit(): void {
+    if(localStorage.getItem('email') != "") { // if this is true means that currently a user is logged in and she/he refreshes the page
+      this.acctService.setViaLocalStorage(); // then set currentUser variable from localstorage
+      this.router.navigate(['user-page']) // and jump to the user page
+    }
   }
 
   toSignIn(){
@@ -19,4 +24,5 @@ export class MainComponent implements OnInit {
   toRegPage(){
     this.router.navigate(['register'])// redirect to sign in page
   }
+
 }

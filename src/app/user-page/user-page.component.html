@@ -1,6 +1,12 @@
-<p>user-page works!</p>
-<h1>the text you are reading comes from page "user-page which will be our user-home-page</h1>
+<div>
+  <button class="add" mat-raised-button color="accent"
+    (click)="onAddProcess()">
+    <mat-icon>add</mat-icon>
+    
+  </button>
+</div>
+<div>
+  <button (click) ="logOut()" mat-raised-button color = "accent">logOut</button>
+</div>
 <process-table></process-table>
-<h2>Check user-page.html to see how I show multiple component on the same page</h2>
-<timer-start></timer-start>
 

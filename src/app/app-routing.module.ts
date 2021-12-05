@@ -8,6 +8,7 @@ import { MainComponent } from './main/main.component';
 import { importType } from '@angular/compiler/src/output/output_ast';
 import { TimerStartComponent } from './timer-start/timer-start.component';
 import { UserPageComponent } from './user-page/user-page.component';
+import { ProcessFormComponent } from './process-form/process-form.component';
 // to enable routing, add route here
 const routes: Routes = [
   {path: 'sign-in', component:SignInComponent},
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path:'process-table',component:ProcessTableComponent},
   {path: 'main',component:MainComponent},
   {path: 'user-page', component:UserPageComponent},
-  {path: 'timer-start', component:TimerStartComponent}
+  {path: 'timer-start', component:TimerStartComponent},
+  {path: 'process-form', component:ProcessFormComponent},
 ];
 
 @NgModule({
