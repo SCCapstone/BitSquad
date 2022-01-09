@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { CountdownComponent } from 'ngx-countdown';
-import { ProcessService } from '../Services/process.service';
+import { ProcessService } from '../services/process.service';
 
 
 @Component({

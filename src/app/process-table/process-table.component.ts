@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account-service.service';
 import { Process } from '../model/process';
-import { ProcessService } from '../Services/process.service';
+import { ProcessService } from '../services/process.service';
 import { TimerStartComponent} from '../timer-start/timer-start.component';
 
 
@@ -59,20 +59,5 @@ export class ProcessTableComponent implements OnInit{
     //this.timerStart.changeTime2();
     // set timer value to the service
   }
-
-
-// <button (click)="changeTime(box2.value)">Start Session</button>
-
-  // onSubmit() {
-  //   this.processService.form.value.processList = this.processList;
-  //   let data = this.processService.form.value;
-  //
-  //   this.processService.createProcess(data)
-  //     .then(res => {
-  //       console.log("success");
-  //     });
-  // }
-
-
 
 }

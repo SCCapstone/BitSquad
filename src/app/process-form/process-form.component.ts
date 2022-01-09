@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProcessService } from '../Services/process.service';
+import { ProcessService } from '../services/process.service';
 import { FormBuilder, FormGroup} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 

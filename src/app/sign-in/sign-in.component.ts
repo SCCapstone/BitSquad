@@ -26,8 +26,9 @@ signInWithEmailAndPassword(auth, this.signInForm.value.email, this.signInForm.va
     const user = userCredential.user;
     this.accountService.setCurrentUser(this.signInForm.value.email)
     this.currentUser = this.accountService.getCurrentUserEmail()
+    localStorage.setItem('email',this.currentUser) // stores user email into local stoarge
     this.router.navigate(['user-page']);
-    // ...
+    
   })
   .catch((error) => {
     const errorCode = error.code;
