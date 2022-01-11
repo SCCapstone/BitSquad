@@ -26,7 +26,10 @@ signInWithEmailAndPassword(auth, this.signInForm.value.email, this.signInForm.va
     const user = userCredential.user;
     this.accountService.setCurrentUser(this.signInForm.value.email)
     this.currentUser = this.accountService.getCurrentUserEmail()
+    this.accountService.setuid(user.uid);
+    console.log("user uid is: "+user.uid)
     localStorage.setItem('email',this.currentUser) // stores user email into local stoarge
+    localStorage.setItem('uid',user.uid);
     this.router.navigate(['user-page']);
     
   })

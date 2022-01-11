@@ -22,7 +22,9 @@ export class UserPageComponent implements OnInit {
     console.log("called logout")
     const auth = getAuth();
     signOut(auth).then(()=>{
+      // clean local storage and route back to main page
       localStorage.setItem('email',"")
+      localStorage.setItem('uid','')
       this.router.navigate(['main']);
       console.log("logged out")
     }).catch((error) =>{
