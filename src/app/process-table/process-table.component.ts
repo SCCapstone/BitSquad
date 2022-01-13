@@ -42,16 +42,27 @@ export class ProcessTableComponent implements OnInit{
   }
   getHours(value:number): number {
     if (value >= 3600) {
-      return parseInt((value/3600).toFixed(0));
+      return Math.floor((value/3600));
     } else {
       return 0;
     }
 
   }
   getMinutes(value:number): number {
-    let remainder:number = value % 3600;
-    
-    return parseInt((remainder / 60).toFixed(0));
+    if (value >= 60) {
+      return Math.floor((value % 3600 / 60));
+    } else {
+      return 0;
+    }
+  }
+
+  getSeconds(value:number): number {
+    if (value > 0) {
+      return value - (this.getHours(value)*3600 + this.getMinutes(value)*60);
+    } else {
+      return 0;
+    }
+
   }
 
   onStart(time:number): void {
