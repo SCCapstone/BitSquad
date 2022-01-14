@@ -22,5 +22,6 @@ export class AccountService {
   }
   setViaLocalStorage(){
     this.currentUser = localStorage.getItem('email');
+    this.uid = localStorage.getItem('uid');
   }
 }

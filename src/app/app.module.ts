@@ -30,6 +30,7 @@ import { CountdownModule } from 'ngx-countdown';
 import { UserPageComponent } from './user-page/user-page.component';
 import { ProcessFormComponent } from './process-form/process-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProfileComponent } from './profile/profile.component';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c',
@@ -50,7 +51,8 @@ const app = initializeApp(firebaseConfig);
     ProcessTableComponent,
     ProcessFormComponent,
     TimerStartComponent,
-    UserPageComponent
+    UserPageComponent,
+    ProfileComponent
     ],
   imports: [
     BrowserModule,

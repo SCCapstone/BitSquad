@@ -12,12 +12,15 @@ export class UserPageComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    
   }
 
   onAddProcess() {
     this.router.navigate(['process-form']);
   }
-
+  profile(){
+    this.router.navigate(['profile']);
+  }
   logOut(){
     console.log("called logout")
     const auth = getAuth();
