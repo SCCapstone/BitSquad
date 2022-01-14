@@ -14,7 +14,6 @@ export class ProcessTableComponent implements OnInit{
   user = "";
   Process: Process[] = [];
   columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings', 'actions'];
-
   limit:number = 0;
 
   constructor (private accountService: AccountService, private processService: ProcessService,
@@ -25,16 +24,16 @@ export class ProcessTableComponent implements OnInit{
   ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
     
     this.user = this.accountService.getCurrentUserEmail();
-    this.processService.getProcessList().subscribe(res => {
+    this.processService.getProcessList(this.accountService.getUID()).subscribe(res => {
       this.Process = res.map( e => {
         return {
-        id : e.payload.doc.id,
+        userID : e.payload.doc.id,
         ...e.payload.doc.data() as{}
       } as Process;
     })
     });
   }
-
+  
   removeProcess (p:Process) {
     if(confirm("Are you sure you want to delete "+ p.processName+ " ?")){
       this.processService.deleteProcess(p);

@@ -16,9 +16,13 @@ export class ProcessService {
     return this.afs.collection(this.afsPath).doc(id).valueChanges();
   }
 
-  getProcessList() {
-    return this.afs.collection(this.afsPath).snapshotChanges();
+  getProcessList(id: any) {
+    return this.afs.collection(this.afsPath, ref => ref.where("userID", 
+      "==", id)).snapshotChanges();
   }
+
+
+
   createProcess(p: Process) {
     return new Promise<any>((resolve, reject) => {
       this.afs.collection(this.afsPath).add(p)
@@ -36,7 +40,7 @@ export class ProcessService {
       return this.timer
     }
     deleteProcess(p: Process) {
-      return this.afs.collection(this.afsPath).doc(p.id).delete();
+      return this.afs.collection(this.afsPath).doc(p.userID).delete();
     }
 
     updateProcess(p:Process, id:any) {

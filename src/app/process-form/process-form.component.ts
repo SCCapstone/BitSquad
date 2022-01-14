@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ProcessService } from '../services/process.service';
 import { FormBuilder, FormGroup} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AccountService } from '../account-service.service';
 
 @Component({
   selector: 'process-form',
@@ -15,10 +16,11 @@ export class ProcessFormComponent implements OnInit {
   constructor(
     private router:Router,
     public processService:ProcessService,
-    public formBuilder:FormBuilder
+    public formBuilder:FormBuilder,
+    public accountService:AccountService
   ) {
     this.processForm = this.formBuilder.group({
-      id: [''],
+      userID: [this.accountService.getUID()],
       processName: [''],
       timeLimit: [''],
       warnings: ['']
