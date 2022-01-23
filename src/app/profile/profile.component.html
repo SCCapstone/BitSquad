@@ -1,1 +1,24 @@
-<h1>Your email is: {{user}}</h1>
+<div>
+    <h1>Profile</h1>
+   <h2>Your email is: {{user}}</h2> 
+</div>
+
+
+
+<div>
+    <h2>Total usage :{{total}}</h2>
+    <div>
+      <div class="chart" >
+        <canvas baseChart
+                [data]="pieChartData"
+                [type]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins">
+        </canvas>
+      </div>
+    </div>
+  </div>
+  <div class="button-row">
+    
+    
+  </div>

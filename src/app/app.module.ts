@@ -16,7 +16,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 
-
+import { NgChartsModule } from 'ng2-charts';
 
 import { environment } from "../environments/environment";
 import { AngularFireStorageModule } from "@angular/fire/compat/storage";
@@ -70,7 +70,8 @@ const app = initializeApp(firebaseConfig);
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
