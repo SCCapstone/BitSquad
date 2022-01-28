@@ -29,6 +29,7 @@ createUserWithEmailAndPassword(auth, this.registerForm.value.email, this.registe
     this.accountService.setCurrentUser(this.registerForm.value.email)
     this.currentUser = this.accountService.getCurrentUserEmail()
     localStorage.setItem('email',this.currentUser);
+    localStorage.setItem('uid',user.uid);
     this.router.navigate(['user-page']);
   })
   .catch((error) => {
