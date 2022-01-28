@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { AccountService } from '../account-service.service';
+import { AccountService } from '../services/account-service.service';
 
 @Component({
   selector: 'app-register',

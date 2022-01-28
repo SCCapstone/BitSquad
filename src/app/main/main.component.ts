@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountService } from '../account-service.service';
+import { AccountService } from '../services/account-service.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',

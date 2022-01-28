@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { AppModule } from '../app.module';
 
 import { ProcessService } from './process.service';
 
@@ -6,7 +7,9 @@ describe('ProcessService', () => {
   let service: ProcessService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [AppModule]
+    });
     service = TestBed.inject(ProcessService);
   });
 

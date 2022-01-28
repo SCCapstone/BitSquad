@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../account-service.service';
+import { AccountService } from '../services/account-service.service';
 import { Process } from '../model/process';
 import { ProcessService } from '../services/process.service';
 import { TimerStartComponent} from '../timer-start/timer-start.component';
@@ -24,7 +24,7 @@ export class ProcessTableComponent implements OnInit{
   ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
     
     this.user = this.accountService.getCurrentUserEmail();
-    this.processService.getProcessList(this.accountService.getUID()).subscribe(res => {
+    this.processService.getProcessList(localStorage.getItem('uid')).subscribe(res => {
       this.Process = res.map( e => {
         return {
         userID : e.payload.doc.id,

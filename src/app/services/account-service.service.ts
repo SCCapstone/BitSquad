@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Account } from 'src/acoount';
+import { Account } from 'src/account';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,6 +22,7 @@ export class AccountService {
   }
   setViaLocalStorage(){
     this.currentUser = localStorage.getItem('email');
-    this.uid = localStorage.getItem('uid');
+    this.uid = localStorage.getItem('userID');
+    console.log(this.uid);
   }
 }

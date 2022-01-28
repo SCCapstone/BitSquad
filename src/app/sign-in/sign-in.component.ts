@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { AccountService } from '../account-service.service';
+import { AccountService } from '../services/account-service.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-sign-in',

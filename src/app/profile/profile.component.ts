@@ -1,5 +1,5 @@
 import { Component, OnInit , ViewChild} from '@angular/core';
-import { AccountService } from '../account-service.service';
+import { AccountService } from '../services/account-service.service';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
