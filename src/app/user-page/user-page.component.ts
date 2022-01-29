@@ -26,8 +26,7 @@ export class UserPageComponent implements OnInit {
     const auth = getAuth();
     signOut(auth).then(()=>{
       // clean local storage and route back to main page
-      localStorage.setItem('email',"")
-      localStorage.setItem('uid','')
+      localStorage.clear();
       this.router.navigate(['main']);
       console.log("logged out")
     }).catch((error) =>{
