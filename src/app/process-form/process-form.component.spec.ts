@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppModule } from '../app.module';
 
 import { ProcessFormComponent } from './process-form.component';
 
@@ -8,7 +9,7 @@ describe('ProcessFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProcessFormComponent ]
+      imports: [AppModule]
     })
     .compileComponents();
   });

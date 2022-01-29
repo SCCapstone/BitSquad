@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ProcessService } from '../services/process.service';
 import { FormBuilder, FormGroup} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AccountService } from '../account-service.service';
+import { AccountService } from '../services/account-service.service';
 
 @Component({
   selector: 'process-form',

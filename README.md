@@ -38,6 +38,10 @@ You will also need Firebase dependencies.
 
 >ng add @angular/fire
 
+To view the analytics page you will need to install another module
+
+>npm install ng2-charts --save
+
 ## Running
 To open on localhost port 4200:
 

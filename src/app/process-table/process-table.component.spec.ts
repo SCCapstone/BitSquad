@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppModule } from '../app.module';
 
 import { ProcessTableComponent } from './process-table.component';
 
@@ -8,7 +9,7 @@ describe('ProcessTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProcessTableComponent ]
+      imports: [AppModule]
     })
     .compileComponents();
   });

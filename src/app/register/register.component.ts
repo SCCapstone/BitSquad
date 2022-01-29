@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { AccountService } from '../account-service.service';
+import { AccountService } from '../services/account-service.service';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +28,9 @@ createUserWithEmailAndPassword(auth, this.registerForm.value.email, this.registe
     const user = userCredential.user;
     this.accountService.setCurrentUser(this.registerForm.value.email)
     this.currentUser = this.accountService.getCurrentUserEmail()
+    this.accountService.setuid(user.uid);
     localStorage.setItem('email',this.currentUser);
+    localStorage.setItem('uid',user.uid);
     this.router.navigate(['user-page']);
   })
   .catch((error) => {
