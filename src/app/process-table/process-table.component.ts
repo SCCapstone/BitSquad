@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../services/account-service.service';
 import { Process } from '../model/process';
 import { ProcessService } from '../services/process.service';
-import { TimerStartComponent} from '../timer-start/timer-start.component';
 
 
 @Component({

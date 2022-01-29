@@ -2,19 +2,19 @@ export const PROCESSES: any = [
   {
     id: 1,
     processName: 'Halo',
-    timeLimit: 120,
-    warnings: [5, 30],
+    timeLimit: 1200,
+    warnings: [150, 60],
   },
   {
     id: 2,
     processName: 'Apex',
-    timeLimit: 45,
+    timeLimit: 1800,
     warnings: [],
   },
   {
     id: 3,
     processName: 'Minecraft',
-    timeLimit: 60,
-    warnings: [5],
+    timeLimit: 3600,
+    warnings: [150],
   },
 ];
