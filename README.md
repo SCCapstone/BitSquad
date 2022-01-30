@@ -68,7 +68,14 @@ The behavioral tests are in `/test/casper/`.
 
 ## Testing Technology
 
-In some cases you need to install test runners, etc. Explain how.
+For behavior test, we use selenium IDE to write and selenium-side-runner to run our tests.
+To run our tests through selenium-side-runner. you must first have it installed.
+the command line to install it: npm install -g selenium-side-runner
+after that you will need to install chrome driver(assuming you are using chrome)
+here is the website to download the zipped chrome driver: https://chromedriver.chromium.org/downloads
+after you downloaded it, unzip the chrome driver to somewhere and then put the directory where you have the chrome driver to the PATH
+then you can run out test by using command: selenium-side-runner <path to our tests>
+
 
 ## Running Tests
 
