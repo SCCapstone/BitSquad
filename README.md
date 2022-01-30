@@ -59,27 +59,48 @@ emulator or in a physical phone.
 
 # Testing
 
-In 492 you will write automated tests. When you do you will need to add a
-section that explains how to run them.
+The unit tests are in `src/app/tests/unit`.
 
-The unit tests are in `/test/unit`.
-
-The behavioral tests are in `/test/casper/`.
+The behavioral tests are in `src/app/tests/selenium`.
 
 ## Testing Technology
 
-For behavior test, we use selenium IDE to write and selenium-side-runner to run our tests.
-To run our tests through selenium-side-runner. you must first have it installed.
-the command line to install it: npm install -g selenium-side-runner
-after that you will need to install chrome driver(assuming you are using chrome)
-here is the website to download the zipped chrome driver: https://chromedriver.chromium.org/downloads
-after you downloaded it, unzip the chrome driver to somewhere and then put the directory where you have the chrome driver to the PATH
-then you can run out test by using command: selenium-side-runner <path to our tests>
+Unit tests are developed with Jasmine, which is comes with the Angular framework.
+
+Behavorial tests are developed with the Selenium IDE, which requires the following setup to execute tests from the command line:
+
+1. Install the Selenium command line runner
+    >npm install -g selenium-side-runner
+
+2. Install the version of Chrome Driver that matches your Chrome version from https://chromedriver.chromium.org/downloads
+    
+    **How to Find Your Chrome Version**
+    1. Click the 3 dots in the upper right hand corner of your Chrome Browser
+    2. Select "Help"
+    3. Select "About Google Chrome" and the version will be listed
+
+3. Select the Windows download: chromedriver_win32.zip 
+4. Unzip the Chrome Driver download to any directory on your computer
+5. In the Windows search bar, type "environment variables" and select "Edit the system environment variables"
+6. Select "Environment Variables"
+7. Select the "Path" variable in the "System variables" section
+8. Select "Edit"
+9. Select "New"
+10. Select "Browse"
+11. Navigate to the directory where you unzipped the Chrome Driver download (step 3), then click "OK" to close all dialog boxes
+12. **Restart your computer before attempting to run any tests**
 
 
 ## Running Tests
+First make sure the program is running:
+>ng serve
 
-open command line, then run command: selenium side runner \PATH\TO\DIR
+The following command will execute our unit tests and launch the Karma debugger in a Chrome window
+> ng test
+
+The following command will execute our behavioral tests and launch a Chrome window
+> selenium-side-runner.cmd src/app/tests/selenium/*.side
+
 
 # Authors
 
