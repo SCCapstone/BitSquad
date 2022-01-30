@@ -79,7 +79,7 @@ then you can run out test by using command: selenium-side-runner <path to our te
 
 ## Running Tests
 
-Explain how to run the automated tests.
+open command line, then run selenium side runner \PATH\TO\DIR
 
 # Authors
 
