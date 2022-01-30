@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { AppModule } from '../app.module';
+import { AppModule } from '../../app.module';
 
-import { ProcessService } from './process.service';
+import { ProcessService } from '../../services/process.service';
 
 describe('ProcessService', () => {
   let service: ProcessService;

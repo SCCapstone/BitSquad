@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppModule } from '../app.module';
+import { AppModule } from '../../app.module';
 
-import { SignInComponent } from './sign-in.component';
+import { ProcessFormComponent } from '../../process-form/process-form.component';
 
-describe('SignInComponent', () => {
-  let component: SignInComponent;
-  let fixture: ComponentFixture<SignInComponent>;
+describe('ProcessFormComponent', () => {
+  let component: ProcessFormComponent;
+  let fixture: ComponentFixture<ProcessFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,7 +15,7 @@ describe('SignInComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SignInComponent);
+    fixture = TestBed.createComponent(ProcessFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppModule } from '../app.module';
+import { AppModule } from '../../app.module';
 
-import { TimerStartComponent } from './timer-start.component';
+import { TimerStartComponent } from '../../timer-start/timer-start.component';
 
 describe('TimerStartComponent', () => {
   let component: TimerStartComponent;

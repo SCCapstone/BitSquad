@@ -2,9 +2,9 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setUpProcessData } from 'src/setup-test-data';
-import { AppModule } from '../app.module';
+import { AppModule } from '../../app.module';
 
-import { ProcessTableComponent } from './process-table.component';
+import { ProcessTableComponent } from '../../process-table/process-table.component';
 
 describe('ProcessTableComponent', () => {
   let component: ProcessTableComponent;

@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppModule } from '../app.module';
+import { AppModule } from '../../app.module';
 
-import { ProcessFormComponent } from './process-form.component';
+import { UserPageComponent } from '../../user-page/user-page.component';
 
-describe('ProcessFormComponent', () => {
-  let component: ProcessFormComponent;
-  let fixture: ComponentFixture<ProcessFormComponent>;
+describe('UserPageComponent', () => {
+  let component: UserPageComponent;
+  let fixture: ComponentFixture<UserPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,7 +15,7 @@ describe('ProcessFormComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProcessFormComponent);
+    fixture = TestBed.createComponent(UserPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

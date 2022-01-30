@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppModule } from '../app.module';
+import { AppModule } from '../../app.module';
 
-import { MainComponent } from './main.component';
+import { SignInComponent } from '../../sign-in/sign-in.component';
 
-describe('MainComponent', () => {
-  let component: MainComponent;
-  let fixture: ComponentFixture<MainComponent>;
+describe('SignInComponent', () => {
+  let component: SignInComponent;
+  let fixture: ComponentFixture<SignInComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,7 +15,7 @@ describe('MainComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainComponent);
+    fixture = TestBed.createComponent(SignInComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
