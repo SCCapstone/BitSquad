@@ -65,7 +65,7 @@ The behavioral tests are in `src/app/tests/selenium`.
 
 ## Testing Technology
 
-Unit tests are developed with Jasmine, which is comes with the Angular framework.
+Unit tests are developed with Jasmine, which comes with the Angular framework.
 
 Behavorial tests are developed with the Selenium IDE, which requires the following setup to execute tests from the command line:
 
