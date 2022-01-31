@@ -23,7 +23,6 @@ describe('ProcessFormComponent', () => {
     fixture.detectChanges();
   });
 
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -34,7 +33,6 @@ describe('ProcessFormComponent', () => {
     expect(component.processForm.value.timeLimit).toEqual('');
     expect(component.processForm.value.warnings).toEqual('');
   });
-
 
   // it('navigate to /user-page', () => {
   //   router.navigate(['']);
