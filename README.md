@@ -92,7 +92,7 @@ Behavorial tests are developed with the Selenium IDE, which requires the followi
 
 
 ## Running Tests
-First make sure the program is running:
+First make sure the program is running in another terminal:
 >ng serve
 
 The following command will execute our unit tests and launch the Karma debugger in a Chrome window
