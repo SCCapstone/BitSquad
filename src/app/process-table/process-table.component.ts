@@ -34,6 +34,7 @@ export class ProcessTableComponent implements OnInit{
   }
   
   removeProcess (p:Process) {
+    console.log("RemoveProcess called");
     if(confirm("Are you sure you want to delete "+ p.processName+ " ?")){
       this.processService.deleteProcess(p);
     }
@@ -67,6 +68,11 @@ export class ProcessTableComponent implements OnInit{
     this.processService.setTimer(time) 
     //this.timerStart.changeTime2();
     // set timer value to the service
+  }
+
+  onDelete(p: Process) {
+    console.log(p.processName + " clicked to delete");
+
   }
 
 }
