@@ -22,7 +22,7 @@ export class AccountService {
   }
   setViaLocalStorage(){
     this.currentUser = localStorage.getItem('email');
-    this.uid = localStorage.getItem('userID');
+    this.uid = localStorage.getItem('uid');
     console.log(this.uid);
   }
 }
