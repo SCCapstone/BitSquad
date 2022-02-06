@@ -3,6 +3,7 @@ import { AccountService } from '../services/account-service.service';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
+import { userData } from '../model/userData';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -13,11 +14,27 @@ export class ProfileComponent implements OnInit {
   public pieChartType: ChartType = 'pie';
   public pieChartPlugins = [ DatalabelsPlugin ];
   user:any;
-  total = 900 // fake data, replace it with real time data later
+  userData:any;
+  test:any; 
   constructor(private accountService: AccountService) { }
-
+  uid:any;
+  data:number[] = []
+  labels:string[] = []
   ngOnInit(): void {
     this.user = this.accountService.getCurrentUserEmail()
+
+    this.uid= this.accountService.getUID();
+    this.userData = this.accountService.getAnalytics();
+    console.log(this.userData.total)
+    const map:Map<String,Number> = this.userData.data;
+    Object.values(map).map(value =>{ // you have to do this way to get keys and values from a map
+      console.log(value)
+      this.data.push(value)
+    })
+    Object.keys(map).map(key =>{ // same as above
+      this.labels.push(key)
+    })
+
   }
 
   public pieChartOptions: ChartConfiguration['options'] = {
@@ -37,11 +54,11 @@ export class ProfileComponent implements OnInit {
       },
     }
   };
-
+  
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: [  'Fake1' ,  'Fake2' , 'Fake3' ], // labels here
+    labels: this.labels, // labels here
     datasets: [ {
-      data: [ 300, 500, 100 ] // fake data here, can replace it with real time data later
+      data: this.data // data, now is the real data
     } ]
   };
 

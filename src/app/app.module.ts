@@ -9,7 +9,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from 'firebase/analytics';
 import { ProcessTableComponent } from './process-table/process-table.component';
 import { TimerStartComponent } from './timer-start/timer-start.component';
-import { MatTableModule } from '@angular/material/table';
+import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -17,7 +17,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 
 import { NgChartsModule } from 'ng2-charts';
-
+import { MatTableDataSource } from '@angular/material/table';
 import { environment } from "../environments/environment";
 import { AngularFireStorageModule } from "@angular/fire/compat/storage";
 import { AngularFireModule } from "@angular/fire/compat";
@@ -52,7 +52,7 @@ const app = initializeApp(firebaseConfig);
     ProcessFormComponent,
     TimerStartComponent,
     UserPageComponent,
-    ProfileComponent
+    ProfileComponent,
     ],
   imports: [
     BrowserModule,
