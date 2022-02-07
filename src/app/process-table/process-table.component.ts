@@ -59,7 +59,7 @@ export class ProcessTableComponent implements OnInit{
   }
 
   getTotalSeconds(valueH:number, valueM:number): number {
-    if (valueH > 0) {
+    if (valueH >= 0 && valueM >= 0 ) {
       return (valueH*3600) + (valueM*60);
     } else {
       return 0;
