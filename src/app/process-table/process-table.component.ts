@@ -39,6 +39,8 @@ export class ProcessTableComponent implements OnInit{
       this.processService.deleteProcess(p);
     }
   }
+
+  //not needed anymore
   getHours(value:number): number {
     if (value >= 3600) {
       return Math.floor((value/3600));
@@ -47,6 +49,7 @@ export class ProcessTableComponent implements OnInit{
     }
 
   }
+  //not needed anymore
   getMinutes(value:number): number {
     if (value >= 60) {
       return Math.floor((value % 3600 / 60));
@@ -55,9 +58,9 @@ export class ProcessTableComponent implements OnInit{
     }
   }
 
-  getSeconds(value:number): number {
-    if (value > 0) {
-      return value - (this.getHours(value)*3600 + this.getMinutes(value)*60);
+  getTotalSeconds(valueH:number, valueM:number): number {
+    if (valueH > 0) {
+      return (valueH*3600) + (valueM*60);
     } else {
       return 0;
     }

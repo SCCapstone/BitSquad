@@ -35,7 +35,8 @@ export class ProcessService {
         userID: p.userID,
         processID: p.processID,
         processName: p.processName,
-        timeLimit: p.timeLimit,
+        timeLimitH: p.timeLimitH,
+        timeLimitM: p.timeLimitM,
         warnings: p.warnings,
       })
       .then(() => {
@@ -63,7 +64,8 @@ export class ProcessService {
   updateProcess(p: Process, id: any) {
     return this.afs.collection(this.afsPath).doc(id).update({
       processName: p.processName,
-      timeLimit: p.timeLimit,
+      timeLimitH: p.timeLimitH,
+      timeLimitM: p.timeLimitM,
       warnings: p.warnings,
     });
   }

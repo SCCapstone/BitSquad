@@ -24,7 +24,8 @@ export class ProcessFormComponent implements OnInit {
       userID: [this.accountService.getUID()],
       processID: [uuid()],  //creates a unique id
       processName: [''],
-      timeLimit: [''],
+      timeLimitH: [''],
+      timeLimitM: [''],
       warnings: ['']
     })
   }
