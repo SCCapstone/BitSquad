@@ -25,10 +25,10 @@ export class ProfileComponent implements OnInit {
 
     this.uid= this.accountService.getUID();
     this.userData = this.accountService.getAnalytics();
-    console.log(this.userData.total)
     const map:Map<String,Number> = this.userData.data;
-    Object.values(map).map(value =>{ // you have to do this way to get keys and values from a map
-      console.log(value)
+
+    // map operation example here
+    Object.values(map).map(value =>{ // you have to do this way to keys and values from a map
       this.data.push(value)
     })
     Object.keys(map).map(key =>{ // same as above

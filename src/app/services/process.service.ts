@@ -8,7 +8,8 @@ import { Process } from '../model/process';
 })
 export class ProcessService {
   private afsPath = '/Processes';
-  timer = 0;
+  timer = 0; //timer data stores here
+  currentProcess:any; // stores the name of the current running process
   constructor(private afs: AngularFirestore) {}
 
   getProcessDoc(id: any) {
@@ -54,6 +55,9 @@ export class ProcessService {
   getTimer() {
     return this.timer;
   }
+  getProcessName(){
+    return this.currentProcess
+  }
 
   /**locates the document at given path and deletes it */
   deleteProcess(p: Process) {
@@ -68,5 +72,8 @@ export class ProcessService {
       timeLimitM: p.timeLimitM,
       warnings: p.warnings,
     });
+  }
+  setCurrentProccess(process:any){
+    this.currentProcess = process
   }
 }

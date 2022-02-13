@@ -67,8 +67,9 @@ export class ProcessTableComponent implements OnInit{
 
   }
 
-  onStart(time:number): void {
+  onStart(time:number, name:any): void {
     this.processService.setTimer(time) 
+    this.processService.setCurrentProccess(name)
     //this.timerStart.changeTime2();
     // set timer value to the service
   }

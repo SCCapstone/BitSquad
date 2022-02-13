@@ -28,6 +28,7 @@ createUserWithEmailAndPassword(auth, this.registerForm.value.email, this.registe
     const user = userCredential.user;
     this.accountService.setCurrentUser(this.registerForm.value.email)
     this.currentUser = this.accountService.getCurrentUserEmail()
+    this.accountService.pullUserDataFromFireBase();
     this.accountService.setuid(user.uid);
     localStorage.setItem('email',this.currentUser);
     localStorage.setItem('uid',user.uid);

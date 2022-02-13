@@ -13,6 +13,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     if(localStorage.getItem('email') != null&&localStorage.getItem('uid')!=null) { // if this is true means that currently a user is logged in and she/he refreshes the page
       this.acctService.setViaLocalStorage(); // then set currentUser variable from localstorage
+      this.acctService.pullUserDataFromFireBase();
       this.router.navigate(['user-page']) // and jump to the user page
       console.log(localStorage.getItem('email'));
     }

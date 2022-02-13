@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { CountdownComponent } from 'ngx-countdown';
 import { ProcessService } from '../services/process.service';
-
+import { AccountService } from '../services/account-service.service';
 
 @Component({
   selector: 'timer-start',
@@ -47,7 +47,7 @@ export class TimerStartComponent implements OnInit {
     return parseInt(val)
   }
 
-  constructor(private processService: ProcessService) { 
+  constructor(private processService: ProcessService, private accountService: AccountService) { 
     this.title = 'Capstone';
     this.displayVal=0;
     this.displayTime='';
@@ -71,7 +71,9 @@ export class TimerStartComponent implements OnInit {
       if(this.status == 'ENJOY YOUR TIME')
       {
         this.sendNotification();
-        //alert("EXITING NOW");
+        //alert("EXITING NOW"); 
+        this.accountService.updateAnalytics() // update analytics data
+
       }
       this.status = 'TIME IS UP';
     }
