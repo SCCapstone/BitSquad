@@ -13,18 +13,22 @@ export class ProfileComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public pieChartType: ChartType = 'pie';
   public pieChartPlugins = [ DatalabelsPlugin ];
+  total:any;
+  showing = "seconds";
   user:any;
   userData:any;
-  test:any; 
-  constructor(private accountService: AccountService) { }
+  test:any;
   uid:any;
   data:number[] = []
-  labels:string[] = []
+  labels:string[] = [] 
+  constructor(private accountService: AccountService) { }
+
   ngOnInit(): void {
     this.user = this.accountService.getCurrentUserEmail()
 
     this.uid= this.accountService.getUID();
     this.userData = this.accountService.getAnalytics();
+    this.total = this.userData.total
     const map:Map<String,Number> = this.userData.data;
 
     // map operation example here
@@ -69,5 +73,29 @@ export class ProfileComponent implements OnInit {
   
     public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
       console.log(event, active);
+    }
+    convert():void{
+      if(this.showing == 'seconds'){
+        this.showing = 'minutes'
+        this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
+          this.pieChartData.datasets[0].data[dataIndex] = val/60
+        })
+        this.total = this.total/60
+      } else if(this.showing == 'minutes'){
+        this.showing = 'hours'
+        this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
+          this.pieChartData.datasets[0].data[dataIndex] = val/60
+        })
+        this.total = this.total/60
+      } else if(this.showing == 'hours'){
+        this.showing = 'seconds'
+        this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
+          this.pieChartData.datasets[0].data[dataIndex] = val*3600
+        })
+        this.total = this.total*3600
+      }
+      console.log(this.pieChartData.datasets[0].data)
+      this.chart?.update();
+      this.chart?.render();
     }
 }
