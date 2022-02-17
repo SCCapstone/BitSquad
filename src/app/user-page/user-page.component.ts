@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { getAuth, signOut } from 'firebase/auth';
+import { LimitsFormComponent } from '../limits-form/limits-form.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AccountService } from '../services/account-service.service';
+
 
 @Component({
   selector: 'app-user-page',
@@ -9,7 +13,8 @@ import { getAuth, signOut } from 'firebase/auth';
 })
 export class UserPageComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private dialog: MatDialog, public accountService: AccountService) { 
+  }
 
   ngOnInit(): void {
     
@@ -33,4 +38,19 @@ export class UserPageComponent implements OnInit {
       console.log(error)
     });
   }
+
+  openLimitDialog(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.closeOnNavigation = true;
+    dialogConfig.disableClose = true;
+    dialogConfig.width = "500px";
+    dialogConfig.data = {
+     
+    }
+    this.dialog.open(LimitsFormComponent, dialogConfig);
+
+  }
+
+ 
 }

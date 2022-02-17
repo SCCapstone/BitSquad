@@ -31,7 +31,8 @@ createUserWithEmailAndPassword(auth, this.registerForm.value.email, this.registe
     this.accountService.setuid(user.uid);
     localStorage.setItem('email',this.currentUser);
     localStorage.setItem('uid',user.uid);
-    this.accountService.createUserData()
+    this.accountService.createUserData();
+    this.accountService.createBlankLimits();
     this.router.navigate(['user-page']);
   })
   .catch((error) => {

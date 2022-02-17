@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { NgChartsModule } from 'ng2-charts';
 import { MatTableDataSource } from '@angular/material/table';
@@ -31,6 +32,7 @@ import { UserPageComponent } from './user-page/user-page.component';
 import { ProcessFormComponent } from './process-form/process-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
+import { LimitsFormComponent } from './limits-form/limits-form.component';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c',
@@ -53,6 +55,7 @@ const app = initializeApp(firebaseConfig);
     TimerStartComponent,
     UserPageComponent,
     ProfileComponent,
+    LimitsFormComponent,
     ],
   imports: [
     BrowserModule,
@@ -65,6 +68,7 @@ const app = initializeApp(firebaseConfig);
     MatFormFieldModule,
     MatCardModule,
     MatInputModule,
+    MatDialogModule,
     CountdownModule,
     AngularFireStorageModule,
     AngularFirestoreModule,
