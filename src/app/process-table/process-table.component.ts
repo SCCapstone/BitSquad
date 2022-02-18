@@ -17,7 +17,7 @@ export class ProcessTableComponent implements OnInit{
   columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings', 'actions'];
   limit:number = 0;
 
-  constructor (private accountService: AccountService, private processService: ProcessService,  public timerStartComponent: TimerStartComponent, 
+  constructor (private accountService: AccountService, private processService: ProcessService, 
      ) { 
 
   }
@@ -69,8 +69,9 @@ export class ProcessTableComponent implements OnInit{
 
   }
 
-  onStart(time:number): void {
+  onStart(time:number, name:any): void {
     this.processService.setTimer(time)
+    this.processService.setCurrentProccess(name)
     //***THIS ACTUALLY STARTS TIMER***
     this.changeTime2();
     
@@ -120,6 +121,7 @@ export class ProcessTableComponent implements OnInit{
       {
         this.sendNotification();
         //alert("EXITING NOW");
+        this.accountService.updateAnalytics() // update analytics data
       }
       this.status = 'TIME IS UP';
     }
