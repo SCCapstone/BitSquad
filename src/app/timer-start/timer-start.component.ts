@@ -65,7 +65,7 @@ export class TimerStartComponent implements OnInit {
     return parseInt(val)
   }
 
-  constructor(private processService: ProcessService, private accountService: AccountService) { 
+  constructor(private processService: ProcessService) { 
     this.title = 'Capstone';
     this.displayVal=0;
     this.displayTime='';
@@ -90,7 +90,7 @@ export class TimerStartComponent implements OnInit {
       {
         this.sendNotification();
         //alert("EXITING NOW"); 
-        this.accountService.updateAnalytics() // update analytics data
+        //this.accountService.updateAnalytics() // update analytics data
 
       }
       this.status = 'TIME IS UP';
