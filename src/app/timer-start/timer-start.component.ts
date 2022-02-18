@@ -1,8 +1,16 @@
+//INACTIVE
+
+
 import { Component, OnInit } from '@angular/core';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { CountdownComponent } from 'ngx-countdown';
 import { ProcessService } from '../services/process.service';
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
+@Injectable({
+  providedIn: 'root',
+})
 
 @Component({
   selector: 'timer-start',
@@ -13,6 +21,7 @@ import { ProcessService } from '../services/process.service';
 
 export class TimerStartComponent implements OnInit {
 
+  
 
   title = 'Capstone';
   displayVal=0;
@@ -33,10 +42,19 @@ export class TimerStartComponent implements OnInit {
   changeTime2()
   {
     this.realTime = this.processService.getTimer(); // get timer from service
-      console.log(this.realTime)
+      //console.log(this.realTime)
       console.log("called changeTime2");
       console.log(this.realTime);
   }
+
+  changeTimeClock(time:number)
+  {
+    this.realTime = time; // get timer from service
+      //console.log(this.realTime)
+      console.log("called changeTimeClock");
+      console.log(this.realTime);
+  }
+  
   resetToZero()
   {
     this.realTime = 0;

@@ -2,6 +2,7 @@ import { error } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Process } from '../model/process';
+import { TimerStartComponent } from '../timer-start/timer-start.component';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { Process } from '../model/process';
 export class ProcessService {
   private afsPath = '/Processes';
   timer = 0;
-  constructor(private afs: AngularFirestore) {}
+  constructor(private afs: AngularFirestore, ) {}
 
   getProcessDoc(id: any) {
     return this.afs.collection(this.afsPath).doc(id).valueChanges();
@@ -50,6 +51,7 @@ export class ProcessService {
   setTimer(time: any) {
     this.timer = time;
     console.log('setTime' + this.timer);
+    this.timer
   }
   getTimer() {
     return this.timer;
