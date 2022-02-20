@@ -86,21 +86,21 @@ export class ProfileComponent implements OnInit {
       if(this.showing == 'seconds'){
         this.showing = 'minutes'
         this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-          this.pieChartData.datasets[0].data[dataIndex] = val/60
+          this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
         })
-        this.total = this.total/60
+        this.total = (this.total / 60).toFixed(2)
       } else if(this.showing == 'minutes'){
         this.showing = 'hours'
         this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-          this.pieChartData.datasets[0].data[dataIndex] = val/60
+          this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
         })
-        this.total = this.total/60
+        this.total = (this.total / 60).toFixed(2)
       } else if(this.showing == 'hours'){
         this.showing = 'seconds'
         this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-          this.pieChartData.datasets[0].data[dataIndex] = val*3600
+          this.pieChartData.datasets[0].data[dataIndex] =+ (val * 3600).toFixed(2)
         })
-        this.total = this.total*3600
+        this.total = this.userData.total
       }
       this.statement = "Total usage: " + this.total+" "+this.showing; // update the statement
       this.chart?.update();
