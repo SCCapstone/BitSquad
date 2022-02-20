@@ -13,7 +13,6 @@ export class AccountService {
   constructor(private afs: AngularFirestore, private processService: ProcessService) { 
 
   }
-  docId:any // stores the document id
   currentUser:any;
   uid: any;
   createUserData(){
@@ -23,20 +22,40 @@ export class AccountService {
       uid: this.uid
     })
   }
+  clearUserData(){
+    this.currentUser = null;
+    this.uid = null;
+    this.userData = null;
+    
+  }
   pullUserDataFromFireBase(){
+    this.afs.collection('userData').doc(this.uid).valueChanges().subscribe(data=>{
+      console.log(this.uid)
+      console.log(data)
+      this.userData = data
+    })
+
+    // below is not useful because found a way to set the user uid to document uid 
+    // but the method below is still useful if you do not know the uid of the document that you want to query
+     // so I left them as comments here for reference
+
         //below is the way that I found viable to get documents by its field
-        this.afs.collection('userData',ref =>ref.where('uid', '==',this.uid)).valueChanges().subscribe(data =>{
+        /*this.afs.collection('userData',ref =>ref.where('uid', '==',this.uid)).valueChanges().subscribe(data =>{
+          console.log(this.uid)
+          console.log(data)
           this.userData = data[0] // this actually returns a array of documents although in this case the size of array is one
-        });
+        });*/
 
     // basically the snapshotChanges will return an array of DocumentChangeAction which are actually the metadata of your document
     // notice that afs.collection('userData', ref => ref.where('uid', '==', this.uid)) returns not a single document but an array of documents
     // in this case the it will return an array with size of 1
     // be aware that each element of the array that snapshotChanges() return is also an array which actually I did not understand
     // but I looked into the data structure and find out the following way to get the id of the document you want
+    /*
     this.afs.collection('userData', ref => ref.where('uid', '==', this.uid)).snapshotChanges().forEach(a =>{
       this.docId = a[0].payload.doc.id
     })
+    */
   }
   setuid(uid: any){ // method to set user uid
     this.uid = uid
@@ -56,8 +75,9 @@ export class AccountService {
 
   }
   getAnalytics(){ //the the essential data for analytics use
-
+    console.log(this.userData)
     return this.userData;
+    
   }
   updateAnalytics(){ // when timer is up, call this function to push timer data to firebase
     var valueToPush = 0
@@ -76,8 +96,8 @@ export class AccountService {
   }
 
     // this is how to update the document, this one is a little special because the userData has a map
-    console.log("pushing time: "+this.processService.getTimer()+" name: "+this.processService.getProcessName()+" to the uid: "+this.uid+" to the document: "+this.docId)
-    this.afs.collection('userData').doc(this.docId).update({
+    console.log("pushing time: "+this.processService.getTimer()+" name: "+this.processService.getProcessName()+" to the uid: "+this.uid+" to the document: "+this.uid)
+    this.afs.collection('userData').doc(this.uid).update({
       [tmp]:  valueToPush+this.processService.getTimer(), // map update, notice [] which allows you to use a varibale as the path
       total: this.userData.total + this.processService.getTimer()
     })

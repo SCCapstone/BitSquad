@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public pieChartType: ChartType = 'pie';
   public pieChartPlugins = [ DatalabelsPlugin ];
+  statement = "No data yet" 
   total:any;
   showing = "seconds";
   user:any;
@@ -21,11 +22,15 @@ export class ProfileComponent implements OnInit {
   uid:any;
   data:number[] = []
   labels:string[] = [] 
-  constructor(private accountService: AccountService) { }
+  visible = false;
+  constructor(private accountService: AccountService) { 
+    
+  }
+
 
   ngOnInit(): void {
+    
     this.user = this.accountService.getCurrentUserEmail()
-
     this.uid= this.accountService.getUID();
     this.userData = this.accountService.getAnalytics();
     this.total = this.userData.total
@@ -38,7 +43,10 @@ export class ProfileComponent implements OnInit {
     Object.keys(map).map(key =>{ // same as above
       this.labels.push(key)
     })
-
+    if(this.total > 0){
+      this.statement = "Total usage: " + this.total+" "+this.showing;
+      this.visible = true;
+    }
   }
 
   public pieChartOptions: ChartConfiguration['options'] = {
@@ -94,7 +102,7 @@ export class ProfileComponent implements OnInit {
         })
         this.total = this.total*3600
       }
-      console.log(this.pieChartData.datasets[0].data)
+      this.statement = "Total usage: " + this.total+" "+this.showing; // update the statement
       this.chart?.update();
       this.chart?.render();
     }

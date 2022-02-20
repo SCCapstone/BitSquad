@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
     password: ['',Validators.required]
   });
   constructor(private fb: FormBuilder, private accountService: AccountService
-    ,private router: Router) { }
+    ,private router: Router) {}
 
   ngOnInit(): void {
   }
@@ -32,8 +32,9 @@ createUserWithEmailAndPassword(auth, this.registerForm.value.email, this.registe
     localStorage.setItem('email',this.currentUser);
     localStorage.setItem('uid',user.uid);
     this.accountService.createUserData()
+     console.log("register called")
     this.router.navigate(['user-page']);
-  })
+  }) 
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
