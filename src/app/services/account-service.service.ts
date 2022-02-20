@@ -22,16 +22,10 @@ export class AccountService {
       uid: this.uid
     })
   }
-  clearUserData(){
-    this.currentUser = null;
-    this.uid = null;
-    this.userData = null;
-    
-  }
+
   pullUserDataFromFireBase(){
+    // this can be use only if the document uid = user uid
     this.afs.collection('userData').doc(this.uid).valueChanges().subscribe(data=>{
-      console.log(this.uid)
-      console.log(data)
       this.userData = data
     })
 

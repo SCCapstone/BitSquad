@@ -27,8 +27,6 @@ export class UserPageComponent implements OnInit {
     signOut(auth).then(()=>{
       // clean local storage and route back to main page
       localStorage.clear();
-      this.accountService.clearUserData()
-      console.log(this.accountService.userData)
       this.router.navigate(['main']);
     }).catch((error) =>{
       console.log(error)

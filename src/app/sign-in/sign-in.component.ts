@@ -30,7 +30,6 @@ signInWithEmailAndPassword(auth, this.signInForm.value.email, this.signInForm.va
     this.accountService.setuid(user.uid);
     localStorage.setItem('email',this.currentUser) // stores user email into local stoarge
     localStorage.setItem('uid',user.uid);
-    console.log("user uid is: "+user.uid)
     this.router.navigate(['user-page']);
     
   })

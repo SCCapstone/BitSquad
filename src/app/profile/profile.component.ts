@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   uid:any;
   data:number[] = []
   labels:string[] = [] 
-  visible = false;
+  visible = false; // this boolean variable controls the visibility of unit convert button
   constructor(private accountService: AccountService) { 
     
   }
@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
     Object.keys(map).map(key =>{ // same as above
       this.labels.push(key)
     })
-    if(this.total > 0){
+    if(this.total > 0){ // switch view when there exist analytics data
       this.statement = "Total usage: " + this.total+" "+this.showing;
       this.visible = true;
     }
