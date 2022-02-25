@@ -4,6 +4,9 @@ import { getAuth, signOut } from 'firebase/auth';
 import { LimitsFormComponent } from '../limits-form/limits-form.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AccountService } from '../services/account-service.service';
+import { Limits } from '../model/limits';
+import { LimitsService } from '../services/limits.service';
+
 
 
 @Component({
@@ -12,12 +15,28 @@ import { AccountService } from '../services/account-service.service';
   styleUrls: ['./user-page.component.scss']
 })
 export class UserPageComponent implements OnInit {
+  
+  limits: Limits[] = [];
 
-  constructor(private router: Router, private dialog: MatDialog, public accountService: AccountService) { 
+  constructor(private router: Router, private dialog: MatDialog, public accountService: AccountService, private limitsService: LimitsService) {
+
   }
 
   ngOnInit(): void {
     this.accountService.pullUserDataFromFireBase()
+    
+    /**Maps values to Limits model, only one document should be found, 
+     * retrievable by using limits[0] */
+    this.limitsService.loadLimitsByUserID(this.accountService.getUID())
+      .subscribe(res => {
+        
+        this.limits = res.map(e => {
+          return {
+            uid: e.payload.doc.id,
+            ...e.payload.doc.data() as{}
+          } as Limits;
+        })
+      });
   }
 
   onAddProcess() {
@@ -39,18 +58,28 @@ export class UserPageComponent implements OnInit {
     window.location.reload(); // need to reload the webpage to reset everything
   }
 
-  openLimitDialog(): void {
+  /**
+   * Configures and opens a dialog box with the daily/weekly limits form (limits-form.ts)
+   * Updates firebase when closed, if needed
+   * @param limits the first (and only) document found during retrieval of user's limits
+   */
+  editLimits(limits: Limits) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.closeOnNavigation = true;
     dialogConfig.disableClose = true;
     dialogConfig.width = "500px";
     dialogConfig.data = {
-     
-    }
-    this.dialog.open(LimitsFormComponent, dialogConfig);
-
+      ...limits   //copies data from given limit, which is limits[0] in HTML
+    };
+    
+    this.dialog.open(LimitsFormComponent, dialogConfig)
+    .afterClosed()
+      .subscribe(values => {
+          this.limitsService.updateLimits(values)
+        }
+        );
+    
   }
-
- 
 }
+

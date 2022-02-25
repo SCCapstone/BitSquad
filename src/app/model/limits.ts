@@ -1,6 +1,6 @@
 export interface Limits {
   // ID created on init
-  userID: string;
+  uid: string;
   // maximum time per week
   weeklyLimitH: number;
   weeklyLimitM: number;

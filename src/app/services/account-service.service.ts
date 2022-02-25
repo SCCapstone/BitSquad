@@ -98,32 +98,5 @@ export class AccountService {
     
   }
 
-  createBlankLimits() {
-    this.afs.collection('limits').doc(this.uid).set({
-      uid: this.uid,
-      weeklyLimitH: 0,
-      weeklyLimitM: 0,
-      
-      monLimitH: 0,
-      monLimitM: 0,
-      
-      tuesLimitH: 0,
-      tuesLimitM: 0,
 
-      wedLimitH: 0,
-      wedLimitM: 0,
-
-      thursLimitH: 0,
-      thursLimitM: 0,
-
-      friLimitH: 0,
-      friLimitM: 0,
-
-      satLimitH: 0,
-      satLimitM: 0,
-
-      sunLimitH: 0,
-      sunLimitM: 0,
-    })
-  }
 }
