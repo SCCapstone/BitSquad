@@ -4,10 +4,8 @@
    <h2>Your uid is: {{uid}}</h2>
 </div>
 
-
-
 <div>
-    <h2>Total usage :{{total}} showing by: {{showing}}</h2>
+    <h2>{{statement}}</h2>
     <div>
       <div class="chart" >
         <canvas baseChart
@@ -18,7 +16,7 @@
         </canvas>
       </div>
     </div>
-  </div>
-  <div class="button-row">
-    <button mat-button mat-raised-button color="primary" (click)="convert()">Convert</button>
+    <div class="button-row" *ngIf="this.visible" >
+      <button mat-button mat-raised-button color="primary" (click)="convert()">Convert</button>
+    </div>
   </div>

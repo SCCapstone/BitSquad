@@ -17,14 +17,14 @@ export class UserPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.accountService.pullUserDataFromFireBase()
   }
 
   onAddProcess() {
     this.router.navigate(['process-form']);
   }
   profile(){
-    this.router.navigate(['profile']);
+    this.router.navigate(['profile'])
   }
   logOut(){
     console.log("called logout")
@@ -33,10 +33,10 @@ export class UserPageComponent implements OnInit {
       // clean local storage and route back to main page
       localStorage.clear();
       this.router.navigate(['main']);
-      console.log("logged out")
     }).catch((error) =>{
       console.log(error)
     });
+    window.location.reload(); // need to reload the webpage to reset everything
   }
 
   openLimitDialog(): void {

@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public pieChartType: ChartType = 'pie';
   public pieChartPlugins = [ DatalabelsPlugin ];
+  statement = "No data yet" 
   total:any;
   showing = "seconds";
   user:any;
@@ -21,11 +22,15 @@ export class ProfileComponent implements OnInit {
   uid:any;
   data:number[] = []
   labels:string[] = [] 
-  constructor(private accountService: AccountService) { }
+  visible = false; // this boolean variable controls the visibility of unit convert button
+  constructor(private accountService: AccountService) { 
+    
+  }
+
 
   ngOnInit(): void {
+    
     this.user = this.accountService.getCurrentUserEmail()
-
     this.uid= this.accountService.getUID();
     this.userData = this.accountService.getAnalytics();
     this.total = this.userData.total
@@ -38,7 +43,10 @@ export class ProfileComponent implements OnInit {
     Object.keys(map).map(key =>{ // same as above
       this.labels.push(key)
     })
-
+    if(this.total > 0){ // switch view when there exist analytics data
+      this.statement = "Total usage: " + this.total+" "+this.showing;
+      this.visible = true;
+    }
   }
 
   public pieChartOptions: ChartConfiguration['options'] = {
@@ -78,23 +86,23 @@ export class ProfileComponent implements OnInit {
       if(this.showing == 'seconds'){
         this.showing = 'minutes'
         this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-          this.pieChartData.datasets[0].data[dataIndex] = val/60
+          this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
         })
-        this.total = this.total/60
+        this.total = (this.total / 60).toFixed(2)
       } else if(this.showing == 'minutes'){
         this.showing = 'hours'
         this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-          this.pieChartData.datasets[0].data[dataIndex] = val/60
+          this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
         })
-        this.total = this.total/60
+        this.total = (this.total / 60).toFixed(2)
       } else if(this.showing == 'hours'){
         this.showing = 'seconds'
         this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-          this.pieChartData.datasets[0].data[dataIndex] = val*3600
+          this.pieChartData.datasets[0].data[dataIndex] =+ (val * 3600).toFixed(2)
         })
-        this.total = this.total*3600
+        this.total = this.userData.total
       }
-      console.log(this.pieChartData.datasets[0].data)
+      this.statement = "Total usage: " + this.total+" "+this.showing; // update the statement
       this.chart?.update();
       this.chart?.render();
     }

@@ -14,7 +14,7 @@ export class SignInComponent implements OnInit {
     email: ['', Validators.required],
     password: ['',Validators.required]
   });
-  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
   }
@@ -23,12 +23,11 @@ export class SignInComponent implements OnInit {
 signInWithEmailAndPassword(auth, this.signInForm.value.email, this.signInForm.value.password)
   .then((userCredential) => {
     // Signed in 
+    console.log(this.accountService.userData)
     const user = userCredential.user;
     this.accountService.setCurrentUser(this.signInForm.value.email)
     this.currentUser = this.accountService.getCurrentUserEmail()
     this.accountService.setuid(user.uid);
-    console.log("user uid is: "+user.uid)
-    this.accountService.pullUserDataFromFireBase();
     localStorage.setItem('email',this.currentUser) // stores user email into local stoarge
     localStorage.setItem('uid',user.uid);
     this.router.navigate(['user-page']);
