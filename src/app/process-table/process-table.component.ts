@@ -74,7 +74,13 @@ export class ProcessTableComponent implements OnInit{
   filter(key:string){
     let temp: Process[] = [];
     let keys = key.split(":");
+    if(keys[0] == '') {
+      return;
+    }
     console.log(keys)
+    if(this.options.less == false && this.options.equal == false && this.options.greater == false)
+    return;
+    else
     if(this.options.less == true){
       if(parseInt(keys[0])> 0) {
       this.Process.forEach(p=>{
