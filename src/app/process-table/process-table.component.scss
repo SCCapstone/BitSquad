@@ -1,3 +1,31 @@
-.table-button {
+button.table-button {
   margin: 4px;
+  text-align: center;
 }
+
+table {
+  margin: 0 auto;
+  width: 75%;
+  border: 1px solid #3E403F ;
+
+  
+}
+
+td{
+  width: 25%;
+  font-size: large;
+  
+}
+
+th{
+  font-size: larger;
+  font-weight: 700;
+  color: #0D0D0D;
+  border-bottom: #3E403F;
+}
+
+tr.body-rows:hover {
+  background-color: whitesmoke
+}
+
+
