@@ -251,16 +251,16 @@ export class ProcessTableComponent implements OnInit{
          //updates cumulativeTime, sends notifcation of time expiration, updates analytics
          this.cumulativeTime += this.realTime;
          console.log(this.cumulativeTime);
-        this.sendNotification();
-        //alert("EXITING NOW");
-        this.accountService.updateAnalytics() // update analytics data
-      }
+          this.sendNotification();
+          //alert("EXITING NOW");
+          this.accountService.updateAnalytics() // update analytics data
       
-      if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM)) 
-      {
-        this.resetToZero();
+        if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM)) 
+        {
+          this.resetToZero();
+        }
+        this.changeDisplay()
       }
-      this.changeDisplay()
     }
     else {
       this.status = 'ENJOY YOUR TIME';
