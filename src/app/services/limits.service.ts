@@ -21,7 +21,6 @@ export class LimitsService {
    * @returns array of documents that match the query that can be subscribed to
    */
   loadLimitsByUserID(uid: any) {
-    console.log("Uid passed to limits: "+ uid);
     return this.afs.collection(this.afsPath, ref => ref.where("uid", "==", uid))
        .snapshotChanges();
   }
