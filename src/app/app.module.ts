@@ -16,7 +16,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import {MatCheckboxModule} from '@angular/material/checkbox'
 import { NgChartsModule } from 'ng2-charts';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from "../environments/environment";
@@ -33,6 +33,7 @@ import { ProcessFormComponent } from './process-form/process-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
 import { LimitsFormComponent } from './limits-form/limits-form.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c',
@@ -75,7 +76,9 @@ const app = initializeApp(firebaseConfig);
     AngularFireModule.initializeApp(environment.firebaseConfig),
     HttpClientModule,
     BrowserAnimationsModule,
-    NgChartsModule
+    NgChartsModule,
+    Ng2SearchPipeModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent],

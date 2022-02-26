@@ -14,9 +14,15 @@ import { TimerStartComponent } from '../timer-start/timer-start.component';
 export class ProcessTableComponent implements OnInit{
   user = "";
   Process: Process[] = [];
+  replicateProcess: Process[] = [];
   columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings', 'actions'];
   limit:number = 0;
-
+  filterKey:any;
+  options = {
+    greater: false,
+    equal:false,
+    less:false
+  }
   constructor (private accountService: AccountService, private processService: ProcessService, 
      ) { 
 
@@ -33,8 +39,88 @@ export class ProcessTableComponent implements OnInit{
       } as Process;
     })
     });
+    
   }
-  
+  restore(){
+    this.user = this.accountService.getCurrentUserEmail();
+    this.processService.getProcessList(localStorage.getItem('uid')).subscribe(res => {
+      this.Process = res.map( e => {
+        return {
+        userID : e.payload.doc.id,
+        ...e.payload.doc.data() as{}
+      } as Process;
+    })
+    });
+  }
+  setOption(boxName:string){
+    if(boxName == 'less'){
+      if(this.options.less == false)
+        this.options.less = true
+      else
+        this.options.less = false
+    } else if(boxName == 'greater'){
+      if(this.options.greater == false)
+        this.options.greater = true
+      else
+        this.options.greater = false
+    } else if(boxName == 'equal'){
+      if(this.options.equal == false)
+        this.options.equal = true
+      else
+        this.options.equal = false
+    } 
+    console.log(this.options)
+  }
+  filter(key:string){
+    let temp: Process[] = [];
+    let keys = key.split(":");
+    console.log(keys)
+    if(this.options.less == true){
+      if(parseInt(keys[0])> 0) {
+      this.Process.forEach(p=>{
+        if(p.timeLimitH < parseInt(keys[0]))
+        temp.push(p);
+      })
+    } else if(parseInt(keys[1])> 0){
+      this.Process.forEach(p=>{
+        if(p.timeLimitM < parseInt(keys[1]) && p.timeLimitH == 0)
+        temp.push(p);
+      })
+    }
+    
+    }
+    if(this.options.greater == true){
+      if(parseInt(keys[0])> 0) {
+      this.Process.forEach(p=>{
+        if(p.timeLimitH > parseInt(keys[0]))
+        temp.push(p);
+      })
+    } else if(parseInt(keys[1])> 0){
+      this.Process.forEach(p=>{
+        if(p.timeLimitM > parseInt(keys[1]) && p.timeLimitH == 0)
+        temp.push(p);
+      })
+    }
+    
+    }
+    if(this.options.equal == true){
+      if(parseInt(keys[0])> 0) {
+      this.Process.forEach(p=>{
+        if(p.timeLimitH == parseInt(keys[0]))
+        temp.push(p);
+      })
+    } else if(parseInt(keys[1])> 0){
+      this.Process.forEach(p=>{
+        if(p.timeLimitM == parseInt(keys[1]) && p.timeLimitH == 0)
+        temp.push(p);
+      })
+    }
+    
+    }
+    console.log(temp)
+    this.Process = temp
+  }
+
   removeProcess (p:Process) {
     console.log("RemoveProcess called");
     if(confirm("Are you sure you want to delete "+ p.processName+ " ?")){

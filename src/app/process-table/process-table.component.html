@@ -2,6 +2,19 @@
   <h2>Welcome, {{user}}</h2>
 </div>
 
+<div>
+  <h2>Filter</h2>
+  <h5>Form:  H:M</h5>
+      <input type="text" [(ngModel)]="filterKey" class="searchTerm" placeholder="Enter a time limit">
+      <button (click)="filter(filterKey)">filter</button>
+      <button (click)="restore()">clear filter</button>
+      <section>
+        <mat-checkbox (change)="setOption('less')">less than</mat-checkbox>
+        <mat-checkbox (change)="setOption('greater')">greater than</mat-checkbox>
+        <mat-checkbox (change)="setOption('equal')">equal</mat-checkbox>
+      </section>
+</div>
+
 
 <table mat-table [dataSource]="Process">
   <!-- Process Column -->

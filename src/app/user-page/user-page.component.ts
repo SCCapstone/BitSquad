@@ -6,7 +6,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AccountService } from '../services/account-service.service';
 import { Limits } from '../model/limits';
 import { LimitsService } from '../services/limits.service';
-
+import { ProcessTableComponent } from '../process-table/process-table.component';
 
 
 @Component({
@@ -19,7 +19,8 @@ export class UserPageComponent implements OnInit {
   dailyH:number = 0;
   dailyM:number = 0;
 
-  constructor(private router: Router, private dialog: MatDialog, public accountService: AccountService, private limitsService: LimitsService) {
+  constructor(private router: Router, private dialog: MatDialog, 
+    public accountService: AccountService, private limitsService: LimitsService) {
 
   }
 
@@ -43,6 +44,10 @@ export class UserPageComponent implements OnInit {
         console.log("Today's hours: " + this.dailyH + " Today's Minutes: " + this.dailyM);
       });      
  
+    }
+
+    filterByTime(){
+      console.log()
     }
 
   onAddProcess() {
