@@ -230,6 +230,8 @@ export class ProcessTableComponent implements OnInit{
   
   //variable to keep track of cumulative usage
   cumulativeTime = 0;
+  cumulativeMins = 0;
+  cumulativeHours = 0;
 
   //changes homepage appearance based on daily time limit being reached
   //sends notification
@@ -250,6 +252,9 @@ export class ProcessTableComponent implements OnInit{
       {
          //updates cumulativeTime, sends notifcation of time expiration, updates analytics
          this.cumulativeTime += this.realTime;
+
+         this.cumulativeHours = this.getHours(this.cumulativeTime);
+         this.cumulativeMins = this.getMinutes(this.cumulativeTime);
          console.log(this.cumulativeTime);
           this.sendNotification();
           //alert("EXITING NOW");
