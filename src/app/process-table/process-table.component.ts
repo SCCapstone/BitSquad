@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../services/account-service.service';
 import { Process } from '../model/process';
 import { ProcessService } from '../services/process.service';
+import { UserPageComponent } from '../user-page/user-page.component';
 import { TimerStartComponent } from '../timer-start/timer-start.component';
+import { getCurrencySymbol, getLocaleDayNames } from '@angular/common';
+import { mixinColor } from '@angular/material/core';
+import { baseColors } from 'ng2-charts';
+import { R3TargetBinder } from '@angular/compiler';
 
 
 
@@ -17,7 +22,7 @@ export class ProcessTableComponent implements OnInit{
   columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings', 'actions'];
   limit:number = 0;
 
-  constructor (private accountService: AccountService, private processService: ProcessService, 
+  constructor (private accountService: AccountService, private processService: ProcessService, private userPage: UserPageComponent 
      ) { 
 
   }
@@ -85,6 +90,7 @@ export class ProcessTableComponent implements OnInit{
 
   status ='TIME TO PLAY';
   realTime = -1;
+  mycolor = '#19E606'
 
   changeTime(val:string)
   {
@@ -93,7 +99,23 @@ export class ProcessTableComponent implements OnInit{
 
   changeTime2()
   {
-    this.realTime = this.processService.getTimer(); // get timer from service
+    //checks if user hasn't used more time than allowed for particular day
+    if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM)) 
+    {
+      this.status = 'USED UP TIME ALLOWANCE FOR THE DAY';
+       this.sendNotification() //"Time up for day"
+    }
+    //checks if user tries to start a process's timer that will run over the daily allowance
+    else if(this.cumulativeTime + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
+    {
+      this.realTime = this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM) - this.cumulativeTime;
+      //send notification that you only have (X) amount of valid time left and the timer has been adjusted
+    }
+    //otherwise set timer as normal
+    else 
+    {
+      this.realTime = this.processService.getTimer(); // get timer from service
+    }
     //console.log(this.realTime)
     console.log("called changeTime2");
     console.log(this.realTime);
@@ -114,16 +136,41 @@ export class ProcessTableComponent implements OnInit{
     console.log("Notification attempted to send");
   }
 
+
+  //variable to keep track of cumulative usage
+  cumulativeTime = 0;
+
+  //changes homepage appearance based on daily time limit being reached
+  //sends notification
+  changeDisplay() 
+  {
+    if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM)) 
+      {
+        this.mycolor = '#E60606'
+        this.status = 'USED UP TIME ALLOWANCE FOR THE DAY';
+        this.sendNotification() //"Time up for day"
+      }
+  }
+
   handleEvent1(event: { action: string; }){
     if(event.action == 'done'){
     
       if(this.status == 'ENJOY YOUR TIME')
       {
+        //updates cumulativeTime, sends notifcation of time expiration, updates analytics
+        this.cumulativeTime += this.realTime;
+        console.log(this.cumulativeTime);
         this.sendNotification();
         //alert("EXITING NOW");
         this.accountService.updateAnalytics() // update analytics data
+
+        if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM)) 
+        {
+          this.resetToZero();
+        }
+        this.changeDisplay();
       }
-      this.status = 'TIME IS UP';
+      
     }
     else {
       this.status = 'ENJOY YOUR TIME';
