@@ -2,25 +2,26 @@
   <h2>Welcome, {{user}}</h2>
 </div>
 
-<div>
-  <h2>Search for a Process by Name</h2>
-  <input type="text" [(ngModel)]="searchKey" class="searchTerm" placeholder="Enter process name here">
-  <button (click)="searchProcesses(searchKey)">Search</button>
-  <button (click)="restore()">Clear Search</button>
+<div class ="grid-container">
+  <div class="grid-child">
+    <h2>Search for a Process by Name</h2>
+    <input type="text" [(ngModel)]="searchKey" class="searchTerm" placeholder="Enter process name here">
+    <button (click)="searchProcesses(searchKey)">Search</button>
+    <button (click)="restore()">Clear Search</button>
 
-</div>
+  </div>
 
-<div>
-  <h2>Filter</h2>
-  <h5>Form:  H:M</h5>
-      <input type="text" [(ngModel)]="filterKey" class="searchTerm" placeholder="Enter a time limit">
-      <button (click)="filter(filterKey)">filter</button>
-      <button (click)="restore()">clear filter</button>
-      <section>
-        <mat-checkbox (change)="setOption('less')">less than</mat-checkbox>
-        <mat-checkbox (change)="setOption('greater')">greater than</mat-checkbox>
-        <mat-checkbox (change)="setOption('equal')">equal</mat-checkbox>
-      </section>
+  <div class ="grid-child">
+    <h2>Filter by Time Limit</h2>
+    <input type="text" [(ngModel)]="filterKey" class="searchTerm" placeholder="Enter a time limit (H:M)">
+    <button (click)="filter(filterKey)">filter</button>
+    <button (click)="restore()">clear filter</button>
+    <section>
+      <mat-checkbox (change)="setOption('less')">less than</mat-checkbox>
+      <mat-checkbox (change)="setOption('greater')">greater than</mat-checkbox>
+      <mat-checkbox (change)="setOption('equal')">equal</mat-checkbox>
+    </section>
+  </div>
 </div>
 
 
@@ -53,7 +54,7 @@
           <mat-icon class="table-icon">play_arrow</mat-icon>
       </button>
 
-      <button mat-button class="table-button" mat-raised-button color="primary">
+      <button mat-button class="table-button" mat-raised-button color="primary" (click) = 'editProcess(this.process)'>
         <mat-icon class="table-icon">edit</mat-icon>
       </button>
 

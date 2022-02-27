@@ -34,6 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
 import { LimitsFormComponent } from './limits-form/limits-form.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { EditFormComponent } from './edit-form/edit-form.component';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c',
@@ -57,6 +58,7 @@ const app = initializeApp(firebaseConfig);
     UserPageComponent,
     ProfileComponent,
     LimitsFormComponent,
+    EditFormComponent,
     ],
   imports: [
     BrowserModule,

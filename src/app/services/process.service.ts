@@ -17,7 +17,7 @@ export class ProcessService {
     return this.afs.collection(this.afsPath).doc(id).valueChanges();
   }
 
-  /** matches userID in firebase to user's ID stored in cache at time of login; 
+  /** matches userID in firebase to user's ID stored in cache at time of login;
    *allows only processes belonging to a particular user to be displayed
    */
   getProcessList(id: any) {
@@ -58,7 +58,10 @@ export class ProcessService {
     return this.timer;
   }
   getProcessName(){
-    return this.currentProcess
+    return this.currentProcess;
+  }
+  getUID(p: Process){
+    return p.userID;
   }
 
   /**locates the document at given path and deletes it */
@@ -68,6 +71,10 @@ export class ProcessService {
   }
 
   updateProcess(p: Process, id: any) {
+    console.log("process:"+p.processName);
+    console.log("id: "+p.processID);
+
+
     return this.afs.collection(this.afsPath).doc(id).update({
       processName: p.processName,
       timeLimitH: p.timeLimitH,

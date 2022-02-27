@@ -8,6 +8,9 @@ import { getCurrencySymbol, getLocaleDayNames } from '@angular/common';
 import { mixinColor } from '@angular/material/core';
 import { baseColors } from 'ng2-charts';
 import { R3TargetBinder } from '@angular/compiler';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { EditFormComponent} from '../edit-form/edit-form.component';
+
 
 
 @Component({
@@ -17,6 +20,7 @@ import { R3TargetBinder } from '@angular/compiler';
 })
 export class ProcessTableComponent implements OnInit{
   user = "";
+  userID:any;
   Process: Process[] = [];
   replicateProcess: Process[] = [];
   columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings', 'actions'];
@@ -28,13 +32,13 @@ export class ProcessTableComponent implements OnInit{
     equal:false,
     less:false
   }
-  constructor (private accountService: AccountService, private processService: ProcessService, private userPage: UserPageComponent
+  constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent
      ) {
 
   }
 
-  ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
 
+  ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
     this.user = this.accountService.getCurrentUserEmail();
     this.processService.getProcessList(localStorage.getItem('uid')).subscribe(res => {
       this.Process = res.map( e => {
@@ -45,6 +49,25 @@ export class ProcessTableComponent implements OnInit{
     })
     });
 
+  }
+
+  editProcess(p: Process) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.closeOnNavigation = true;
+    dialogConfig.disableClose = true;
+    dialogConfig.width = "500px";
+    dialogConfig.data = {
+      ...p   //copies data from given process
+    };
+
+    this.dialog.open(EditFormComponent, dialogConfig)
+    .afterClosed()
+      .subscribe(values => {
+
+          this.processService.updateProcess(values, p.processID)
+        }
+        );
   }
   restore(){
     this.user = this.accountService.getCurrentUserEmail();

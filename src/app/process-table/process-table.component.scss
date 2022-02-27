@@ -8,13 +8,13 @@ table {
   width: 75%;
   border: 1px solid #3E403F ;
 
-  
+
 }
 
 td{
   width: 25%;
   font-size: large;
-  
+
 }
 
 th{
@@ -27,5 +27,20 @@ th{
 tr.body-rows:hover {
   background-color: whitesmoke
 }
+.flex-container {
+    display: flex;
+}
+.flex-child {
+    flex: 1;
+    // border: 2px solid black;
+}
+.flex-child:first-child {
+    margin-right: 10px;
+}
 
-
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 5px;
+    text-align: center;
+}
