@@ -18,20 +18,22 @@ export class UserPageComponent implements OnInit {
   limits: Limits[] = [];
   dailyH:number = 0;
   dailyM:number = 0;
+  user = '';
 
-  constructor(private router: Router, private dialog: MatDialog, 
+  constructor(private router: Router, private dialog: MatDialog,
     public accountService: AccountService, private limitsService: LimitsService) {
 
   }
 
   ngOnInit(): void {
     this.accountService.pullUserDataFromFireBase()
-    
-    /**Maps values to Limits model, only one document should be found, 
+    this.user = this.accountService.getCurrentUserEmail();
+
+    /**Maps values to Limits model, only one document should be found,
      * retrievable by using limits[0] */
     this.limitsService.loadLimitsByUserID(this.accountService.getUID())
       .subscribe(res => {
-        
+
         this.limits = res.map(e => {
           return {
             uid: e.payload.doc.id,
@@ -42,8 +44,8 @@ export class UserPageComponent implements OnInit {
         this.dailyH = this.setHourLimitForToday(today, this.limits[0]);
         this.dailyM = this.setMinuteLimitForToday(today, this.limits[0])
         console.log("Today's hours: " + this.dailyH + " Today's Minutes: " + this.dailyM);
-      });      
- 
+      });
+
     }
 
     filterByTime(){
@@ -83,14 +85,14 @@ export class UserPageComponent implements OnInit {
     dialogConfig.data = {
       ...limits   //copies data from given limit, which is limits[0] in HTML
     };
-    
+
     this.dialog.open(LimitsFormComponent, dialogConfig)
     .afterClosed()
       .subscribe(values => {
           this.limitsService.updateLimits(values)
         }
         );
-    
+
   }
 
   /**
@@ -148,4 +150,3 @@ export class UserPageComponent implements OnInit {
   }
 
 }
-
