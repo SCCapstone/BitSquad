@@ -22,18 +22,19 @@ export class ProcessTableComponent implements OnInit{
   columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings', 'actions'];
   limit:number = 0;
   filterKey:any;
+  searchKey:any;
   options = {
     greater: false,
     equal:false,
     less:false
   }
   constructor (private accountService: AccountService, private processService: ProcessService, private userPage: UserPageComponent
-     ) { 
+     ) {
 
   }
 
   ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
-    
+
     this.user = this.accountService.getCurrentUserEmail();
     this.processService.getProcessList(localStorage.getItem('uid')).subscribe(res => {
       this.Process = res.map( e => {
@@ -43,7 +44,7 @@ export class ProcessTableComponent implements OnInit{
       } as Process;
     })
     });
-    
+
   }
   restore(){
     this.user = this.accountService.getCurrentUserEmail();
@@ -72,7 +73,7 @@ export class ProcessTableComponent implements OnInit{
         this.options.equal = true
       else
         this.options.equal = false
-    } 
+    }
     console.log(this.options)
   }
   filter(key:string){
@@ -97,7 +98,7 @@ export class ProcessTableComponent implements OnInit{
         temp.push(p);
       })
     }
-    
+
     }
     if(this.options.greater == true){
       if(parseInt(keys[0])> 0) {
@@ -111,7 +112,7 @@ export class ProcessTableComponent implements OnInit{
         temp.push(p);
       })
     }
-    
+
     }
     if(this.options.equal == true){
       if(parseInt(keys[0])> 0) {
@@ -125,10 +126,20 @@ export class ProcessTableComponent implements OnInit{
         temp.push(p);
       })
     }
-    
+
     }
     console.log(temp)
     this.Process = temp
+  }
+
+  searchProcesses(searchStr:string) {
+    let results: Process[] = [];
+    searchStr = searchStr.toLowerCase();
+
+    this.Process.forEach(p=> {
+      if (p.processName.toLowerCase().indexOf(searchStr) >= 0) results.push(p);
+    });
+    this.Process = results;
   }
 
   removeProcess (p:Process) {
@@ -170,10 +181,10 @@ export class ProcessTableComponent implements OnInit{
     this.processService.setCurrentProccess(name)
     //***THIS ACTUALLY STARTS TIMER***
     this.changeTime2();
-    
+
   }
 
-  
+
   onDelete(p: Process) {
     console.log(p.processName + " clicked to delete");
 
@@ -191,7 +202,7 @@ export class ProcessTableComponent implements OnInit{
   {
     this.realTime = this.processService.getTimer(); // get timer from service
       //checks if user hasn't used more time than allowed for particular day
-      if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM)) 
+      if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.status = 'USED UP TIME ALLOWANCE FOR THE DAY';
          this.sendNotification() //"Time up for day"
@@ -203,7 +214,7 @@ export class ProcessTableComponent implements OnInit{
         //send notification that you only have (X) amount of valid time left and the timer has been adjusted
       }
       //otherwise set timer as normal
-      else 
+      else
       {
         this.realTime = this.processService.getTimer(); // get timer from service
       }
@@ -227,7 +238,7 @@ export class ProcessTableComponent implements OnInit{
     console.log("Notification attempted to send");
   }
 
-  
+
   //variable to keep track of cumulative usage
   cumulativeTime = 0;
   cumulativeMins = 0;
@@ -235,9 +246,9 @@ export class ProcessTableComponent implements OnInit{
 
   //changes homepage appearance based on daily time limit being reached
   //sends notification
-  changeDisplay() 
+  changeDisplay()
   {
-    if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM)) 
+    if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.mycolor = '#E60606'
         this.status = 'USED UP TIME ALLOWANCE FOR THE DAY';
@@ -247,7 +258,7 @@ export class ProcessTableComponent implements OnInit{
 
   handleEvent1(event: { action: string; }){
     if(event.action == 'done'){
-    
+
       if(this.status == 'ENJOY YOUR TIME')
       {
          //updates cumulativeTime, sends notifcation of time expiration, updates analytics
@@ -259,8 +270,8 @@ export class ProcessTableComponent implements OnInit{
           this.sendNotification();
           //alert("EXITING NOW");
           this.accountService.updateAnalytics() // update analytics data
-      
-        if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM)) 
+
+        if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
         {
           this.resetToZero();
         }

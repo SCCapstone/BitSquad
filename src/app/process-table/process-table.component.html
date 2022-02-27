@@ -3,6 +3,14 @@
 </div>
 
 <div>
+  <h2>Search for a Process by Name</h2>
+  <input type="text" [(ngModel)]="searchKey" class="searchTerm" placeholder="Enter process name here">
+  <button (click)="searchProcesses(searchKey)">Search</button>
+  <button (click)="restore()">Clear Search</button>
+
+</div>
+
+<div>
   <h2>Filter</h2>
   <h5>Form:  H:M</h5>
       <input type="text" [(ngModel)]="filterKey" class="searchTerm" placeholder="Enter a time limit">
@@ -40,7 +48,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>>
     <td mat-cell *matCellDef="let process">
-      <button mat-button 
+      <button mat-button
           (click) = 'onStart(getTotalSeconds(process.timeLimitH, process.timeLimitM), process.processName)' class="table-button" mat-raised-button color="accent">
           <mat-icon class="table-icon">play_arrow</mat-icon>
       </button>
@@ -73,8 +81,8 @@
 
   <p>Status of Session: {{status}} </p>
   <p>Today's Usage: {{cumulativeHours}} hours and {{cumulativeMins}} minutes</p>
-  
-  
+
+
   </body>
 
 
