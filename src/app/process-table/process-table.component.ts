@@ -114,6 +114,8 @@ export class ProcessTableComponent implements OnInit{
       this.Process.forEach(p=>{
         if(p.timeLimitH < parseInt(keys[0]))
         temp.push(p);
+        else if(p.timeLimitH == parseInt(keys[0]) && p.timeLimitM < parseInt(keys[1]))
+        temp.push(p);
       })
     } else if(parseInt(keys[1])> 0){
       this.Process.forEach(p=>{
@@ -128,6 +130,8 @@ export class ProcessTableComponent implements OnInit{
       this.Process.forEach(p=>{
         if(p.timeLimitH > parseInt(keys[0]))
         temp.push(p);
+        else if(p.timeLimitH == parseInt(keys[0]) && p.timeLimitM > parseInt(keys[1]))
+        temp.push(p);
       })
     } else if(parseInt(keys[1])> 0){
       this.Process.forEach(p=>{
@@ -141,6 +145,8 @@ export class ProcessTableComponent implements OnInit{
       if(parseInt(keys[0])> 0) {
       this.Process.forEach(p=>{
         if(p.timeLimitH == parseInt(keys[0]))
+        temp.push(p);
+        else if(p.timeLimitH == parseInt(keys[0]) && p.timeLimitM == parseInt(keys[1]))
         temp.push(p);
       })
     } else if(parseInt(keys[1])> 0){
