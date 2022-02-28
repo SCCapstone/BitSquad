@@ -49,13 +49,10 @@ To open on localhost port 4200:
 
 # Deployment
 
-Webapps need a deployment section that explains how to get it deployed on the
-Internet. These should be detailed enough so anyone can re-deploy if needed
-. Note that you **do not put passwords in git**.
+To deploy a version of the BitSquad Screen Time Tracker, run the commands:
+>ng build
 
-Mobile apps will also sometimes need some instructions on how to build a
-"release" version, maybe how to sign it, and how to run that binary in an
-emulator or in a physical phone.
+>firebase deploy
 
 # Testing
 
