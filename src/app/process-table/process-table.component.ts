@@ -172,7 +172,6 @@ export class ProcessTableComponent implements OnInit{
     }
   }
 
-  //not needed anymore
   getHours(value:number): number {
     if (value >= 3600) {
       return Math.floor((value/3600));
@@ -181,7 +180,7 @@ export class ProcessTableComponent implements OnInit{
     }
 
   }
-  //not needed anymore
+  
   getMinutes(value:number): number {
     if (value >= 60) {
       return Math.floor((value % 3600 / 60));
