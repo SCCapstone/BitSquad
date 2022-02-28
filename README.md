@@ -51,6 +51,7 @@ To open on localhost port 4200:
 
 To deploy a version of the BitSquad Screen Time Tracker, run the commands:
 >ng build
+
 >firebase deploy
 
 # Testing
