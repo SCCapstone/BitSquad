@@ -1,7 +1,7 @@
 
-<mat-card class="limit-card">
-  <mat-card-title class="limit-card-title">Start a Process Timer</mat-card-title>
-  <mat-card-content class="limit-card-body"><countdown #cd [config]="{leftTime: realTime, notify: 5}" (event)="handleEvent1($event)"></countdown></mat-card-content>
+<mat-card class="timer-card" style = "background-color: {{mycolor}}" >
+  <mat-card-title class="timer-card-title">Start a Process Timer</mat-card-title>
+  <mat-card-content class="timer-card-body"><countdown #cd [config]="{leftTime: realTime, notify: 5}" (event)="handleEvent1($event)"></countdown></mat-card-content>
   <button (click)="cd.pause()">Pause</button>
   <button (click)="cd.resume()">Resume</button>
   <button (click)="cd.restart()">Reset</button>
@@ -60,7 +60,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>>
     <td mat-cell *matCellDef="let process">
-      <button mat-button
+      <button mat-button [disabled] = 'changeDisplay()'
           (click) = 'onStart(getTotalSeconds(process.timeLimitH, process.timeLimitM), process.processName)' class="table-button" mat-raised-button color="accent">
           <mat-icon class="table-icon">play_arrow</mat-icon>
       </button>
