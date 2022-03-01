@@ -135,7 +135,7 @@ export class ProcessTableComponent implements OnInit{
       })
     } else if(parseInt(keys[1])> 0){
       this.Process.forEach(p=>{
-        if(p.timeLimitM > parseInt(keys[1]) && p.timeLimitH == 0)
+        if(p.timeLimitM > parseInt(keys[1]) || p.timeLimitH > 0)
         temp.push(p);
       })
     }
