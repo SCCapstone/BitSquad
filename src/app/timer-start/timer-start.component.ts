@@ -21,7 +21,8 @@ export class TimerStartComponent implements OnInit {
   realTime=-1;
   status ='TIME TO PLAY';
 
-  
+
+
   changeTime(val:string)
   {
     console.warn(val)
@@ -47,7 +48,7 @@ export class TimerStartComponent implements OnInit {
     return parseInt(val)
   }
 
-  constructor(private processService: ProcessService) { 
+  constructor(private processService: ProcessService) {
     this.title = 'Capstone';
     this.displayVal=0;
     this.displayTime='';
@@ -59,16 +60,35 @@ export class TimerStartComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  sendNotifications(){
+    var text = 'HEY! Your task is now overdue.';
+    var notification = new Notification('Process time is done.', {body:"Pop"});
+  }
   handleEvent1(event: { action: string; }){
-    if(event.action == 'done'){
-    
+
+
+
+  if(event.action == 'done'){
+
       if(this.status == 'ENJOY YOUR TIME')
       {
-        alert("EXITING NOW");
-      }
+        Notification.requestPermission().then(function(result) {
+          console.log(result);
+
+        });
+
       this.status = 'TIME IS UP';
+     // var img = '/to-do-notifications/img/icon-128.png';
+
+       // alert("EXITING NOW");
+      this.sendNotifications();
+
+      }
+
+
+
     }
+
     else {
       this.status = 'ENJOY YOUR TIME';
     }

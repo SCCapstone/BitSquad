@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
-
+import { MatSortHeader } from '@angular/material/sort';
 import { NgChartsModule } from 'ng2-charts';
 
 import { environment } from "../environments/environment";
@@ -31,6 +31,7 @@ import { UserPageComponent } from './user-page/user-page.component';
 import { ProcessFormComponent } from './process-form/process-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c',
@@ -71,7 +72,13 @@ const app = initializeApp(firebaseConfig);
     AngularFireModule.initializeApp(environment.firebaseConfig),
     HttpClientModule,
     BrowserAnimationsModule,
-    NgChartsModule
+    NgChartsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],

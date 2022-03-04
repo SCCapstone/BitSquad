@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { MatSort } from '@angular/material/sort';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,7 +9,11 @@ import { Router } from '@angular/router';
 })
 
 export class AppComponent implements OnInit{
+  @ViewChild(MatSort)
+  sort!: MatSort;
+
   constructor(private router: Router){}
+
   title = "bitsquad"
   ngOnInit(): void {
     console.log("navigated to main")
