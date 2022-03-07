@@ -1,0 +1,80 @@
+<div class="limits-form">
+  <h2 mat-dialog-title>Daily and Weekly Time Limits</h2>
+
+  <mat-dialog-content [formGroup]="limitsForm">
+    <h3>Weekly Limit</h3>
+    <mat-form-field class = "weekly">
+      <input matInput type="number" placeholder="Hours" formControlName="weeklyLimitH">
+    </mat-form-field>
+    <mat-form-field class = "weekly">
+      <input matInput type="number" placeholder="Minutes" formControlName="weeklyLimitM">
+    </mat-form-field>
+  
+    <br>
+  
+    <h3>Daily Limits</h3>
+    <h4 class="week-day" >Monday</h4>
+    <mat-form-field class = "daily">
+      <input matInput type="number" placeholder="Hours" formControlName="monLimitH">
+      
+    </mat-form-field>
+    <mat-form-field class="daily">
+      <input matInput type="number" placeholder="Minutes" formControlName="monLimitM">
+    </mat-form-field>
+    
+    <h4 class="week-day" >Tuesday</h4>
+    <mat-form-field class = "daily">
+      <input matInput type="number" placeholder="Hours" formControlName="tuesLimitH">
+    </mat-form-field>
+    <mat-form-field class="daily">
+      <input matInput type="number" placeholder="Minutes" formControlName="tuesLimitM">
+    </mat-form-field>
+  
+    <h4 class="week-day" >Wednesday</h4>
+    <mat-form-field class = "daily">
+      <input matInput type="number" placeholder="Hours" formControlName="wedLimitH">
+    </mat-form-field>
+    <mat-form-field class="daily">
+      <input matInput type="number" placeholder="Minutes" formControlName="wedLimitM">
+    </mat-form-field>
+  
+    <h4 class="week-day" >Thursday</h4>
+    <mat-form-field class = "daily">
+      <input matInput type="number" placeholder="Hours" formControlName="thursLimitH">
+    </mat-form-field>
+    <mat-form-field class="daily">
+      <input matInput type="number" placeholder="Minutes" formControlName="thursLimitM">
+    </mat-form-field>
+  
+    <h4 class="week-day" >Friday</h4>
+    <mat-form-field class = "daily">
+      <input matInput type="number" placeholder="Hours" formControlName="friLimitH">
+    </mat-form-field>
+    <mat-form-field class="daily">
+      <input matInput type="number" placeholder="Minutes" formControlName="friLimitM">
+    </mat-form-field>
+  
+    <h4 class="week-day" >Saturday</h4>
+    <mat-form-field class = "daily">
+      <input matInput type="number" placeholder="Hours" formControlName="satLimitH">
+    </mat-form-field>
+    <mat-form-field class="daily">
+      <input matInput type="number" placeholder="Minutes" formControlName="satLimitM">
+    </mat-form-field>
+  
+    <h4 class="week-day" >Sunday</h4>
+    <mat-form-field class = "daily">
+      <input matInput type="number" placeholder="Hours" formControlName="sunLimitH">
+    </mat-form-field>
+    <mat-form-field class="daily">
+      <input matInput type="number" placeholder="Minutes" formControlName="sunLimitM">
+    </mat-form-field>
+  
+  </mat-dialog-content>
+  
+  <br>
+  <mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="closeLimitDialog()">Cancel</button>
+    <button mat-raised-button color="accent" (click)="saveLimitDialog()">Save</button>
+  </mat-dialog-actions>
+</div>

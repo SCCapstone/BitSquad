@@ -1,0 +1,75 @@
+{
+  "id": "5cacc6bd-ca0d-42e3-8949-f131cd2af6f9",
+  "version": "2.0",
+  "name": "login",
+  "url": "http://localhost:4200",
+  "tests": [{
+    "id": "e69a8a1c-53c3-46ae-b6db-4dfb280e0170",
+    "name": "login",
+    "commands": [{
+      "id": "60f77cf2-a560-456b-aef9-5415fdb5df81",
+      "comment": "",
+      "command": "open",
+      "target": "/main",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9074f066-62a2-4283-abe9-601d9d34e49f",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(1)",
+      "targets": [
+        ["css=button:nth-child(1)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Sign in')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a9957dd0-31d1-44a2-8fe5-ddc6aa795aae",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2970874496@qq.com"
+    }, {
+      "id": "c2f072a1-20f9-453f-b460-01881ad6f8d9",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "80a03cab-4a5f-45cc-984f-1e93652bdf29",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Sign In')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "eed74f9c-25d7-4aa6-9421-3078b197a6cb",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["e69a8a1c-53c3-46ae-b6db-4dfb280e0170"]
+  }],
+  "urls": ["http://localhost:4200/"],
+  "plugins": []
+}

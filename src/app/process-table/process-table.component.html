@@ -1,8 +1,42 @@
-<div>
-  <h2>Welcome, {{user}}</h2>
+
+<mat-card class="timer-card" style = "background-color: {{mycolor}}" >
+  <mat-card-title class="timer-card-title">Start a Process Timer</mat-card-title>
+  <mat-card-content class="timer-card-body"><countdown #cd [config]="{leftTime: realTime, notify: 5}" (event)="handleEvent1($event)"></countdown></mat-card-content>
+  <button (click)="cd.pause()">Pause</button>
+  <button (click)="cd.resume()">Resume</button>
+  <button (click)="cd.restart()">Reset</button>
+  <button (click)="resetToZero()">Cancel</button>
+
+  <p>Status of Session: {{status}} </p>
+  <p>Today's Usage: {{cumulativeHours}} hours and {{cumulativeMins}} minutes</p>
+
+</mat-card>
+
+
+<div class ="grid-container">
+  <div class="grid-child">
+    <h2>Search for a Process by Name</h2>
+    <input type="text" [(ngModel)]="searchKey" class="searchTerm" placeholder="Enter process name here">
+    <button (click)="searchProcesses(searchKey)">Search</button>
+    <button (click)="restore()">Clear Search</button>
+
+  </div>
+
+  <div class ="grid-child">
+    <h2>Filter by Time Limit</h2>
+    <input type="text" [(ngModel)]="filterKey" class="searchTerm" placeholder="Enter a time limit (H:M)">
+    <button (click)="filter(filterKey)">filter</button>
+    <button (click)="restore()">clear filter</button>
+    <section>
+      <mat-checkbox (change)="setOption('less')">less than</mat-checkbox>
+      <mat-checkbox (change)="setOption('greater')">greater than</mat-checkbox>
+      <mat-checkbox (change)="setOption('equal')">equal</mat-checkbox>
+    </section>
+  </div>
 </div>
 
 
+<<<<<<< HEAD
 <mat-table [dataSource]="Process" matsort>
   <!-- Process Column -->
  <ng-container matColumnDef="processName">
@@ -30,22 +64,57 @@
       <button mat-button (click) = 'onStart(process.timeLimit)' class="table-button" mat-raised-button color="accent">
         <mat-icon class="table-icon">check_box</mat-icon>
         Select
-      </button>
-
-      <button mat-button class="table-button" mat-raised-button color="primary">
-        <mat-icon class="table-icon">edit</mat-icon>
-        Edit
-      </button>
-
-      <button mat-button class="table-button" mat-raised-button color="warn">
-        <mat-icon class="table-icon">delete</mat-icon>
-        Delete
-      </button>
-    </mat-cell>
+=======
+<table mat-table [dataSource]="Process">
+  <!-- Process Column -->
+ <ng-container matColumnDef="processName">
+    <th mat-header-cell *matHeaderCellDef>Process Name</th>
+    <td mat-cell *matCellDef="let process">{{ process.processName }}</td>
   </ng-container>
 
-   <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
-</mat-table>
+  <ng-container matColumnDef="timeLimit">
+    <th mat-header-cell *matHeaderCellDef>Time Limit</th>
+    <td mat-cell *matCellDef="let process">
+      {{ process.timeLimitH }} hrs
+      {{ process.timeLimitM }} mins
+      <!-- {{ getTotalSeconds(process.timeLimitH, process.timeLimitM)}} secs -->
+    </td>
+  </ng-container>
 
-<timer-start></timer-start>
+  <ng-container matColumnDef="warnings">
+    <th mat-header-cell *matHeaderCellDef>Warnings</th>
+    <td mat-cell *matCellDef="let process">{{ process.warnings }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>>
+    <td mat-cell *matCellDef="let process">
+      <button mat-button [disabled] = 'changeDisplay()'
+          (click) = 'onStart(getTotalSeconds(process.timeLimitH, process.timeLimitM), process.processName)' class="table-button" mat-raised-button color="accent">
+          <mat-icon class="table-icon">play_arrow</mat-icon>
+>>>>>>> 84f07473c581a6198e6036c71e9bc5ab5cfd010e
+      </button>
+
+      <button mat-button class="table-button" mat-raised-button color="primary" (click) = 'editProcess(this.process)'>
+        <mat-icon class="table-icon">edit</mat-icon>
+      </button>
+
+      <button mat-button (click) = 'removeProcess(this.process)'
+        class="table-button" mat-raised-button color="warn" >
+        <mat-icon class="table-icon">delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+   <tr class="header" mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr class = "body-rows" mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+</table>
+
+
+
+
+
+
+
+
+<!--timer-start></timer-start-->

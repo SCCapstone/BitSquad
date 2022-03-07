@@ -9,15 +9,20 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from 'firebase/analytics';
 import { ProcessTableComponent } from './process-table/process-table.component';
 import { TimerStartComponent } from './timer-start/timer-start.component';
-import { MatTableModule } from '@angular/material/table';
+import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
+<<<<<<< HEAD
 import { MatSortHeader } from '@angular/material/sort';
+=======
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCheckboxModule} from '@angular/material/checkbox'
+>>>>>>> 84f07473c581a6198e6036c71e9bc5ab5cfd010e
 import { NgChartsModule } from 'ng2-charts';
-
+import { MatTableDataSource } from '@angular/material/table';
 import { environment } from "../environments/environment";
 import { AngularFireStorageModule } from "@angular/fire/compat/storage";
 import { AngularFireModule } from "@angular/fire/compat";
@@ -31,7 +36,13 @@ import { UserPageComponent } from './user-page/user-page.component';
 import { ProcessFormComponent } from './process-form/process-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
+<<<<<<< HEAD
 import { ServiceWorkerModule } from '@angular/service-worker';
+=======
+import { LimitsFormComponent } from './limits-form/limits-form.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { EditFormComponent } from './edit-form/edit-form.component';
+>>>>>>> 84f07473c581a6198e6036c71e9bc5ab5cfd010e
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c',
@@ -53,7 +64,9 @@ const app = initializeApp(firebaseConfig);
     ProcessFormComponent,
     TimerStartComponent,
     UserPageComponent,
-    ProfileComponent
+    ProfileComponent,
+    LimitsFormComponent,
+    EditFormComponent,
     ],
   imports: [
     BrowserModule,
@@ -66,6 +79,7 @@ const app = initializeApp(firebaseConfig);
     MatFormFieldModule,
     MatCardModule,
     MatInputModule,
+    MatDialogModule,
     CountdownModule,
     AngularFireStorageModule,
     AngularFirestoreModule,
@@ -73,12 +87,17 @@ const app = initializeApp(firebaseConfig);
     HttpClientModule,
     BrowserAnimationsModule,
     NgChartsModule,
+<<<<<<< HEAD
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     })
+=======
+    Ng2SearchPipeModule,
+    MatCheckboxModule
+>>>>>>> 84f07473c581a6198e6036c71e9bc5ab5cfd010e
   ],
   providers: [],
   bootstrap: [AppComponent],

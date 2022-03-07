@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProcessService } from '../services/process.service';
-import { FormBuilder, FormGroup} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccountService } from '../services/account-service.service';
+import { v4 as uuid} from 'uuid'
 
 @Component({
   selector: 'process-form',
@@ -21,9 +22,11 @@ export class ProcessFormComponent implements OnInit {
   ) {
     this.processForm = this.formBuilder.group({
       userID: [this.accountService.getUID()],
-      processName: [''],
-      timeLimit: [''],
-      warnings: ['']
+      processID: [uuid()],  //creates a unique id
+      processName: ['',Validators.required],
+      timeLimitH: ['',Validators.required],
+      timeLimitM: ['',Validators.required],
+      warnings: ['',Validators.required]
     })
   }
 
