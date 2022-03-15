@@ -78,21 +78,22 @@ export class TimerStartComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  sendNotification() {
-    var notification = new Notification("test", {body: "Time is up"});
-    console.log("Notification attempted to send");
-  }
+
 
   handleEvent1(event: { action: string; }){
+
     if(event.action == 'done'){
-    
+      
+      
       if(this.status == 'ENJOY YOUR TIME')
       {
-        this.sendNotification();
+         
         //alert("EXITING NOW"); 
         //this.accountService.updateAnalytics() // update analytics data
 
       }
+      
+
       this.status = 'TIME IS UP';
     }
     else {

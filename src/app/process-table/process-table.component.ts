@@ -13,11 +13,57 @@ import { EditFormComponent} from '../edit-form/edit-form.component';
 
 
 
+
+
+Notification.requestPermission().then(function(result) {
+  console.log(result);
+});
+
+function checkNotificationPromise() {
+  try {
+    Notification.requestPermission().then();
+  } catch(e) {
+    return false;
+  }
+
+  return true;
+}
+
+
+function notifyMe() {
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  }
+
+  // Let's check whether notification permissions have already been granted
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+    var notification = new Notification("Time is up!");
+  }
+
+  // Otherwise, we need to ask the user for permission
+  else if (Notification.permission !== "denied") {
+    Notification.requestPermission().then(function (permission) {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        var notification = new Notification("Time is up!");
+      }
+    });
+  }
+
+  // At last, if the user has denied notifications, and you
+  // want to be respectful there is no need to bother them any more.
+}
+
+
 @Component({
   selector: 'process-table',
   templateUrl: './process-table.component.html',
   styleUrls: ['./process-table.component.scss']
 })
+
+
 export class ProcessTableComponent implements OnInit{
   user = "";
   userID:any;
@@ -32,8 +78,11 @@ export class ProcessTableComponent implements OnInit{
     equal:false,
     less:false
   }
+  
+  
   constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent
      ) {
+       
 
   }
 
@@ -217,7 +266,7 @@ export class ProcessTableComponent implements OnInit{
     console.log(p.processName + " clicked to delete");
 
   }
-
+  
   status ='TIME TO PLAY';
   realTime = -1;
   mycolor = '#00E676;'
@@ -225,7 +274,7 @@ export class ProcessTableComponent implements OnInit{
   {
     this.realTime=this.getTime(val)
   }
-
+  
   changeTime2()
   {
     //this.realTime = this.processService.getTimer(); // get timer from service
@@ -261,11 +310,6 @@ export class ProcessTableComponent implements OnInit{
     return parseInt(val)
   }
 
-  sendNotification() {
-    var notification = new Notification("test", {body: "Time is up"});
-    console.log("Notification attempted to send");
-  }
-
 
   //variable to keep track of cumulative usage
   cumulativeTime = 0;
@@ -286,18 +330,23 @@ export class ProcessTableComponent implements OnInit{
   }
 
   handleEvent1(event: { action: string; }){
+    
     if(event.action == 'done'){
 
       if(this.status == 'ENJOY YOUR TIME')
       {
+        
          //updates cumulativeTime, sends notifcation of time expiration, updates analytics
          this.cumulativeTime += this.realTime;
 
          this.cumulativeHours = this.getHours(this.cumulativeTime);
          this.cumulativeMins = this.getMinutes(this.cumulativeTime);
          console.log(this.cumulativeTime);
-          //this.sendNotification();
-          alert("Process Finished");
+
+       
+          //this.sendNotification();  
+          notifyMe();
+          //alert("Process Finished");
           this.accountService.updateAnalytics() // update analytics data
 
         if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
