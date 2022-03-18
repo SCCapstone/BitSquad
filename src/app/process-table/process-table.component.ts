@@ -39,6 +39,7 @@ function notifyMe() {
   // Let's check whether notification permissions have already been granted
   else if (Notification.permission === "granted") {
     // If it's okay let's create a notification
+    console.log("notification granted");
     var notification = new Notification("Time is up!");
   }
 
@@ -258,6 +259,7 @@ export class ProcessTableComponent implements OnInit{
     this.processService.setCurrentProccess(name)
     //***THIS ACTUALLY STARTS TIMER***
     this.changeTime2();
+    this.stop = false;
 
   }
 
@@ -329,9 +331,10 @@ export class ProcessTableComponent implements OnInit{
       return false;
   }
 
+  stop = false;
   handleEvent1(event: { action: string; }){
     
-    if(event.action == 'done'){
+    if(event.action == 'done' && this.stop == false){
 
       if(this.status == 'ENJOY YOUR TIME')
       {
@@ -346,6 +349,7 @@ export class ProcessTableComponent implements OnInit{
        
           //this.sendNotification();  
           notifyMe();
+          this.stop = true;
           //alert("Process Finished");
           this.accountService.updateAnalytics() // update analytics data
 
@@ -355,6 +359,7 @@ export class ProcessTableComponent implements OnInit{
         }
         this.changeDisplay()
       }
+  
     }
     else {
       this.status = 'ENJOY YOUR TIME';
