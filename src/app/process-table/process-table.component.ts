@@ -66,6 +66,7 @@ function notifyMe() {
 
 
 export class ProcessTableComponent implements OnInit{
+  currentProcess ="no process is running"
   user = "";
   userID:any;
   Process: Process[] = [];
@@ -257,6 +258,7 @@ export class ProcessTableComponent implements OnInit{
   onStart(time:number, name:any): void {
     this.processService.setTimer(time)
     this.processService.setCurrentProccess(name)
+    this.currentProcess = name;
     //***THIS ACTUALLY STARTS TIMER***
     this.changeTime2();
     this.stop = false;
@@ -306,6 +308,7 @@ export class ProcessTableComponent implements OnInit{
   {
     this.realTime = 0;
     this.stop = true; // update stop status here
+    this.currentProcess ="no process is running"
   }
   getTime(val:string)
   {
