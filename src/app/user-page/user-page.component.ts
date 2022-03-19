@@ -8,7 +8,6 @@ import { Limits } from '../model/limits';
 import { LimitsService } from '../services/limits.service';
 import { ProcessTableComponent } from '../process-table/process-table.component';
 
-
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
@@ -44,6 +43,7 @@ export class UserPageComponent implements OnInit {
         this.dailyH = this.setHourLimitForToday(today, this.limits[0]);
         this.dailyM = this.setMinuteLimitForToday(today, this.limits[0])
         console.log("Today's hours: " + this.dailyH + " Today's Minutes: " + this.dailyM);
+        
       });
 
     }

@@ -79,7 +79,7 @@ export class ProcessTableComponent implements OnInit{
     equal:false,
     less:false
   }
-  
+  stop = false;
   
   constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent
      ) {
@@ -260,7 +260,7 @@ export class ProcessTableComponent implements OnInit{
     //***THIS ACTUALLY STARTS TIMER***
     this.changeTime2();
     this.stop = false;
-
+    this.status = "ENJOY YOUR TIME"
   }
 
 
@@ -305,6 +305,7 @@ export class ProcessTableComponent implements OnInit{
   resetToZero()
   {
     this.realTime = 0;
+    this.stop = true; // update stop status here
   }
   getTime(val:string)
   {
@@ -328,30 +329,34 @@ export class ProcessTableComponent implements OnInit{
         this.status = 'USED UP TIME ALLOWANCE FOR THE DAY';
         return true;
       }
+      else{
+        this.mycolor = '#00E676;'
+        this.status ='TIME TO PLAY';
+        
+      }
       return false;
   }
 
-  stop = false;
+  
   handleEvent1(event: { action: string; }){
-    
+    console.log(event.action+" "+this.stop) // strange enough, when click cancel, the event.action actually is "done"
     if(event.action == 'done' && this.stop == false){
 
       if(this.status == 'ENJOY YOUR TIME')
       {
-        
          //updates cumulativeTime, sends notifcation of time expiration, updates analytics
          this.cumulativeTime += this.realTime;
 
          this.cumulativeHours = this.getHours(this.cumulativeTime);
          this.cumulativeMins = this.getMinutes(this.cumulativeTime);
          console.log(this.cumulativeTime);
-
+         this.accountService.updateAnalytics() // update analytics data
        
           //this.sendNotification();  
           notifyMe();
           this.stop = true;
           //alert("Process Finished");
-          this.accountService.updateAnalytics() // update analytics data
+          
 
         if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
         {
@@ -362,7 +367,7 @@ export class ProcessTableComponent implements OnInit{
   
     }
     else {
-      this.status = 'ENJOY YOUR TIME';
+     // this.status = 'ENJOY YOUR TIME';
     }
   }
 

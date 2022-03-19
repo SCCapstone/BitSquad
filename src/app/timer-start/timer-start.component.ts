@@ -82,8 +82,7 @@ export class TimerStartComponent implements OnInit {
 
   handleEvent1(event: { action: string; }){
 
-    if(event.action == 'done'){
-      
+    if(event.action == 'done'){ 
       
       if(this.status == 'ENJOY YOUR TIME')
       {
@@ -93,7 +92,7 @@ export class TimerStartComponent implements OnInit {
 
       }
       
-
+      window.location.reload(); // need to reload the webpage to reset everything
       this.status = 'TIME IS UP';
     }
     else {
