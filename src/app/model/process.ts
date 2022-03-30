@@ -11,6 +11,9 @@ export interface Process {
   timeLimitH: number;
   //time in minutes
   timeLimitM: number;
-  // time in seconds/(minutes?) that a user will get warnings for remaining time
-  warnings?: number[];
+  
+  // minutes remaining, up to 3
+  warning1?: number;
+  warning2?: number;
+  warning3?: number;
 }
