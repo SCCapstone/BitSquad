@@ -39,7 +39,9 @@ export class ProcessService {
         processName: p.processName,
         timeLimitH: p.timeLimitH,
         timeLimitM: p.timeLimitM,
-        warnings: p.warnings,
+        warning1: p.warning1,
+        warning2: p.warning2,
+        warning3: p.warning3
       })
       .then(() => {
         console.log('process added with id: ' + p.processID);
@@ -79,7 +81,9 @@ export class ProcessService {
       processName: p.processName,
       timeLimitH: p.timeLimitH,
       timeLimitM: p.timeLimitM,
-      warnings: p.warnings,
+      warning1: p.warning1,
+      warning2: p.warning2,
+      warning3: p.warning3
     });
   }
   setCurrentProccess(process:any){

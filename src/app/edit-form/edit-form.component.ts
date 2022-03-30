@@ -21,7 +21,9 @@ export class EditFormComponent implements OnInit {
   timeLimit: number;
   timeLimitH: number;
   timeLimitM: number;
-  warnings?: number[];
+  warning1?: number;
+  warning2?: number;
+  warning3?: number;
 
 
   constructor(private accountService: AccountService,
@@ -32,7 +34,9 @@ export class EditFormComponent implements OnInit {
       this.timeLimit = data.timeLimit;
       this.timeLimitM = data.timeLimitM;
       this.timeLimitH = data.timeLimitH;
-      this.warnings = data.warnings;
+      this.warning1 = data.warning1;
+      this.warning2 = data.warning2;
+      this.warning3 = data.warning3;
       this.userID = data.userID;
       this.processID = data.processID;
 
@@ -41,7 +45,9 @@ export class EditFormComponent implements OnInit {
         timeLimit: [this.timeLimit],
         timeLimitH: [this.timeLimitH],
         timeLimitM: [this.timeLimitM],
-        warnings: [this.warnings],
+        warning1: [this.warning1],
+        warning2: [this.warning2],
+        warning3: [this.warning3]
       });
     }
 

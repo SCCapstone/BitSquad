@@ -374,4 +374,21 @@ export class ProcessTableComponent implements OnInit{
     }
   }
 
+/**
+ * Creates warning column display value based on how many warnings a process has (0-3)
+ * @param process current process
+ * @returns string of comma separated warnings
+ */
+  displayWarnings(process: Process) {
+    if(process.warning1 == null) {
+      return "";
+    } else if(process.warning2 == null) {
+      return process.warning1 + " mins";
+    } else if(process.warning3 == null) {
+      return (process.warning1+ ", " + process.warning2 + " mins");
+    } else {
+      return (process.warning1 + ", " + process.warning2 + ", " 
+                + process.warning3 + " mins")
+    }
+  }
 }
