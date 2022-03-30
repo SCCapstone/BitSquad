@@ -211,6 +211,12 @@ export class ProcessTableComponent implements OnInit{
     console.log(temp)
     this.Process = temp
   }
+  searchByEnter(event: { key: string; }){ // key event so that press enter can call search function
+    if(event.key == "Enter"){
+      this.searchProcesses(this.searchKey);
+    }
+
+  }
 
   searchProcesses(searchStr:string) {
     let results: Process[] = [];
