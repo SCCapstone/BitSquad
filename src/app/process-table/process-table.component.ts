@@ -268,7 +268,7 @@ export class ProcessTableComponent implements OnInit{
     //***THIS ACTUALLY STARTS TIMER***
     this.changeTime2();
     this.stop = false;
-    this.status = "ENJOY YOUR TIME"
+    
   }
 
 
@@ -277,8 +277,8 @@ export class ProcessTableComponent implements OnInit{
 
   }
   
-  status ='TIME TO PLAY';
-  realTime = -1;
+  
+  realTime = 0;
   mycolor = '#00E676;'
   changeTime(val:string)
   {
@@ -291,7 +291,7 @@ export class ProcessTableComponent implements OnInit{
       //checks if user hasn't used more time than allowed for particular day
       if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
-        this.status = 'USED UP TIME ALLOWANCE FOR THE DAY'
+        
       }
       //checks if user tries to start a process's timer that will run over the daily allowance
       else if(this.cumulativeTime + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
@@ -335,12 +335,10 @@ export class ProcessTableComponent implements OnInit{
     if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.mycolor = '#E60606'
-        this.status = 'USED UP TIME ALLOWANCE FOR THE DAY';
         return true;
       }
       else{
         this.mycolor = '#00E676;'
-        this.status ='TIME TO PLAY';
         
       }
       return false;
@@ -351,8 +349,8 @@ export class ProcessTableComponent implements OnInit{
     console.log(event.action+" "+this.stop) // strange enough, when click cancel, the event.action actually is "done"
     if(event.action == 'done' && this.stop == false){
 
-      if(this.status == 'ENJOY YOUR TIME')
       {
+        console.log(this.realTime);
          //updates cumulativeTime, sends notifcation of time expiration, updates analytics
          this.cumulativeTime += this.realTime;
 
@@ -374,9 +372,6 @@ export class ProcessTableComponent implements OnInit{
         this.changeDisplay()
       }
   
-    }
-    else {
-     // this.status = 'ENJOY YOUR TIME';
     }
   }
 
