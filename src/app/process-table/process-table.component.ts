@@ -81,10 +81,10 @@ export class ProcessTableComponent implements OnInit{
     less:false
   }
   stop = false;
-  
+
   constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent
      ) {
-       
+
 
   }
 
@@ -243,7 +243,7 @@ export class ProcessTableComponent implements OnInit{
     }
 
   }
-  
+
   getMinutes(value:number): number {
     if (value >= 60) {
       return Math.floor((value % 3600 / 60));
@@ -276,15 +276,15 @@ export class ProcessTableComponent implements OnInit{
     console.log(p.processName + " clicked to delete");
 
   }
-  
+
   status ='TIME TO PLAY';
-  realTime = -1;
+  realTime = 0;
   mycolor = '#00E676;'
   changeTime(val:string)
   {
     this.realTime=this.getTime(val)
   }
-  
+
   changeTime2()
   {
     //this.realTime = this.processService.getTimer(); // get timer from service
@@ -341,13 +341,15 @@ export class ProcessTableComponent implements OnInit{
       else{
         this.mycolor = '#00E676;'
         this.status ='TIME TO PLAY';
-        
+
       }
       return false;
   }
 
-  
+
   handleEvent1(event: { action: string; }){
+
+
     console.log(event.action+" "+this.stop) // strange enough, when click cancel, the event.action actually is "done"
     if(event.action == 'done' && this.stop == false){
 
@@ -360,12 +362,11 @@ export class ProcessTableComponent implements OnInit{
          this.cumulativeMins = this.getMinutes(this.cumulativeTime);
          console.log(this.cumulativeTime);
          this.accountService.updateAnalytics() // update analytics data
-       
-          //this.sendNotification();  
+         //checkNotificationPromise();
           notifyMe();
           this.stop = true;
           //alert("Process Finished");
-          
+
 
         if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
         {
@@ -373,7 +374,7 @@ export class ProcessTableComponent implements OnInit{
         }
         this.changeDisplay()
       }
-  
+
     }
     else {
      // this.status = 'ENJOY YOUR TIME';
@@ -393,7 +394,7 @@ export class ProcessTableComponent implements OnInit{
     } else if(process.warning3 == null) {
       return (process.warning1+ ", " + process.warning2 + " mins");
     } else {
-      return (process.warning1 + ", " + process.warning2 + ", " 
+      return (process.warning1 + ", " + process.warning2 + ", "
                 + process.warning3 + " mins")
     }
   }
