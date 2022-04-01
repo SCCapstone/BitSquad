@@ -266,6 +266,7 @@ export class ProcessTableComponent implements OnInit{
     this.processService.setCurrentProccess(name)
     this.currentProcess = name;
     //***THIS ACTUALLY STARTS TIMER***
+
     this.changeTime2();
     this.stop = false;
     
@@ -347,32 +348,36 @@ export class ProcessTableComponent implements OnInit{
   
   handleEvent1(event: { action: string; }){
     console.log(event.action+" "+this.stop) // strange enough, when click cancel, the event.action actually is "done"
-    if(event.action == 'done' && this.stop == false){
+    if(event.action == 'done' && this.stop == false)
+    {
+      console.log(this.realTime);
+      //updates cumulativeTime, sends notifcation of time expiration, updates analytics
+      this.cumulativeTime += this.realTime;
 
-      {
-        console.log(this.realTime);
-         //updates cumulativeTime, sends notifcation of time expiration, updates analytics
-         this.cumulativeTime += this.realTime;
-
-         this.cumulativeHours = this.getHours(this.cumulativeTime);
-         this.cumulativeMins = this.getMinutes(this.cumulativeTime);
-         console.log(this.cumulativeTime);
-         this.accountService.updateAnalytics() // update analytics data
+      this.cumulativeHours = this.getHours(this.cumulativeTime);
+      this.cumulativeMins = this.getMinutes(this.cumulativeTime);
+      console.log(this.cumulativeTime);
+      this.accountService.updateAnalytics() // update analytics data
        
-          //this.sendNotification();  
-          notifyMe();
-          this.stop = true;
-          //alert("Process Finished");
+      //this.sendNotification();  
+      notifyMe();
+      this.currentProcess = "no process is running";
+      this.stop = true;
+      //alert("Process Finished");
           
 
-        if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
-        {
-          this.resetToZero();
-        }
-        this.changeDisplay()
+      if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
+      {
+        this.resetToZero();
       }
-  
+      this.changeDisplay()
     }
+    else if(event.action === 'notify') 
+    {
+      console.log("warnings are going")
+    }
+    
+    
   }
 
 /**
