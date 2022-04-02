@@ -1,37 +1,74 @@
-<mat-card class="app-edit-form">
-  <mat-card-title>Edit Process</mat-card-title>
+<div class="app-edit-form">
+  <h2 mat-dialog-title>Edit {{this.processName}}</h2>
 
-  <mat-dialog-content [formGroup]="editForm" >
+  <mat-dialog-content [formGroup]="editForm">
+    <mat-form-field>
+      <input matInput type="text" formControlName='processName' class = 'form-control'  placeholder="Process Name" required>
+      <mat-error>Process name required</mat-error>
+    </mat-form-field>
+  
+    <br>
+    <br>
+
+    <mat-form-field class="time">
+      <input matInput type="number" formControlName='timeLimitH' class = 'form-control' placeholder="Time Limit (Hours)" required>
+      
+      <mat-error>Hours must be a positive whole number between 0 and 24</mat-error> 
+
+    </mat-form-field>
+
+
+    <mat-form-field class="time">
+      <input matInput type="number" formControlName='timeLimitM' class = 'form-control' placeholder="Time Limit (Minutes)" required>
+      
+      <mat-error>Minutes must be a positive whole number between 0 and 59</mat-error>
+    
+    </mat-form-field>
+
+    <!--edge case time checks-->
+    <mat-error *ngIf="editForm.errors?.zeroTime">Minimum time limit is 1 minute</mat-error>
+    <mat-error *ngIf="editForm.errors?.over24Hours">Maximum time limit is 24 hours and 0 minutes</mat-error>
+
+    <br>
+    <br>
+    
+    <p>Warning 1:    
       <mat-form-field>
-        <label> Process Name </label>
-        <input matInput type="text" formControlName='processName' class = 'form-control' required>
+        <input matInput type="number" formControlName='warning1' class = 'form-control'
+        placeholder="Minutes Remaining">
+        <mat-error>Warnings must be a whole number greater than or equal to 1</mat-error>
       </mat-form-field>
-
-      <br>
-
+    </p>
+    
+    <p>Warning 2:    
       <mat-form-field>
-        <label> Time Limit (Hours) </label>
-        <input matInput type="text" formControlName='timeLimitH' class = 'form-control' required>
+        <input matInput type="number" formControlName='warning2' class = 'form-control'
+        placeholder="Minutes Remaining">
+        <mat-error>Warnings must be a whole number greater than or equal to 1</mat-error>
       </mat-form-field>
+    </p>
 
+    <p>Warning 3:    
       <mat-form-field>
-        <label> Time Limit (Minutes) </label>
-        <input matInput type="text" formControlName='timeLimitM' class = 'form-control' required>
+        <input matInput type="number" formControlName='warning3' class = 'form-control'
+        placeholder="Minutes Remaining">
+        <mat-error>Warnings must be a whole number greater than or equal to 1</mat-error>
       </mat-form-field>
+    </p>
 
-      <mat-form-field>
-        <label> Warnings </label>
-        <input matInput type="number[]" formControlName='warnings' class = 'form-control' required>
-      </mat-form-field>
+    <!--warning error checks-->
+    <mat-error *ngIf="editForm.errors?.outOfRange">Warnings must be at least 1 minute less than time limit</mat-error>
+    <mat-error *ngIf="editForm.errors?.duplicateWarning">Warnings must be unique</mat-error>
+    <mat-error *ngIf="editForm.errors?.warning2Before1">Warning 1 must be complete before adding a second warning</mat-error>
+    <mat-error *ngIf="editForm.errors?.warning3Before1Or2">Warnings 1 and 2 must be complete before adding a third warning</mat-error>
 
-      <br>
-      <br>
-      <br>
-      <mat-dialog-actions>
-        <button mat-raised-button color="warn" (click)="exitWithoutSave()">Cancel</button>
-        <button mat-raised-button color="accent" (click)="saveChanges()">Save</button>
-      </mat-dialog-actions>
+    <br>
+    <br>
+    <br>
+    <mat-dialog-actions>
+      <button mat-raised-button color="warn" (click)="exitWithoutSave()">Cancel</button>
+      <button mat-raised-button color="accent" [disabled]=!editForm.valid (click)="saveChanges()">Save</button>
+    </mat-dialog-actions>
+       
   </mat-dialog-content>
-
-
-</mat-card>
+</div>

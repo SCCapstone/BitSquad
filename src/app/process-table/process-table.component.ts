@@ -283,9 +283,10 @@ export class ProcessTableComponent implements OnInit{
     this.processService.setCurrentProccess(name)
     this.currentProcess = name;
     //***THIS ACTUALLY STARTS TIMER***
+
     this.changeTime2();
     this.stop = false;
-    this.status = "ENJOY YOUR TIME"
+    
   }
 
 
@@ -294,8 +295,8 @@ export class ProcessTableComponent implements OnInit{
 
   }
   
-  status ='TIME TO PLAY';
-  realTime = -1;
+  
+  realTime = 0;
   mycolor = '#00E676;'
   changeTime(val:string)
   {
@@ -308,7 +309,7 @@ export class ProcessTableComponent implements OnInit{
       //checks if user hasn't used more time than allowed for particular day
       if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
-        this.status = 'USED UP TIME ALLOWANCE FOR THE DAY'
+        
       }
       //checks if user tries to start a process's timer that will run over the daily allowance
       else if(this.cumulativeTime + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
@@ -352,12 +353,10 @@ export class ProcessTableComponent implements OnInit{
     if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.mycolor = '#E60606'
-        this.status = 'USED UP TIME ALLOWANCE FOR THE DAY';
         return true;
       }
       else{
         this.mycolor = '#00E676;'
-        this.status ='TIME TO PLAY';
         
       }
       return false;
@@ -366,35 +365,53 @@ export class ProcessTableComponent implements OnInit{
   
   handleEvent1(event: { action: string; }){
     console.log(event.action+" "+this.stop) // strange enough, when click cancel, the event.action actually is "done"
-    if(event.action == 'done' && this.stop == false){
+    if(event.action == 'done' && this.stop == false)
+    {
+      console.log(this.realTime);
+      //updates cumulativeTime, sends notifcation of time expiration, updates analytics
+      this.cumulativeTime += this.realTime;
 
-      if(this.status == 'ENJOY YOUR TIME')
-      {
-         //updates cumulativeTime, sends notifcation of time expiration, updates analytics
-         this.cumulativeTime += this.realTime;
-
-         this.cumulativeHours = this.getHours(this.cumulativeTime);
-         this.cumulativeMins = this.getMinutes(this.cumulativeTime);
-         console.log(this.cumulativeTime);
-         this.accountService.updateAnalytics() // update analytics data
+      this.cumulativeHours = this.getHours(this.cumulativeTime);
+      this.cumulativeMins = this.getMinutes(this.cumulativeTime);
+      console.log(this.cumulativeTime);
+      this.accountService.updateAnalytics() // update analytics data
        
-          //this.sendNotification();  
-          notifyMe();
-          this.stop = true;
-          //alert("Process Finished");
+      //this.sendNotification();  
+      notifyMe();
+      this.currentProcess = "no process is running";
+      this.stop = true;
+      //alert("Process Finished");
           
 
-        if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
-        {
-          this.resetToZero();
-        }
-        this.changeDisplay()
+      if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
+      {
+        this.resetToZero();
       }
-  
+      this.changeDisplay()
     }
-    else {
-     // this.status = 'ENJOY YOUR TIME';
+    else if(event.action === 'notify') 
+    {
+      console.log("warnings are going")
     }
+    
+    
   }
 
+/**
+ * Creates warning column display value based on how many warnings a process has (0-3)
+ * @param process current process
+ * @returns string of comma separated warnings
+ */
+  displayWarnings(process: Process) {
+    if(process.warning1 == null) {
+      return "";
+    } else if(process.warning2 == null) {
+      return process.warning1 + " mins";
+    } else if(process.warning3 == null) {
+      return (process.warning1+ ", " + process.warning2 + " mins");
+    } else {
+      return (process.warning1 + ", " + process.warning2 + ", " 
+                + process.warning3 + " mins")
+    }
+  }
 }
