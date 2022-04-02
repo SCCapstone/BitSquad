@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScheduleFormComponent } from './limits-form.component';
+import { LimitsFormComponent } from './limits-form.component';
 
 describe('ScheduleFormComponent', () => {
-  let component: ScheduleFormComponent;
-  let fixture: ComponentFixture<ScheduleFormComponent>;
+  let component: LimitsFormComponent;
+  let fixture: ComponentFixture<LimitsFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScheduleFormComponent ]
+      declarations: [ LimitsFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScheduleFormComponent);
+    fixture = TestBed.createComponent(LimitsFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

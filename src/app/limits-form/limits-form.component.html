@@ -12,10 +12,21 @@
     <div *ngIf="select.value == 'weekly'">
       <mat-form-field class = "weekly">
         <input matInput type="number" placeholder="Hours" formControlName="weeklyLimitH">
+        <mat-error>Weekly hours must be a positive whole number from 0 to 168</mat-error>
       </mat-form-field>
       <mat-form-field class = "weekly">
         <input matInput type="number" placeholder="Minutes" formControlName="weeklyLimitM">
+        <mat-error>Weekly minutes must be a positive whole number from 0 to 59</mat-error>
       </mat-form-field>
+      
+      <mat-error *ngIf="limitsForm.errors?.zeroWeekTime">
+        Minimum weekly limit is 1 minute
+      </mat-error>
+      
+      <mat-error *ngIf="limitsForm.errors?.over168Hours">
+        Maximum weekly limit is 168 hours and 0 minutes
+      </mat-error>
+    
     </div>
 
     <div *ngIf="select.value == 'daily'">
@@ -23,80 +34,123 @@
       
       <mat-form-field class = "daily">
         <input matInput type="number" placeholder="Hours" formControlName="monLimitH">
+        <mat-error>Hours must be a positive whole number between 0 and 24</mat-error>
       </mat-form-field>
       
       <mat-form-field class="daily">
         <input matInput type="number" placeholder="Minutes" formControlName="monLimitM">
+        <mat-error>Minutes must be a positive whole number from 0 to 59</mat-error>
       </mat-form-field>
     
+      <mat-error *ngIf="limitsForm.errors?.over24M">
+        Maximum time for Monday is 24 hours and 0 minutes
+      </mat-error>
+
       <h4 class="week-day" >Tuesday</h4>
       
       <mat-form-field class = "daily">
         <input matInput type="number" placeholder="Hours" formControlName="tuesLimitH">
+        <mat-error>Hours must be a positive whole number between 0 and 24</mat-error>
       </mat-form-field>
 
       <mat-form-field class="daily">
         <input matInput type="number" placeholder="Minutes" formControlName="tuesLimitM">
+        <mat-error>Minutes must be a positive whole number from 0 to 59</mat-error>
       </mat-form-field>
+
+      <mat-error *ngIf="limitsForm.errors?.over24Tu">
+        Maximum time for Tuesday is 24 hours and 0 minutes
+      </mat-error>
   
       <h4 class="week-day" >Wednesday</h4>
       
       <mat-form-field class = "daily">
         <input matInput type="number" placeholder="Hours" formControlName="wedLimitH">
+        <mat-error>Hours must be a positive whole number between 0 and 24</mat-error>
       </mat-form-field>
       
       <mat-form-field class="daily">
         <input matInput type="number" placeholder="Minutes" formControlName="wedLimitM">
+        <mat-error>Minutes must be a positive whole number from 0 to 59</mat-error>
       </mat-form-field>
+
+      <mat-error *ngIf="limitsForm.errors?.over24W">
+        Maximum time for Wednesday is 24 hours and 0 minutes
+      </mat-error>
   
       <h4 class="week-day" >Thursday</h4>
       
       <mat-form-field class = "daily">
         <input matInput type="number" placeholder="Hours" formControlName="thursLimitH">
+        <mat-error>Hours must be a positive whole number between 0 and 24</mat-error>
       </mat-form-field>
       
       <mat-form-field class="daily">
         <input matInput type="number" placeholder="Minutes" formControlName="thursLimitM">
+        <mat-error>Minutes must be a positive whole number from 0 to 59</mat-error>
       </mat-form-field>
   
+      <mat-error *ngIf="limitsForm.errors?.over24Tr">
+        Maximum time for Thursday is 24 hours and 0 minutes
+      </mat-error>
+
       <h4 class="week-day" >Friday</h4>
       
       <mat-form-field class = "daily">
         <input matInput type="number" placeholder="Hours" formControlName="friLimitH">
+        <mat-error>Hours must be a positive whole number between 0 and 24</mat-error>
       </mat-form-field>
       
       <mat-form-field class="daily">
         <input matInput type="number" placeholder="Minutes" formControlName="friLimitM">
+        <mat-error>Minutes must be a positive whole number from 0 to 59</mat-error>
       </mat-form-field>
+
+      <mat-error *ngIf="limitsForm.errors?.over24F">
+        Maximum time for Friday is 24 hours and 0 minutes
+      </mat-error>
   
       <h4 class="week-day" >Saturday</h4>
       
       <mat-form-field class = "daily">
         <input matInput type="number" placeholder="Hours" formControlName="satLimitH">
+        <mat-error>Hours must be a positive whole number between 0 and 24</mat-error>
       </mat-form-field>
 
       <mat-form-field class="daily">
         <input matInput type="number" placeholder="Minutes" formControlName="satLimitM">
+        <mat-error>Minutes must be a positive whole number from 0 to 59</mat-error>
       </mat-form-field>
+
+      <mat-error *ngIf="limitsForm.errors?.over24Sa">
+        Maximum time for Saturday is 24 hours and 0 minutes
+      </mat-error>
   
       <h4 class="week-day" >Sunday</h4>
 
       <mat-form-field class = "daily">
         <input matInput type="number" placeholder="Hours" formControlName="sunLimitH">
+        <mat-error>Hours must be a positive whole number between 0 and 24</mat-error>
       </mat-form-field>
       
       <mat-form-field class="daily">
         <input matInput type="number" placeholder="Minutes" formControlName="sunLimitM">
+        <mat-error>Minutes must be a positive whole number from 0 to 59</mat-error>
       </mat-form-field>
-    
-    </div>
+
+      <mat-error *ngIf="limitsForm.errors?.over24Su">
+        Maximum time for Sunday is 24 hours and 0 minutes
+      </mat-error>
+       
+    </div>  
   </mat-dialog-content>
   
   <br>
   
   <mat-dialog-actions>
     <button mat-raised-button color="warn" (click)="closeLimitDialog()">Cancel</button>
-    <button mat-raised-button color="accent" (click)="saveLimitDialog()">Save</button>
+    <button mat-raised-button color="accent" [disabled]="!limitsForm.valid" 
+      (click)="saveLimitDialog()">Save</button>
   </mat-dialog-actions>
   
 </div>

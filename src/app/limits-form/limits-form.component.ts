@@ -5,26 +5,27 @@ import { Limits } from '../model/limits';
 
 import { AccountService } from '../services/account-service.service';
 import { LimitsService } from '../services/limits.service';
+import { createLimitFormValidator } from '../validators/limit-form.validator';
+import { createWholeNumberValidator } from '../validators/whole-number.validator';
 
 @Component({
   selector: 'limits-form',
   templateUrl: './limits-form.component.html',
   styleUrls: ['./limits-form.component.scss'],
 })
-
 export class LimitsFormComponent implements OnInit {
   limitsForm: FormGroup;
-  
+
   //declarations for form variables
   limitType: string;
   weeklyLimitH: number;
   weeklyLimitM: number;
-  monLimitH:number;
-  monLimitM:number;
-  tuesLimitH:number;
-  tuesLimitM:number;
+  monLimitH: number;
+  monLimitM: number;
+  tuesLimitH: number;
+  tuesLimitM: number;
   wedLimitH: number;
-  wedLimitM: number
+  wedLimitM: number;
   thursLimitH: number;
   thursLimitM: number;
   friLimitH: number;
@@ -33,10 +34,14 @@ export class LimitsFormComponent implements OnInit {
   satLimitM: number;
   sunLimitH: number;
   sunLimitM: number;
-  
-  
-  constructor( private dialogRef: MatDialogRef<LimitsFormComponent>, private formBuilder: FormBuilder, public accountService: AccountService, public limitService: LimitsService, 
-  @Inject(MAT_DIALOG_DATA) data:Limits) {
+
+  constructor(
+    private dialogRef: MatDialogRef<LimitsFormComponent>,
+    private formBuilder: FormBuilder,
+    public accountService: AccountService,
+    public limitService: LimitsService,
+    @Inject(MAT_DIALOG_DATA) data: Limits
+  ) {
     /*sets dialog form variables with data from data object set in user-page.component.ts editLimits method*/
     this.limitType = data.limitType;
     this.weeklyLimitH = data.weeklyLimitH;
@@ -57,34 +62,166 @@ export class LimitsFormComponent implements OnInit {
     this.sunLimitM = data.sunLimitM;
 
     //builds the form and injects above data
-    this.limitsForm = this.formBuilder.group({
-      limitType: [this.limitType, Validators.required],
-      
-      weeklyLimitH: [this.weeklyLimitH, Validators.min(0)],
-      weeklyLimitM: [this.weeklyLimitM, Validators.min(0)],
+    this.limitsForm = this.formBuilder.group(
+      {
+        limitType: [this.limitType, Validators.required],
 
-      monLimitH: [this.monLimitH, Validators.min(0)],
-      monLimitM: [this.monLimitM, Validators.min(0)],
-      
-      tuesLimitH: [this.tuesLimitH, Validators.min(0)],
-      tuesLimitM: [this.tuesLimitM, Validators.min(0)],
-      
-      wedLimitH: [this.wedLimitH, Validators.min(0)],
-      wedLimitM: [this.wedLimitM,Validators.min(0)],
-      
-      thursLimitH: [this.thursLimitH, Validators.min(0)],
-      thursLimitM: [this.thursLimitM, Validators.min(0)],
-      
-      friLimitH: [this.friLimitH, Validators.min(0)],
-      friLimitM: [this.friLimitM, Validators.min(0)],
-      
-      satLimitH: [this.satLimitH, Validators.min(0)],
-      satLimitM: [this.satLimitM, Validators.min(0)],
+        weeklyLimitH: [
+          this.weeklyLimitH,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(168),
+            createWholeNumberValidator(),
+          ],
+        ],
+        weeklyLimitM: [
+          this.weeklyLimitM,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(59),
+            createWholeNumberValidator(),
+          ],
+        ],
 
-      sunLimitH: [this.sunLimitH, Validators.min(0)],
-      sunLimitM: [this.sunLimitM, Validators.min(0)],
-    });
-    
+        monLimitH: [
+          this.monLimitH,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(24),
+            createWholeNumberValidator(),
+          ],
+        ],
+        monLimitM: [
+          this.monLimitM,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(59),
+            createWholeNumberValidator(),
+          ],
+        ],
+
+        tuesLimitH: [
+          this.tuesLimitH,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(24),
+            createWholeNumberValidator(),
+          ],
+        ],
+        tuesLimitM: [
+          this.tuesLimitM,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(59),
+            createWholeNumberValidator(),
+          ],
+        ],
+
+        wedLimitH: [
+          this.wedLimitH,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(24),
+            createWholeNumberValidator(),
+          ],
+        ],
+        wedLimitM: [
+          this.wedLimitM,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(59),
+            createWholeNumberValidator(),
+          ],
+        ],
+
+        thursLimitH: [
+          this.thursLimitH,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(24),
+            createWholeNumberValidator(),
+          ],
+        ],
+        thursLimitM: [
+          this.thursLimitM,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(59),
+            createWholeNumberValidator(),
+          ],
+        ],
+
+        friLimitH: [
+          this.friLimitH,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(24),
+            createWholeNumberValidator(),
+          ],
+        ],
+        friLimitM: [
+          this.friLimitM,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(59),
+            createWholeNumberValidator(),
+          ],
+        ],
+
+        satLimitH: [
+          this.satLimitH,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(24),
+            createWholeNumberValidator(),
+          ],
+        ],
+        satLimitM: [
+          this.satLimitM,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(59),
+            createWholeNumberValidator(),
+          ],
+        ],
+
+        sunLimitH: [
+          this.sunLimitH,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(24),
+            createWholeNumberValidator(),
+          ],
+        ],
+        sunLimitM: [
+          this.sunLimitM,
+          [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(59),
+            createWholeNumberValidator(),
+          ],
+        ],
+      },
+      {
+        validators: [createLimitFormValidator()],
+      }
+    );
   }
 
   ngOnInit(): void {}
