@@ -10,6 +10,7 @@ import { baseColors } from 'ng2-charts';
 import { R3TargetBinder } from '@angular/compiler';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditFormComponent} from '../edit-form/edit-form.component';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 
@@ -84,7 +85,6 @@ export class ProcessTableComponent implements OnInit{
   
   constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent
      ) {
-       
 
   }
 
@@ -210,6 +210,23 @@ export class ProcessTableComponent implements OnInit{
     }
     console.log(temp)
     this.Process = temp
+  }
+
+
+  sortAlphabetic(){
+
+    var temp = this.Process.sort(function(a, b){
+      if(a.processName[0].toLowerCase() < b.processName[0].toLowerCase()) { return -1; }
+      if(a.processName[0] > b.processName[0]) { return 1; }
+      return 0;
+  })
+  console.log(temp)
+  this.Process = [];
+  // you HAVE to do this step to make the above sorting applied to Process
+  temp.forEach(p =>{
+    this.Process.push(p)
+  })
+  
   }
   searchByEnter(event: { key: string; }){ // key event so that press enter can call search function
     if(event.key == "Enter"){

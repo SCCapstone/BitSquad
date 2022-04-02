@@ -20,7 +20,10 @@
     <button (click)="restore()">Clear Search</button>
 
   </div>
-
+<div class = "grid-child">
+  <h2>Sort</h2>
+  <button (click)="sortAlphabetic()">Sort A-Z</button>
+</div>
   <div class ="grid-child">
     <h2>Filter by Time Limit</h2>
     <input type="text" [(ngModel)]="filterKey" class="searchTerm" placeholder="Enter a time limit (H:M)">
