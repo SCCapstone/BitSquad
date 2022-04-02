@@ -17,6 +17,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox'
+import {MatSelectModule} from '@angular/material/select';
 import { NgChartsModule } from 'ng2-charts';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from "../environments/environment";
@@ -72,6 +73,7 @@ const app = initializeApp(firebaseConfig);
     MatCardModule,
     MatInputModule,
     MatDialogModule,
+    MatSelectModule,
     CountdownModule,
     AngularFireStorageModule,
     AngularFirestoreModule,
