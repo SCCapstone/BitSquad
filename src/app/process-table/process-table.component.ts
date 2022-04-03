@@ -10,40 +10,38 @@ import { baseColors } from 'ng2-charts';
 import { R3TargetBinder } from '@angular/compiler';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditFormComponent} from '../edit-form/edit-form.component';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
-<<<<<<< HEAD
+
+
 
 
 Notification.requestPermission().then(function(result) {
   console.log(result);
 });
-=======
-// request permission on page load
-document.addEventListener('DOMContentLoaded', function() {
-  if (!Notification) {
-   alert('Desktop notifications not available in your browser. Try Chromium.');
-   return;
+
+function checkNotificationPromise() {
+  try {
+    Notification.requestPermission().then();
+  } catch(e) {
+    return false;
   }
 
-  if (Notification.permission !== 'granted')
-   Notification.requestPermission();
- });
->>>>>>> branavan
+  return true;
+}
 
 
- function notifyMe() {
-  if (Notification.permission !== 'granted')
-   Notification.requestPermission();
-  else {
-   var notification = new Notification('Notification title', {
-    body: 'Time is up!',
-   });
+function notifyMe() {
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  }
 
-<<<<<<< HEAD
   // Let's check whether notification permissions have already been granted
   else if (Notification.permission === "granted") {
     // If it's okay let's create a notification
-    var notification = new Notification("Hi there!");
+    console.log("notification granted");
+    var notification = new Notification("Time is up!");
   }
 
   // Otherwise, we need to ask the user for permission
@@ -51,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Notification.requestPermission().then(function (permission) {
       // If the user accepts, let's create a notification
       if (permission === "granted") {
-        var notification = new Notification("Hi there!");
+        var notification = new Notification("Time is up!");
       }
     });
   }
@@ -59,17 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // At last, if the user has denied notifications, and you
   // want to be respectful there is no need to bother them any more.
 }
-
-=======
-  }
- }
->>>>>>> branavan
-
-
-
-
-
-
 
 
 @Component({
@@ -95,13 +82,11 @@ export class ProcessTableComponent implements OnInit{
     less:false
   }
   stop = false;
-
+  
   constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent
      ) {
 
-
   }
-
 
 
   ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
@@ -226,8 +211,6 @@ export class ProcessTableComponent implements OnInit{
     console.log(temp)
     this.Process = temp
   }
-<<<<<<< HEAD
-=======
 
 
   sortAlphabetic(){
@@ -243,9 +226,8 @@ export class ProcessTableComponent implements OnInit{
   temp.forEach(p =>{
     this.Process.push(p)
   })
-
+  
   }
->>>>>>> branavan
   searchByEnter(event: { key: string; }){ // key event so that press enter can call search function
     if(event.key == "Enter"){
       this.searchProcesses(this.searchKey);
@@ -278,7 +260,7 @@ export class ProcessTableComponent implements OnInit{
     }
 
   }
-
+  
   getMinutes(value:number): number {
     if (value >= 60) {
       return Math.floor((value % 3600 / 60));
@@ -301,13 +283,10 @@ export class ProcessTableComponent implements OnInit{
     this.processService.setCurrentProccess(name)
     this.currentProcess = name;
     //***THIS ACTUALLY STARTS TIMER***
+
     this.changeTime2();
     this.stop = false;
-<<<<<<< HEAD
-    this.status = "ENJOY YOUR TIME"
-=======
-
->>>>>>> branavan
+    
   }
 
 
@@ -315,31 +294,22 @@ export class ProcessTableComponent implements OnInit{
     console.log(p.processName + " clicked to delete");
 
   }
-
-<<<<<<< HEAD
-  status ='TIME TO PLAY';
-  realTime = -1;
-=======
-
+  
+  
   realTime = 0;
->>>>>>> branavan
   mycolor = '#00E676;'
   changeTime(val:string)
   {
     this.realTime=this.getTime(val)
   }
-
+  
   changeTime2()
   {
     //this.realTime = this.processService.getTimer(); // get timer from service
       //checks if user hasn't used more time than allowed for particular day
       if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
-<<<<<<< HEAD
-        this.status = 'USED UP TIME ALLOWANCE FOR THE DAY'
-=======
-
->>>>>>> branavan
+        
       }
       //checks if user tries to start a process's timer that will run over the daily allowance
       else if(this.cumulativeTime + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
@@ -383,31 +353,18 @@ export class ProcessTableComponent implements OnInit{
     if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.mycolor = '#E60606'
-        this.status = 'USED UP TIME ALLOWANCE FOR THE DAY';
         return true;
       }
       else{
         this.mycolor = '#00E676;'
-<<<<<<< HEAD
-        this.status ='TIME TO PLAY';
-=======
->>>>>>> branavan
-
+        
       }
       return false;
   }
 
-
+  
   handleEvent1(event: { action: string; }){
-
     console.log(event.action+" "+this.stop) // strange enough, when click cancel, the event.action actually is "done"
-<<<<<<< HEAD
-    if(event.action == 'done' && this.stop == false){
-
-
-
-      if(this.status == 'ENJOY YOUR TIME')
-=======
     if(event.action == 'done' && this.stop == false)
     {
       console.log(this.realTime);
@@ -418,50 +375,26 @@ export class ProcessTableComponent implements OnInit{
       this.cumulativeMins = this.getMinutes(this.cumulativeTime);
       console.log(this.cumulativeTime);
       this.accountService.updateAnalytics() // update analytics data
-
-      //this.sendNotification();
+       
+      //this.sendNotification();  
       notifyMe();
       this.currentProcess = "no process is running";
       this.stop = true;
       //alert("Process Finished");
-
+          
 
       if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
->>>>>>> branavan
       {
-        notifyMe();
-         //updates cumulativeTime, sends notifcation of time expiration, updates analytics
-         this.cumulativeTime += this.realTime;
-         this.cumulativeHours = this.getHours(this.cumulativeTime);
-         this.cumulativeMins = this.getMinutes(this.cumulativeTime);
-         console.log(this.cumulativeTime);
-
-
-         this.accountService.updateAnalytics() // update analytics data
-         this.stop = true;
-          //alert("Process Finished");
-
-
-        if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
-        {
-          this.resetToZero();
-        }
-        this.changeDisplay()
+        this.resetToZero();
       }
-
+      this.changeDisplay()
     }
-<<<<<<< HEAD
-    else {
-     // this.status = 'ENJOY YOUR TIME';
-    }
-=======
-    else if(event.action === 'notify')
+    else if(event.action === 'notify') 
     {
       console.log("warnings are going")
     }
-
-
->>>>>>> branavan
+    
+    
   }
 
 /**
@@ -477,7 +410,7 @@ export class ProcessTableComponent implements OnInit{
     } else if(process.warning3 == null) {
       return (process.warning1+ ", " + process.warning2 + " mins");
     } else {
-      return (process.warning1 + ", " + process.warning2 + ", "
+      return (process.warning1 + ", " + process.warning2 + ", " 
                 + process.warning3 + " mins")
     }
   }
