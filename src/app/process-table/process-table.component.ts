@@ -23,6 +23,21 @@ document.addEventListener('DOMContentLoaded', function() {
    Notification.requestPermission();
  });
 
+ function WarningnNotifyMe(){
+  if (Notification.permission !== 'granted')
+  Notification.requestPermission();
+ else {
+  var notification = new Notification('Notification title', {
+   body: 'Time is running out soon.....',
+  });
+
+ }
+}
+
+
+
+
+
 
  function notifyMe() {
   if (Notification.permission !== 'granted')
@@ -34,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   }
  }
+
 
 
 
@@ -365,7 +381,7 @@ export class ProcessTableComponent implements OnInit{
       this.cumulativeMins = this.getMinutes(this.cumulativeTime);
       console.log(this.cumulativeTime);
       this.accountService.updateAnalytics() // update analytics data
-
+      notifyMe();
       //this.sendNotification();
 
       this.currentProcess = "no process is running";
@@ -381,6 +397,7 @@ export class ProcessTableComponent implements OnInit{
     }
     else if(event.action === 'notify')
     {
+      WarningnNotifyMe();
       console.log("warnings are going")
     }
 
