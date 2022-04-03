@@ -1,5 +1,5 @@
 
-<mat-card class="timer-card" style = "background-color: {{mycolor}}" >
+<mat-card class="timer-card" style = "background-color: mycolor" >
   <mat-card-title class="timer-card-title">Start a Process Timer</mat-card-title>
   <mat-card-content class="timer-card-body"><countdown #cd [config]="{leftTime: realTime, notify: [1,10,20]}" (event)="handleEvent1($event)"></countdown></mat-card-content>
   <button (click)="cd.pause()">Pause</button>
