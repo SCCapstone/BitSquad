@@ -14,50 +14,28 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 
-
-
-Notification.requestPermission().then(function(result) {
-  console.log(result);
-});
-
-function checkNotificationPromise() {
-  try {
-    Notification.requestPermission().then();
-  } catch(e) {
-    return false;
+// request permission on page load
+document.addEventListener('DOMContentLoaded', function() {
+  if (!Notification) {
+   alert('Desktop notifications not available in your browser. Try Chromium.');
+   return;
   }
 
-  return true;
-}
+  if (Notification.permission !== 'granted')
+   Notification.requestPermission();
+ });
 
 
-function notifyMe() {
-  // Let's check if the browser supports notifications
-  if (!("Notification" in window)) {
-    alert("This browser does not support desktop notification");
+ function notifyMe() {
+  if (Notification.permission !== 'granted')
+   Notification.requestPermission();
+  else {
+   var notification = new Notification('Notification title', {
+    body: 'Time is up!',
+   });
+
   }
-
-  // Let's check whether notification permissions have already been granted
-  else if (Notification.permission === "granted") {
-    // If it's okay let's create a notification
-    console.log("notification granted");
-    var notification = new Notification("Time is up!");
-  }
-
-  // Otherwise, we need to ask the user for permission
-  else if (Notification.permission !== "denied") {
-    Notification.requestPermission().then(function (permission) {
-      // If the user accepts, let's create a notification
-      if (permission === "granted") {
-        var notification = new Notification("Time is up!");
-      }
-    });
-  }
-
-  // At last, if the user has denied notifications, and you
-  // want to be respectful there is no need to bother them any more.
-}
-
+ }
 
 @Component({
   selector: 'process-table',
@@ -82,7 +60,7 @@ export class ProcessTableComponent implements OnInit{
     less:false
   }
   stop = false;
-  
+
   constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent
      ) {
 
@@ -226,7 +204,7 @@ export class ProcessTableComponent implements OnInit{
   temp.forEach(p =>{
     this.Process.push(p)
   })
-  
+
   }
   searchByEnter(event: { key: string; }){ // key event so that press enter can call search function
     if(event.key == "Enter"){
@@ -260,7 +238,7 @@ export class ProcessTableComponent implements OnInit{
     }
 
   }
-  
+
   getMinutes(value:number): number {
     if (value >= 60) {
       return Math.floor((value % 3600 / 60));
@@ -286,7 +264,7 @@ export class ProcessTableComponent implements OnInit{
 
     this.changeTime2();
     this.stop = false;
-    
+
   }
 
 
@@ -294,22 +272,22 @@ export class ProcessTableComponent implements OnInit{
     console.log(p.processName + " clicked to delete");
 
   }
-  
-  
+
+
   realTime = 0;
   mycolor = '#00E676;'
   changeTime(val:string)
   {
     this.realTime=this.getTime(val)
   }
-  
+
   changeTime2()
   {
     //this.realTime = this.processService.getTimer(); // get timer from service
       //checks if user hasn't used more time than allowed for particular day
       if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
-        
+
       }
       //checks if user tries to start a process's timer that will run over the daily allowance
       else if(this.cumulativeTime + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
@@ -357,12 +335,12 @@ export class ProcessTableComponent implements OnInit{
       }
       else{
         this.mycolor = '#00E676;'
-        
+
       }
       return false;
   }
 
-  
+
   handleEvent1(event: { action: string; }){
     console.log(event.action+" "+this.stop) // strange enough, when click cancel, the event.action actually is "done"
     if(event.action == 'done' && this.stop == false)
@@ -375,13 +353,13 @@ export class ProcessTableComponent implements OnInit{
       this.cumulativeMins = this.getMinutes(this.cumulativeTime);
       console.log(this.cumulativeTime);
       this.accountService.updateAnalytics() // update analytics data
-       
-      //this.sendNotification();  
+
+      //this.sendNotification();
       notifyMe();
       this.currentProcess = "no process is running";
       this.stop = true;
       //alert("Process Finished");
-          
+
 
       if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
@@ -389,12 +367,12 @@ export class ProcessTableComponent implements OnInit{
       }
       this.changeDisplay()
     }
-    else if(event.action === 'notify') 
+    else if(event.action === 'notify')
     {
       console.log("warnings are going")
     }
-    
-    
+
+
   }
 
 /**
@@ -410,7 +388,7 @@ export class ProcessTableComponent implements OnInit{
     } else if(process.warning3 == null) {
       return (process.warning1+ ", " + process.warning2 + " mins");
     } else {
-      return (process.warning1 + ", " + process.warning2 + ", " 
+      return (process.warning1 + ", " + process.warning2 + ", "
                 + process.warning3 + " mins")
     }
   }
