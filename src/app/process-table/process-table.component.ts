@@ -10,25 +10,12 @@ import { baseColors } from 'ng2-charts';
 import { R3TargetBinder } from '@angular/compiler';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditFormComponent} from '../edit-form/edit-form.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
-
 
 
 
 Notification.requestPermission().then(function(result) {
   console.log(result);
 });
-
-function checkNotificationPromise() {
-  try {
-    Notification.requestPermission().then();
-  } catch(e) {
-    return false;
-  }
-
-  return true;
-}
 
 
 function notifyMe() {
@@ -40,8 +27,7 @@ function notifyMe() {
   // Let's check whether notification permissions have already been granted
   else if (Notification.permission === "granted") {
     // If it's okay let's create a notification
-    console.log("notification granted");
-    var notification = new Notification("Time is up!");
+    var notification = new Notification("Hi there!");
   }
 
   // Otherwise, we need to ask the user for permission
@@ -49,7 +35,7 @@ function notifyMe() {
     Notification.requestPermission().then(function (permission) {
       // If the user accepts, let's create a notification
       if (permission === "granted") {
-        var notification = new Notification("Time is up!");
+        var notification = new Notification("Hi there!");
       }
     });
   }
@@ -57,6 +43,13 @@ function notifyMe() {
   // At last, if the user has denied notifications, and you
   // want to be respectful there is no need to bother them any more.
 }
+
+
+
+
+
+
+
 
 
 @Component({
@@ -85,12 +78,10 @@ export class ProcessTableComponent implements OnInit{
 
   constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent
      ) {
-<<<<<<< HEAD
 
-=======
->>>>>>> 97b1a03c754c7618e6b9371379336e7ed4d0285a
 
   }
+
 
 
   ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
@@ -215,23 +206,6 @@ export class ProcessTableComponent implements OnInit{
     console.log(temp)
     this.Process = temp
   }
-
-
-  sortAlphabetic(){
-
-    var temp = this.Process.sort(function(a, b){
-      if(a.processName[0].toLowerCase() < b.processName[0].toLowerCase()) { return -1; }
-      if(a.processName[0] > b.processName[0]) { return 1; }
-      return 0;
-  })
-  console.log(temp)
-  this.Process = [];
-  // you HAVE to do this step to make the above sorting applied to Process
-  temp.forEach(p =>{
-    this.Process.push(p)
-  })
-  
-  }
   searchByEnter(event: { key: string; }){ // key event so that press enter can call search function
     if(event.key == "Enter"){
       this.searchProcesses(this.searchKey);
@@ -287,10 +261,9 @@ export class ProcessTableComponent implements OnInit{
     this.processService.setCurrentProccess(name)
     this.currentProcess = name;
     //***THIS ACTUALLY STARTS TIMER***
-
     this.changeTime2();
     this.stop = false;
-    
+    this.status = "ENJOY YOUR TIME"
   }
 
 
@@ -298,14 +271,9 @@ export class ProcessTableComponent implements OnInit{
     console.log(p.processName + " clicked to delete");
 
   }
-<<<<<<< HEAD
 
   status ='TIME TO PLAY';
-=======
-  
-  
->>>>>>> 97b1a03c754c7618e6b9371379336e7ed4d0285a
-  realTime = 0;
+  realTime = -1;
   mycolor = '#00E676;'
   changeTime(val:string)
   {
@@ -318,7 +286,7 @@ export class ProcessTableComponent implements OnInit{
       //checks if user hasn't used more time than allowed for particular day
       if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
-        
+        this.status = 'USED UP TIME ALLOWANCE FOR THE DAY'
       }
       //checks if user tries to start a process's timer that will run over the daily allowance
       else if(this.cumulativeTime + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
@@ -362,16 +330,13 @@ export class ProcessTableComponent implements OnInit{
     if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.mycolor = '#E60606'
+        this.status = 'USED UP TIME ALLOWANCE FOR THE DAY';
         return true;
       }
       else{
         this.mycolor = '#00E676;'
-<<<<<<< HEAD
         this.status ='TIME TO PLAY';
 
-=======
-        
->>>>>>> 97b1a03c754c7618e6b9371379336e7ed4d0285a
       }
       return false;
   }
@@ -379,61 +344,37 @@ export class ProcessTableComponent implements OnInit{
 
   handleEvent1(event: { action: string; }){
 
-
     console.log(event.action+" "+this.stop) // strange enough, when click cancel, the event.action actually is "done"
-<<<<<<< HEAD
     if(event.action == 'done' && this.stop == false){
+
+
 
       if(this.status == 'ENJOY YOUR TIME')
       {
+        notifyMe();
          //updates cumulativeTime, sends notifcation of time expiration, updates analytics
          this.cumulativeTime += this.realTime;
-
          this.cumulativeHours = this.getHours(this.cumulativeTime);
          this.cumulativeMins = this.getMinutes(this.cumulativeTime);
          console.log(this.cumulativeTime);
+
+
          this.accountService.updateAnalytics() // update analytics data
-         //checkNotificationPromise();
-          notifyMe();
-          this.stop = true;
+         this.stop = true;
           //alert("Process Finished");
 
-=======
-    if(event.action == 'done' && this.stop == false)
-    {
-      console.log(this.realTime);
-      //updates cumulativeTime, sends notifcation of time expiration, updates analytics
-      this.cumulativeTime += this.realTime;
 
-      this.cumulativeHours = this.getHours(this.cumulativeTime);
-      this.cumulativeMins = this.getMinutes(this.cumulativeTime);
-      console.log(this.cumulativeTime);
-      this.accountService.updateAnalytics() // update analytics data
-       
-      //this.sendNotification();  
-      notifyMe();
-      this.currentProcess = "no process is running";
-      this.stop = true;
-      //alert("Process Finished");
-          
->>>>>>> 97b1a03c754c7618e6b9371379336e7ed4d0285a
-
-      if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
-      {
-        this.resetToZero();
+        if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
+        {
+          this.resetToZero();
+        }
+        this.changeDisplay()
       }
-<<<<<<< HEAD
 
-=======
-      this.changeDisplay()
->>>>>>> 97b1a03c754c7618e6b9371379336e7ed4d0285a
     }
-    else if(event.action === 'notify') 
-    {
-      console.log("warnings are going")
+    else {
+     // this.status = 'ENJOY YOUR TIME';
     }
-    
-    
   }
 
 /**
