@@ -256,7 +256,7 @@ export class ProcessTableComponent implements OnInit{
 
   }
 
-  onStart(time:number, name:any): void {
+  onStart(time:number, name:any, p:Process): void {
     this.processService.setTimer(time)
     this.processService.setCurrentProccess(name)
     this.currentProcess = name;
@@ -264,6 +264,18 @@ export class ProcessTableComponent implements OnInit{
 
     this.changeTime2();
     this.stop = false;
+    if(p.warning1 != null)
+    {
+      this.warnList.push(p.warning1 * 60);
+    }
+    if(p.warning2 != null)
+    {
+      this.warnList.push(p.warning2 * 60);
+    }
+    if(p.warning3 != null)
+    {
+      this.warnList.push(p.warning3 * 60);
+    }
 
   }
 
@@ -272,7 +284,7 @@ export class ProcessTableComponent implements OnInit{
     console.log(p.processName + " clicked to delete");
 
   }
-
+  warnList:number[] = [];
 
   realTime = 0;
   mycolor = '#00E676;'
