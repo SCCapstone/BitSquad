@@ -1,4 +1,15 @@
 
+<mat-toolbar *ngIf="router.url === '/user-page' || router.url === '/profile'" color="accent" class="navbar">
+  <div> BitSquad Screen Time Limiter </div>
+  <div class="">
+    <button (click)="home()" mat-raised-button color="accent">Home</button>
+    <button (click)="profile()" mat-raised-button color="accent">Analytics</button>
+    <button (click) ="logOut()"mat-raised-button color="accent">Log Out</button>
+
+  </div>
+
+</mat-toolbar>
+
 <router-outlet></router-outlet>
 
 <!--font needed to make icons-->

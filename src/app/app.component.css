@@ -20,3 +20,9 @@ button {
     font-size: 1rem;
     color: #fafafa;
   }
+  .navbar {
+    justify-content: space-between;
+  }
+  span {
+    padding-right: 1rem;
+  }

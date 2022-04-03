@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { getAuth, signOut } from 'firebase/auth';
+
+
 
 @Component({
   selector: 'app-root',
@@ -9,10 +12,30 @@ import { Router } from '@angular/router';
 })
 
 export class AppComponent implements OnInit{
-  constructor(private router: Router){}
+  constructor(public router: Router){}
   title = "bitsquad"
   ngOnInit(): void {
     console.log("navigated to main")
     this.router.navigate(['main'])
   }
+
+profile(){
+  this.router.navigate(['profile'])
+}
+home(){
+  this.router.navigate(['user-page'])
+}
+logOut(){
+  console.log("called logout")
+  const auth = getAuth();
+  signOut(auth).then(()=>{
+    // clean local storage and route back to main page
+    localStorage.clear();
+    this.router.navigate(['main']);
+  }).catch((error) =>{
+    console.log(error)
+  });
+  window.location.reload(); // need to reload the webpage to reset everything
+}
+
 }
