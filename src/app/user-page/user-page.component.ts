@@ -78,7 +78,7 @@ export class UserPageComponent implements OnInit {
    */
   editLimits(limits: Limits) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
+    dialogConfig.autoFocus = false;
     dialogConfig.closeOnNavigation = true;
     dialogConfig.disableClose = true;
     dialogConfig.width = "500px";
