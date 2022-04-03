@@ -8,6 +8,8 @@ import { v4 as uuid} from 'uuid'
 import { createWholeNumberValidator } from '../validators/whole-number.validator';
 import { createUniqueWarningTimeValidator } from '../validators/unique-valid-warning-times.validator';
 import { createValidLimitValidator } from '../validators/valid-limit.validator';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
 
 @Component({
   selector: 'process-form',
@@ -21,7 +23,8 @@ export class ProcessFormComponent implements OnInit {
     private router:Router,
     public processService:ProcessService,
     public formBuilder:FormBuilder,
-    public accountService:AccountService
+    public accountService:AccountService,
+    public toolbar: MatToolbarModule
   ) {
     this.processForm = this.formBuilder.group({
       userID: [this.accountService.getUID()],
@@ -46,22 +49,22 @@ export class ProcessFormComponent implements OnInit {
       const minsControl = this.processForm.controls["timeLimitM"];
       const warning1Control = this.processForm.controls["warning1"];
       const warning2Control = this.processForm.controls["warning2"];
-      const warning3Control = this.processForm.controls["warning3"]; 
-      
-      const nameTimeValid = nameControl.status == "VALID" 
-                              && hoursControl.status == "VALID" 
+      const warning3Control = this.processForm.controls["warning3"];
+
+      const nameTimeValid = nameControl.status == "VALID"
+                              && hoursControl.status == "VALID"
                               && minsControl.status == "VALID";
 
-      const nameTimeInvalid = nameControl.status == "INVALID" 
-                              || hoursControl.status == "INVALID" 
+      const nameTimeInvalid = nameControl.status == "INVALID"
+                              || hoursControl.status == "INVALID"
                               || minsControl.status == "INVALID";
 
-      const warningsEnabled = warning1Control.enabled && warning2Control.enabled 
+      const warningsEnabled = warning1Control.enabled && warning2Control.enabled
                               && warning3Control.enabled;
-      const warningsDisabled = warning1Control.disabled && warning2Control.disabled 
+      const warningsDisabled = warning1Control.disabled && warning2Control.disabled
                               && warning3Control.disabled;
-      
-      
+
+
       if (nameTimeValid && warningsDisabled) {
         warning1Control.enable({emitEvent: false});
         warning2Control.enable({emitEvent: false});
@@ -73,7 +76,12 @@ export class ProcessFormComponent implements OnInit {
       }
     });
   }
-  
+  profile(){
+    this.router.navigate(['profile'])
+  }
+  home(){
+    this.router.navigate(['user-page'])
+  }
   //getters allow html to use just the control name, cleaner and easier to read
   get processName() {
     return this.processForm.controls['processName'];
@@ -99,7 +107,7 @@ export class ProcessFormComponent implements OnInit {
     return this.processForm.controls['warning3'];
   }
 
-  onSubmit() {    
+  onSubmit() {
     this.processService.createProcess(this.processForm.value);
     this.router.navigate(['user-page']);
   }

@@ -1,21 +1,13 @@
-<div>
-  <button class="add" mat-raised-button color="accent" (click)="onAddProcess()">
-    New Process
-  </button>
-  &nbsp;
-
-  <button (click)="profile()" mat-raised-button color="accent">
-    Analytics
-  </button>
-
-  &nbsp;
-  <button (click)="editLimits(this.limits[0])" mat-raised-button color="accent">
-    Daily/Weekly Limits
-  </button>
-
-<button class='right' (click)="logOut()" mat-raised-button color="accent">Log Out</button>
-  &nbsp;
-</div>
+<mat-toolbar color="accent" class="navbar">
+  <div> BitSquad Screen Time Limiter: Home </div>
+  <div >
+    <button (click)="home()" mat-raised-button color="accent">Home</button>
+    <button class="add" mat-raised-button color="accent" (click)="onAddProcess()">New Process</button>
+    <button (click)="editLimits(this.limits[0])" mat-raised-button color="accent"> Set Limits</button>
+    <button (click)="profile()" mat-raised-button color="accent">Analytics</button>
+    <button (click) ="logOut()"mat-raised-button color="accent">Log Out</button>
+  </div>
+</mat-toolbar>
 
 <h1> Welcome, {{user}}</h1>
 

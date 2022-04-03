@@ -7,19 +7,21 @@ import { AccountService } from '../services/account-service.service';
 import { Limits } from '../model/limits';
 import { LimitsService } from '../services/limits.service';
 import { ProcessTableComponent } from '../process-table/process-table.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.scss']
 })
+
 export class UserPageComponent implements OnInit {
   limits: Limits[] = [];
   dailyH:number = 0;
   dailyM:number = 0;
   user = '';
 
-  constructor(private router: Router, private dialog: MatDialog,
+  constructor(public toolbar: MatToolbarModule, private router: Router, private dialog: MatDialog,
     public accountService: AccountService, private limitsService: LimitsService) {
 
   }
@@ -43,7 +45,7 @@ export class UserPageComponent implements OnInit {
         this.dailyH = this.setHourLimitForToday(today, this.limits[0]);
         this.dailyM = this.setMinuteLimitForToday(today, this.limits[0])
         console.log("Today's hours: " + this.dailyH + " Today's Minutes: " + this.dailyM);
-        
+
       });
 
     }
@@ -57,6 +59,9 @@ export class UserPageComponent implements OnInit {
   }
   profile(){
     this.router.navigate(['profile'])
+  }
+  home(){
+    this.router.navigate(['user-page'])
   }
   logOut(){
     console.log("called logout")

@@ -4,6 +4,8 @@ import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { userData } from '../model/userData';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -13,7 +15,7 @@ export class ProfileComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public pieChartType: ChartType = 'pie';
   public pieChartPlugins = [ DatalabelsPlugin ];
-  statement = "No data yet" 
+  statement = "No data yet"
   total:any;
   showing = "seconds";
   user:any;
@@ -21,15 +23,15 @@ export class ProfileComponent implements OnInit {
   test:any;
   uid:any;
   data:number[] = []
-  labels:string[] = [] 
+  labels:string[] = []
   visible = false; // this boolean variable controls the visibility of unit convert button
-  constructor(private accountService: AccountService) { 
-    
+  constructor(private router: Router,private toolbar:MatToolbarModule, private accountService: AccountService) {
+
   }
 
 
   ngOnInit(): void {
-    
+
     this.user = this.accountService.getCurrentUserEmail()
     this.uid= this.accountService.getUID();
     this.userData = this.accountService.getAnalytics();
@@ -48,6 +50,13 @@ export class ProfileComponent implements OnInit {
       this.visible = true;
     }
   }
+  profile(){
+    this.router.navigate(['profile'])
+  }
+  home(){
+    this.router.navigate(['user-page'])
+  }
+  
 
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -66,7 +75,7 @@ export class ProfileComponent implements OnInit {
       },
     }
   };
-  
+
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
     labels: this.labels, // labels here
     datasets: [ {
@@ -78,7 +87,7 @@ export class ProfileComponent implements OnInit {
     public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
       console.log(event, active);
     }
-  
+
     public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
       console.log(event, active);
     }
