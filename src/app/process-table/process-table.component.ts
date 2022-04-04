@@ -3,15 +3,9 @@ import { AccountService } from '../services/account-service.service';
 import { Process } from '../model/process';
 import { ProcessService } from '../services/process.service';
 import { UserPageComponent } from '../user-page/user-page.component';
-import { TimerStartComponent } from '../timer-start/timer-start.component';
-import { getCurrencySymbol, getLocaleDayNames } from '@angular/common';
-import { mixinColor } from '@angular/material/core';
-import { baseColors } from 'ng2-charts';
-import { R3TargetBinder } from '@angular/compiler';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditFormComponent} from '../edit-form/edit-form.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
+;
 
 document.addEventListener('DOMContentLoaded', function() {
   if (!Notification) {
@@ -27,31 +21,23 @@ document.addEventListener('DOMContentLoaded', function() {
   if (Notification.permission !== 'granted')
   Notification.requestPermission();
  else {
-  var notification = new Notification('Notification title', {
+  var notification = new Notification('BitSquad Notfifier', {
    body: 'Time is running out soon.....',
   });
 
  }
 }
 
-
-
-
-
-
  function notifyMe() {
   if (Notification.permission !== 'granted')
    Notification.requestPermission();
   else {
-   var notification = new Notification('Notification title', {
+   var notification = new Notification('BitSquad Notifier', {
     body: 'Time is up!',
    });
 
   }
  }
-
-
-
 
 @Component({
   selector: 'process-table',
@@ -61,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 export class ProcessTableComponent implements OnInit{
+  [x: string]: any;
   currentProcess ="no process is running"
   user = "";
   userID:any;
@@ -206,7 +193,24 @@ export class ProcessTableComponent implements OnInit{
     this.Process = temp
   }
 
+  sortByPopularity(){
+    this.userData = this.accountService.getAnalytics();
+    this.total = this.userData.total
+    var temp = this.Process.sort(function(a,b){
+      if(a.processName[0] < b.processName[0]) { return -1; }
+      if(a.processName[0] > b.processName[0]) { return 1; }
+      return 0;
+  })
 
+
+  console.log(temp)
+  this.Process = [];
+  // you HAVE to do this step to make the above sorting applied to Process
+  temp.forEach((p: any) =>{
+    this.Process.push(p)
+  })
+
+  }
   sortAlphabetic(){
 
     var temp = this.Process.sort(function(a, b){
@@ -214,6 +218,8 @@ export class ProcessTableComponent implements OnInit{
       if(a.processName[0] > b.processName[0]) { return 1; }
       return 0;
   })
+
+
   console.log(temp)
   this.Process = [];
   // you HAVE to do this step to make the above sorting applied to Process
@@ -222,12 +228,14 @@ export class ProcessTableComponent implements OnInit{
   })
 
   }
+
   searchByEnter(event: { key: string; }){ // key event so that press enter can call search function
     if(event.key == "Enter"){
       this.searchProcesses(this.searchKey);
     }
 
   }
+
 
   searchProcesses(searchStr:string) {
     let results: Process[] = [];

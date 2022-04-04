@@ -8,9 +8,10 @@ import { ProcessService } from './process.service';
   providedIn: 'root'
 })
 export class AccountService {
+  [x: string]: any;
   userData:any; // just set the variable to type any
 
-  constructor(private afs: AngularFirestore, private processService: ProcessService) { 
+  constructor(private afs: AngularFirestore, private processService: ProcessService) {
 
   }
   currentUser:any;
@@ -29,7 +30,7 @@ export class AccountService {
       this.userData = data
     })
 
-    // below is not useful because found a way to set the user uid to document uid 
+    // below is not useful because found a way to set the user uid to document uid
     // but the method below is still useful if you do not know the uid of the document that you want to query
      // so I left them as comments here for reference
 
@@ -71,13 +72,13 @@ export class AccountService {
   getAnalytics(){ //the the essential data for analytics use
     console.log(this.userData)
     return this.userData;
-    
+
   }
   updateAnalytics(){ // when timer is up, call this function to push timer data to firebase
     var valueToPush = 0
     let name: string = this.processService.getProcessName()
-    var tmp = 'data.'+name 
-    
+    var tmp = 'data.'+name
+
     if(Object.keys(this.userData.data).length == 0){
       console.log("empty")
     }
@@ -95,7 +96,7 @@ export class AccountService {
       [tmp]:  valueToPush+this.processService.getTimer(), // map update, notice [] which allows you to use a varibale as the path
       total: this.userData.total + this.processService.getTimer()
     })
-    
+
   }
 
 

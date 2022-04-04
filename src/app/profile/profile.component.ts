@@ -56,7 +56,7 @@ export class ProfileComponent implements OnInit {
   home(){
     this.router.navigate(['user-page'])
   }
-  
+
 
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -91,6 +91,7 @@ export class ProfileComponent implements OnInit {
     public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
       console.log(event, active);
     }
+
     convert():void{
       if(this.showing == 'seconds'){
         this.showing = 'minutes'
