@@ -15,8 +15,18 @@
 
 
 <mat-card class="limit-card">
-  <mat-card-title class="limit-card-title">Today's Limit</mat-card-title>
-  <mat-card-content class="limit-card-body">{{this.dailyH}} hours and {{this.dailyM}} minutes</mat-card-content>
+  <div *ngIf="this.limitType =='daily'"> 
+    <mat-card-title class="limit-card-title">Today's Limit</mat-card-title>
+  
+  
+    <mat-card-content class="limit-card-body">{{this.dailyH}} hours and {{this.dailyM}} minutes</mat-card-content>
+  </div>
+
+  <div *ngIf="this.limitType =='weekly'">
+    <mat-card-title class="limit-card-title">Weekly Limit</mat-card-title>
+    <mat-card-content class="limit-card-body">{{this.weeklyH}} hours and {{this.weeklyM}} minutes</mat-card-content>
+  </div>
+
 </mat-card>
 
 <process-table></process-table>
