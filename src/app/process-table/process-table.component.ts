@@ -388,7 +388,10 @@ export class ProcessTableComponent implements OnInit{
       this.cumulativeHours = this.getHours(this.cumulativeTime);
       this.cumulativeMins = this.getMinutes(this.cumulativeTime);
       console.log(this.cumulativeTime);
+      if(this.processService.getProcessName() != null) {// make sure there is a process currently been tracking
+      console.log(this.processService.getProcessName())
       this.accountService.updateAnalytics() // update analytics data
+      }
       notifyMe();
       //this.sendNotification();
 
