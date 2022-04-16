@@ -37,7 +37,7 @@ import { LimitsFormComponent } from './limits-form/limits-form.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { EditFormComponent } from './edit-form/edit-form.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c',
@@ -62,6 +62,7 @@ const app = initializeApp(firebaseConfig);
     ProfileComponent,
     LimitsFormComponent,
     EditFormComponent,
+    
     ],
   imports: [
     BrowserModule,
@@ -85,7 +86,8 @@ const app = initializeApp(firebaseConfig);
     BrowserAnimationsModule,
     NgChartsModule,
     Ng2SearchPipeModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent],

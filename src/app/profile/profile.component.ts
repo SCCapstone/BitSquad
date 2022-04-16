@@ -6,6 +6,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { userData } from '../model/userData';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { Router } from '@angular/router';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -58,6 +59,7 @@ export class ProfileComponent implements OnInit {
   }
 
 
+
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
@@ -67,12 +69,16 @@ export class ProfileComponent implements OnInit {
         position: 'left', // change legend position here
       },
       datalabels: {
+        display:false // disabled the data label
+        /*
         formatter: (value, ctx) => {
           if (ctx.chart.data.labels) {
             return ctx.chart.data.labels[ctx.dataIndex];
           }
         },
+        */
       },
+      
     }
   };
 
@@ -116,4 +122,5 @@ export class ProfileComponent implements OnInit {
       this.chart?.update();
       this.chart?.render();
     }
+    
 }
