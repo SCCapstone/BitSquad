@@ -27,6 +27,8 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { YouTubePlayerModule } from '@angular/youtube-player';
+// import { VideoComponent } from './video.component';
 
 import { CountdownModule } from 'ngx-countdown';
 import { UserPageComponent } from './user-page/user-page.component';
@@ -64,7 +66,7 @@ const app = initializeApp(firebaseConfig);
     LimitsFormComponent,
     EditFormComponent,
     AboutComponent,
-    
+
     ],
   imports: [
     BrowserModule,
@@ -89,7 +91,8 @@ const app = initializeApp(firebaseConfig);
     NgChartsModule,
     Ng2SearchPipeModule,
     MatCheckboxModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    YouTubePlayerModule
   ],
   providers: [],
   bootstrap: [AppComponent],
