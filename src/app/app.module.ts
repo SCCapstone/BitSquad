@@ -41,6 +41,8 @@ import { EditFormComponent } from './edit-form/edit-form.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AboutComponent } from './about/about.component';
+import { MainComponent } from './main/main.component';
+
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c',
@@ -66,6 +68,8 @@ const app = initializeApp(firebaseConfig);
     LimitsFormComponent,
     EditFormComponent,
     AboutComponent,
+    MainComponent,
+
 
     ],
   imports: [
