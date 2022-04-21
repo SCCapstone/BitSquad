@@ -63,6 +63,7 @@ export class ProcessTableComponent implements OnInit{
     less:false
   }
   stop = false;
+  buttonPressed = false;
 
   constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent
      ) {
@@ -288,6 +289,7 @@ export class ProcessTableComponent implements OnInit{
 
     this.changeTime2();
     this.stop = false;
+    this.buttonPressed = true;
     if(p.warning1 != null)
     {
       this.warnList.push(p.warning1 * 60);
@@ -392,7 +394,11 @@ export class ProcessTableComponent implements OnInit{
       console.log(this.processService.getProcessName())
       this.accountService.updateAnalytics() // update analytics data
       }
-      notifyMe();
+
+      if(this.buttonPressed == true) 
+      {
+        notifyMe();
+      }
       //this.sendNotification();
 
       this.currentProcess = "no process is running";
