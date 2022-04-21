@@ -1,7 +1,7 @@
 <!--INACTIVE-->
 
 <body style="background-color:rgb(25, 230, 6);">
-    <h1>Start a Process Timer</h1>
+    <!-- <h1>Start a Process Timer</h1> -->
     <button (click)="changeTime2()">Start Session</button>
     <!--start button from process table must start the timer-->
     <h1><countdown #cd [config]="{leftTime: realTime, notify: 5}" (event)="handleEvent1($event)"></countdown></h1>
@@ -10,6 +10,6 @@
     <button (click)="cd.resume()">Resume</button>
     <button (click)="cd.restart()">Reset</button>
     <button (click)="resetToZero()">Cancel</button>
-    
+
     <p>Status of Session: {{status}} </p>
     </body>

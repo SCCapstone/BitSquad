@@ -59,7 +59,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 export class ProcessTableComponent implements OnInit{
   [x: string]: any;
-  currentProcess ="no process is running"
+  currentProcess ="no process is running";
+  processRunning = false;
+  timerText = "Start a Process Timer";
   user = "";
   userID:any;
   Process: Process[] = [];
@@ -247,6 +249,13 @@ export class ProcessTableComponent implements OnInit{
     }
 
   }
+  setTimerText(){
+    if (this.processRunning == true){
+      this.timerText = "Enjoy your Time!";
+    } else {
+      this.timerText = "Start a Process Timer";
+    }
+  }
 
 
   searchProcesses(searchStr:string) {
@@ -296,6 +305,8 @@ export class ProcessTableComponent implements OnInit{
     this.processService.setTimer(time)
     this.processService.setCurrentProccess(name)
     this.currentProcess = name;
+    this.processRunning = true;
+    this.setTimerText();
     //***THIS ACTUALLY STARTS TIMER***
 
     this.changeTime2();
@@ -360,6 +371,9 @@ export class ProcessTableComponent implements OnInit{
     this.realTime = 0;
     this.stop = true; // update stop status here
     this.currentProcess ="no process is running"
+    this.processRunning = false;
+    this.setTimerText();
+
   }
   getTime(val:string)
   {
@@ -406,13 +420,16 @@ export class ProcessTableComponent implements OnInit{
       this.accountService.updateAnalytics() // update analytics data
       }
 
-      if(this.buttonPressed == true) 
+      if(this.buttonPressed == true)
       {
         notifyMe();
       }
       //this.sendNotification();
 
       this.currentProcess = "no process is running";
+      this.processRunning = false;
+      this.setTimerText();
+
       this.stop = true;
       //alert("Process Finished");
 

@@ -63,10 +63,16 @@ mat-card.timer-card {
   width: 25%;
   margin: 0 auto;
   text-align: center;
+
 }
 
 mat-card-content.limit-card-body {
   font-size: medium;
+}
+mat-card-content.timer-card-body {
+  font-size: 69px;
+    line-height: 54px;
+    font-weight: 350;
 }
 
 .right {
