@@ -42,6 +42,10 @@ To view the analytics page you will need to install another module
 
 >npm install ng2-charts --save
 
+To view the embedded YouTube demo video on the about page you will need to install another module
+
+>npm i @angular/youtube-player
+
 ## Running
 To open on localhost port 4200:
 
