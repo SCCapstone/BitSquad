@@ -17,6 +17,17 @@ document.addEventListener('DOMContentLoaded', function() {
    Notification.requestPermission();
  });
 
+ function AdjustedTimerNotifyMe(){
+  if (Notification.permission !== 'granted')
+  Notification.requestPermission();
+ else {
+  var notification = new Notification('BitSquad Notfifier', {
+   body: 'Limit is less than requested time amount: Timer set to remaining time allowance',
+  });
+
+ }
+}
+
  function WarningnNotifyMe(){
   if (Notification.permission !== 'granted')
   Notification.requestPermission();
@@ -332,7 +343,7 @@ export class ProcessTableComponent implements OnInit{
       {
         this.realTime = this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM) - this.cumulativeTime;
         //send notification that you only have (X) amount of valid time left and the timer has been adjusted
-        alert("Timer set to remaining time allowance")
+        AdjustedTimerNotifyMe();
       }
       //otherwise set timer as normal
       else
