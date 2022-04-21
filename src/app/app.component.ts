@@ -25,6 +25,23 @@ profile(){
 home(){
   this.router.navigate(['user-page'])
 }
+
+about() {
+  this.router.navigate(['about']);
+}
+
+signIn() {
+  this.router.navigate(['sign-in'])
+}
+
+register() {
+  this.router.navigate(['register'])
+}
+
+main() {
+  this.router.navigate(['main']);
+}
+
 logOut(){
   console.log("called logout")
   const auth = getAuth();
@@ -37,5 +54,7 @@ logOut(){
   });
   window.location.reload(); // need to reload the webpage to reset everything
 }
+
+
 
 }

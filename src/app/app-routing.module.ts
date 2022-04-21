@@ -10,8 +10,10 @@ import { TimerStartComponent } from './timer-start/timer-start.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { ProcessFormComponent } from './process-form/process-form.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AboutComponent } from './about/about.component';
 // to enable routing, add route here
 const routes: Routes = [
+  {path: 'about', component:AboutComponent},
   {path: 'sign-in', component:SignInComponent},
   {path:'register', component: RegisterComponent},
   {path:'process-table',component:ProcessTableComponent},
