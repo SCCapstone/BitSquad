@@ -1,18 +1,9 @@
-<!-- <mat-toolbar color="accent" class="navbar">
-  <div> BitSquad Screen Time Limiter: Home </div>
-  <div >
-    <button (click)="home()" mat-raised-button color="accent">Home</button>
-
-    <button (click)="profile()" mat-raised-button color="accent">Analytics</button>
-    <button (click) ="logOut()"mat-raised-button color="accent">Log Out</button>
-  </div>
-</mat-toolbar> -->
 <div class="buttons">
   <button mat-raised-button color="accent" (click)="onAddProcess()">New Process</button>
   <button mat-raised-button color="accent" (click)="editLimits(this.limits[0])" > Set Limits</button>
 </div>
-<h1>Welcome, {{user}}</h1>
 
+<br>
 
 <mat-card class="limit-card">
   <div *ngIf="this.limitType =='daily'"> 

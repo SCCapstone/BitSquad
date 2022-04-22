@@ -1,22 +1,13 @@
-button {
-    margin-top: 10px;
-    background-color: #05f283;
-    padding: .5rem;
-    border-radius: 8px;
-    font-size: 1rem;
-  }
-  button:hover {
-    margin-top: 10px;
-    background-color: #04bf68;
-    padding: .5rem;
-    border-radius: 8px;
-    font-size: 1rem;
-  }
-  button:active{
-    margin-top: 10px;
-    background-color: #05f205;
-    padding: .5rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: #fafafa;
-  }
+mat-card.video-demo-card {
+  // width: 25%;
+  // margin: 0 auto;
+  // text-align: left;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+.videoheader{
+  width: 25%;
+  margin: 0 auto;
+  text-align: center;
+}

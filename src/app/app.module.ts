@@ -28,6 +28,9 @@ import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatRadioModule } from '@angular/material/radio';
+import { YouTubePlayerModule } from '@angular/youtube-player';
+// import { VideoComponent } from './video.component';
+
 import { CountdownModule } from 'ngx-countdown';
 import { UserPageComponent } from './user-page/user-page.component';
 import { ProcessFormComponent } from './process-form/process-form.component';
@@ -37,7 +40,10 @@ import { LimitsFormComponent } from './limits-form/limits-form.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { EditFormComponent } from './edit-form/edit-form.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { AboutComponent } from './about/about.component';
+import { MainComponent } from './main/main.component';
+
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBIKj9T8JeG5_gCO1kuBCwpbT2tTIo1I6c',
@@ -64,6 +70,10 @@ const app = initializeApp(firebaseConfig);
     EditFormComponent,
     
     
+    AboutComponent,
+    MainComponent,
+
+
     ],
   imports: [
     BrowserModule,
@@ -89,7 +99,8 @@ const app = initializeApp(firebaseConfig);
     Ng2SearchPipeModule,
     MatCheckboxModule,
     MatSlideToggleModule,
-    MatRadioModule
+    MatRadioModule,
+    YouTubePlayerModule
   ],
   providers: [],
   bootstrap: [AppComponent],

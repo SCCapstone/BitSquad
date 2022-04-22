@@ -17,6 +17,17 @@ document.addEventListener('DOMContentLoaded', function() {
    Notification.requestPermission();
  });
 
+ function AdjustedTimerNotifyMe(){
+  if (Notification.permission !== 'granted')
+  Notification.requestPermission();
+ else {
+  var notification = new Notification('BitSquad Notfifier', {
+   body: 'Limit is less than requested time amount: Timer set to remaining time allowance',
+  });
+
+ }
+}
+
  function WarningnNotifyMe(){
   if (Notification.permission !== 'granted')
   Notification.requestPermission();
@@ -48,7 +59,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 export class ProcessTableComponent implements OnInit{
   [x: string]: any;
-  currentProcess ="no process is running"
+  currentProcess ="no process is running";
+  processRunning = false;
+  timerText = "Start a Process Timer";
   user = "";
   userID:any;
   Process: Process[] = [];
@@ -63,6 +76,7 @@ export class ProcessTableComponent implements OnInit{
     less:false
   }
   stop = false;
+  buttonPressed = false;
 
   constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent
      ) {
@@ -235,6 +249,13 @@ export class ProcessTableComponent implements OnInit{
     }
 
   }
+  setTimerText(){
+    if (this.processRunning == true){
+      this.timerText = "Enjoy your Time on " + this.currentProcess + "!";
+    } else {
+      this.timerText = "Start a Process Timer";
+    }
+  }
 
 
   searchProcesses(searchStr:string) {
@@ -284,10 +305,13 @@ export class ProcessTableComponent implements OnInit{
     this.processService.setTimer(time)
     this.processService.setCurrentProccess(name)
     this.currentProcess = name;
+    this.processRunning = true;
+    this.setTimerText();
     //***THIS ACTUALLY STARTS TIMER***
 
     this.changeTime2();
     this.stop = false;
+    this.buttonPressed = true;
     if(p.warning1 != null)
     {
       this.warnList.push(p.warning1 * 60);
@@ -330,7 +354,7 @@ export class ProcessTableComponent implements OnInit{
       {
         this.realTime = this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM) - this.cumulativeTime;
         //send notification that you only have (X) amount of valid time left and the timer has been adjusted
-        alert("Timer set to remaining time allowance")
+        AdjustedTimerNotifyMe();
       }
       //otherwise set timer as normal
       else
@@ -347,6 +371,9 @@ export class ProcessTableComponent implements OnInit{
     this.realTime = 0;
     this.stop = true; // update stop status here
     this.currentProcess ="no process is running"
+    this.processRunning = false;
+    this.setTimerText();
+
   }
   getTime(val:string)
   {
@@ -366,7 +393,7 @@ export class ProcessTableComponent implements OnInit{
   {
     if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
-        this.mycolor = '#E60606'
+        this.mycolor = '#f44336'
         return true;
       }
       else{
@@ -392,10 +419,17 @@ export class ProcessTableComponent implements OnInit{
       console.log(this.processService.getProcessName())
       this.accountService.updateAnalytics() // update analytics data
       }
-      notifyMe();
+
+      if(this.buttonPressed == true)
+      {
+        notifyMe();
+      }
       //this.sendNotification();
 
       this.currentProcess = "no process is running";
+      this.processRunning = false;
+      this.setTimerText();
+
       this.stop = true;
       //alert("Process Finished");
 
