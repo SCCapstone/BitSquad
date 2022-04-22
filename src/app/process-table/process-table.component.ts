@@ -251,7 +251,7 @@ export class ProcessTableComponent implements OnInit{
   }
   setTimerText(){
     if (this.processRunning == true){
-      this.timerText = "Enjoy your Time!";
+      this.timerText = "Enjoy your Time on " + this.currentProcess + "!";
     } else {
       this.timerText = "Start a Process Timer";
     }
@@ -393,7 +393,7 @@ export class ProcessTableComponent implements OnInit{
   {
     if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
-        this.mycolor = '#E60606'
+        this.mycolor = '#f44336'
         return true;
       }
       else{
