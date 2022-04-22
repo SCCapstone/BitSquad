@@ -1,12 +1,13 @@
 import { Component, OnInit , ViewChild} from '@angular/core';
 import { AccountService } from '../services/account-service.service';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartType, Chart} from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 import { userData } from '../model/userData';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import {MatRadioModule} from '@angular/material/radio';
+import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -26,6 +27,7 @@ export class ProfileComponent implements OnInit {
   data:number[] = []
   labels:string[] = []
   timeUnit = "second";
+  public barChart: Chart | undefined;
   visible = false; // this boolean variable controls the visibility of unit convert button
   constructor(private router: Router,private toolbar:MatToolbarModule, private accountService: AccountService, private radioModule: MatRadioModule) {
     
@@ -51,6 +53,36 @@ export class ProfileComponent implements OnInit {
       this.statement = "Total usage: " + this.total+" "+this.showing;
       this.visible = true;
     }
+
+    this.barChart = new Chart("canvas", {
+      type: "bar",
+      data: {
+        labels: this.labels,
+        datasets: [
+          {
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(255, 159, 64, 0.2)"
+            ],
+            data: this.data,
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio:true,
+        scales: {
+
+        }
+      }
+    });
+
+
   }
   profile(){
     this.router.navigate(['profile'])
