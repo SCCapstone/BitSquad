@@ -1,16 +1,8 @@
-<!-- <mat-toolbar color="accent" class="navbar">
-  <div> BitSquad Screen Time Limiter: Analytics </div>
-  <div >
-    <button (click)="home()" mat-raised-button color="accent">Home</button>
-    <button (click)="profile()" mat-raised-button color="accent">Analytics</button>
 
-  </div>
-</mat-toolbar> -->
 
 <div>
     <h1>Profile</h1>
-   <h2>Your email is: {{user}}</h2>
-   <h2>Your uid is: {{uid}}</h2>
+   
 </div>
 
 <div>
@@ -25,7 +17,16 @@
         </canvas>
       </div>
     </div>
+    <div>
+      <h2>Time unit</h2>
+    </div>
+    
+    <mat-radio-group aria-label="time unit" [(ngModel)]="timeUnit">
+      <mat-radio-button value="second">Second</mat-radio-button>
+      <mat-radio-button value="minute">Minute</mat-radio-button>
+      <mat-radio-button value="hour">Hour</mat-radio-button>
+    </mat-radio-group>
     <div class="button-row" *ngIf="this.visible" >
-      <button mat-button mat-raised-button color="primary" (click)="convert()">Convert Time Unit</button>
+      <button mat-button mat-raised-button color="primary" (click)="convert(timeUnit)">Convert Time Unit</button>
     </div>
   </div>

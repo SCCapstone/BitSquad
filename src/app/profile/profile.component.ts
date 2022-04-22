@@ -6,7 +6,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { userData } from '../model/userData';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { Router } from '@angular/router';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatRadioModule} from '@angular/material/radio';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -25,9 +25,10 @@ export class ProfileComponent implements OnInit {
   uid:any;
   data:number[] = []
   labels:string[] = []
+  timeUnit = "second";
   visible = false; // this boolean variable controls the visibility of unit convert button
-  constructor(private router: Router,private toolbar:MatToolbarModule, private accountService: AccountService) {
-
+  constructor(private router: Router,private toolbar:MatToolbarModule, private accountService: AccountService, private radioModule: MatRadioModule) {
+    
   }
 
 
@@ -70,13 +71,6 @@ export class ProfileComponent implements OnInit {
       },
       datalabels: {
         display:false // disabled the data label
-        /*
-        formatter: (value, ctx) => {
-          if (ctx.chart.data.labels) {
-            return ctx.chart.data.labels[ctx.dataIndex];
-          }
-        },
-        */
       },
       
     }
@@ -98,27 +92,58 @@ export class ProfileComponent implements OnInit {
       console.log(event, active);
     }
 
-    convert():void{
-      if(this.showing == 'seconds'){
-        this.showing = 'minutes'
-        this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-          this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
-        })
-        this.total = (this.total / 60).toFixed(2)
-      } else if(this.showing == 'minutes'){
-        this.showing = 'hours'
-        this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-          this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
-        })
-        this.total = (this.total / 60).toFixed(2)
-      } else if(this.showing == 'hours'){
-        this.showing = 'seconds'
-        this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-          this.pieChartData.datasets[0].data[dataIndex] =+ (val * 3600).toFixed(2)
-        })
-        this.total = this.userData.total
+    convert(unit:String):void{
+      // convert time unit accordinng to the unit parameter
+      switch(unit){
+        case 'second': // convert minute or hour to second
+          if(this.showing == 'minutes'){
+            this.showing = 'hours'
+            this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
+              this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
+            })
+            this.total = (this.total / 60).toFixed(2)
+          } else if(this.showing == 'hours'){
+            this.showing = 'seconds'
+            this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
+              this.pieChartData.datasets[0].data[dataIndex] =+ (val * 3600).toFixed(2)
+            })
+            this.total = this.userData.total
+          }
+          break;
+          case 'minute': // convert second or hour to minute
+            if(this.showing == 'seconds'){
+              this.showing = 'minutes'
+              this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
+                this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
+              })
+              this.total = (this.total / 60).toFixed(2)
+            } else if(this.showing == 'hours'){
+              this.showing = 'seconds'
+              this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
+                this.pieChartData.datasets[0].data[dataIndex] =+ (val * 3600).toFixed(2)
+              })
+              this.total = this.userData.total
+            }
+            break;
+            case 'hour': // convert second or minute to hour
+              if(this.showing == 'seconds'){
+                this.showing = 'minutes'
+                this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
+                  this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
+                })
+                this.total = (this.total / 60).toFixed(2)
+              } else if(this.showing == 'minutes'){
+                this.showing = 'hours'
+                this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
+                  this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
+                })
+                this.total = (this.total / 60).toFixed(2)
+              } 
+              break;
       }
+
       this.statement = "Total usage: " + this.total+" "+this.showing; // update the statement
+      //update the chart
       this.chart?.update();
       this.chart?.render();
     }

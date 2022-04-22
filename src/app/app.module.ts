@@ -27,7 +27,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { MatRadioModule } from '@angular/material/radio';
 import { CountdownModule } from 'ngx-countdown';
 import { UserPageComponent } from './user-page/user-page.component';
 import { ProcessFormComponent } from './process-form/process-form.component';
@@ -63,6 +63,7 @@ const app = initializeApp(firebaseConfig);
     LimitsFormComponent,
     EditFormComponent,
     
+    
     ],
   imports: [
     BrowserModule,
@@ -87,7 +88,8 @@ const app = initializeApp(firebaseConfig);
     NgChartsModule,
     Ng2SearchPipeModule,
     MatCheckboxModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent],
