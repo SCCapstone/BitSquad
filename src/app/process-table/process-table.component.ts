@@ -190,9 +190,7 @@ export class ProcessTableComponent implements OnInit{
     if(this.options.equal == true){
       if(parseInt(keys[0])> 0) {
       this.Process.forEach(p=>{
-        if(p.timeLimitH == parseInt(keys[0]))
-        temp.push(p);
-        else if(p.timeLimitH == parseInt(keys[0]) && p.timeLimitM == parseInt(keys[1]))
+        if(p.timeLimitH == parseInt(keys[0]) && p.timeLimitM == parseInt(keys[1]))
         temp.push(p);
       })
     } else if(parseInt(keys[1])> 0){
@@ -261,11 +259,17 @@ export class ProcessTableComponent implements OnInit{
   searchProcesses(searchStr:string) {
     let results: Process[] = [];
     searchStr = searchStr.toLowerCase();
-
+    if(searchStr == ""){
+      this.restore();
+    }
+    else{
     this.Process.forEach(p=> {
       if (p.processName.toLowerCase().indexOf(searchStr) >= 0) results.push(p);
     });
     this.Process = results;
+    }
+
+    
   }
 
   removeProcess (p:Process) {
