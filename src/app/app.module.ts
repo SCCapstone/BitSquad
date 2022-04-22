@@ -101,13 +101,9 @@ const app = initializeApp(firebaseConfig);
     Ng2SearchPipeModule,
     MatCheckboxModule,
     MatSlideToggleModule,
-<<<<<<< HEAD
     MatRadioModule,
-    YouTubePlayerModule
-=======
     YouTubePlayerModule,
     MatGridListModule
->>>>>>> 0cd064e1906eaa0570837c29563d86a65f43cfdf
   ],
   providers: [],
   bootstrap: [AppComponent],
