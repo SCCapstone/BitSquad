@@ -132,17 +132,17 @@ export class ProfileComponent implements OnInit {
       switch(unit){
         case 'second': // convert minute or hour to second
           if(this.showing == 'minutes'){
-            this.showing = 'hours'
+            this.showing = 'seconds'
             this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-              this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
+              this.pieChartData.datasets[0].data[dataIndex] =+ (val * 60).toFixed(2)
             })
-            this.total = (this.total / 60).toFixed(2)
+            this.total = this.userData.total // when converting any other time unit to seconds, just get the original data
           } else if(this.showing == 'hours'){
             this.showing = 'seconds'
             this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
               this.pieChartData.datasets[0].data[dataIndex] =+ (val * 3600).toFixed(2)
             })
-            this.total = this.userData.total
+            this.total = this.userData.total 
           }
           break;
           case 'minute': // convert second or hour to minute
@@ -150,28 +150,28 @@ export class ProfileComponent implements OnInit {
               this.showing = 'minutes'
               this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
                 this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
-              })
-              this.total = (this.total / 60).toFixed(2)
+              }) // second to minute means /60
+              this.total = (this.total / 60).toFixed(2) 
             } else if(this.showing == 'hours'){
-              this.showing = 'seconds'
+              this.showing = 'minutes'
               this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-                this.pieChartData.datasets[0].data[dataIndex] =+ (val * 3600).toFixed(2)
-              })
-              this.total = this.userData.total
+                this.pieChartData.datasets[0].data[dataIndex] =+ (val * 60).toFixed(2)
+              }) // hour to minute means *60
+              this.total = (this.total * 60).toFixed(2)
             }
             break;
             case 'hour': // convert second or minute to hour
               if(this.showing == 'seconds'){
-                this.showing = 'minutes'
+                this.showing = 'hours'
                 this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
-                  this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
-                })
-                this.total = (this.total / 60).toFixed(2)
+                  this.pieChartData.datasets[0].data[dataIndex] =+ (val / 3600).toFixed(2)
+                }) // second to hour means /3600
+                this.total = (this.total / 3600).toFixed(2)
               } else if(this.showing == 'minutes'){
                 this.showing = 'hours'
                 this.pieChartData.datasets[0].data.forEach((val,dataIndex) =>{
                   this.pieChartData.datasets[0].data[dataIndex] =+ (val / 60).toFixed(2)
-                })
+                }) // minute to hour means /60
                 this.total = (this.total / 60).toFixed(2)
               } 
               break;
