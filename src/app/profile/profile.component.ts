@@ -178,9 +178,11 @@ export class ProfileComponent implements OnInit {
       }
 
       this.statement = "Total usage: " + this.total+" "+this.showing; // update the statement
-      //update the chart
+      //update charts
       this.chart?.update();
       this.chart?.render();
+      this.barChart?.update();
+      this.barChart?.render();
     }
     
 }
