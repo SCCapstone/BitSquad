@@ -70,6 +70,7 @@ export class ProcessTableComponent implements OnInit{
   limit:number = 0;
   filterKey:any;
   searchKey:any;
+  sortByPopKey = "up";
   options = {
     greater: false,
     equal:false,
@@ -205,14 +206,26 @@ export class ProcessTableComponent implements OnInit{
     this.Process = temp
   }
 
-  sortByPopularity(){
+  sortByPopularity(key:string){
+    
     this.userData = this.accountService.getAnalytics();
     this.total = this.userData.total
+    if(key == "up"){
+      // sort popularity from most to least
     var temp = this.Process.sort(function(a,b){
       if(a.processName[0] < b.processName[0]) { return -1; }
       if(a.processName[0] > b.processName[0]) { return 1; }
       return 0;
-  })
+  });
+    } else{
+      // sort popularity from least to most
+      var temp = this.Process.sort(function(a,b){
+        if(a.processName[0] < b.processName[0]) { return -1; }
+        if(a.processName[0] > b.processName[0]) { return 1; }
+        return 0;
+    });
+    }
+
 
 
   console.log(temp)

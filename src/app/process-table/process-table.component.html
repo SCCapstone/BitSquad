@@ -33,7 +33,15 @@
 </div>
 <div class = "grid-child">
   <h2>Sort by Popularity</h2>
-  <button (click)="sortByPopularity()">Sort</button>
+  <div>
+  <mat-radio-group [(ngModel)] = "sortByPopKey">
+    <mat-radio-button value="up">Most to least</mat-radio-button>
+    <h2> </h2>
+    <mat-radio-button value="down">Least to most</mat-radio-button>
+  </mat-radio-group>
+  </div>
+
+  <button (click)="sortByPopularity(sortByPopKey)">Sort</button>
 </div>
   <div class ="grid-child">
     <h2>Filter by Time Limit</h2>
