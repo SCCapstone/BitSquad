@@ -29,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 // import { VideoComponent } from './video.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { CountdownModule } from 'ngx-countdown';
 import { UserPageComponent } from './user-page/user-page.component';
@@ -71,6 +72,7 @@ const app = initializeApp(firebaseConfig);
     MainComponent,
 
 
+
     ],
   imports: [
     BrowserModule,
@@ -96,7 +98,8 @@ const app = initializeApp(firebaseConfig);
     Ng2SearchPipeModule,
     MatCheckboxModule,
     MatSlideToggleModule,
-    YouTubePlayerModule
+    YouTubePlayerModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent],
