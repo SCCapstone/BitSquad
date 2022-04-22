@@ -60,6 +60,7 @@ export class ProfileComponent implements OnInit {
         labels: this.labels,
         datasets: [
           {
+            
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
@@ -76,9 +77,11 @@ export class ProfileComponent implements OnInit {
       options: {
         responsive: true,
         maintainAspectRatio:true,
-        scales: {
-
-        }
+        plugins: {
+          legend: {
+              display: false
+          }
+      }
       }
     });
 
