@@ -46,23 +46,20 @@ export class UserPageComponent implements OnInit {
           } as Limits;
         })
         const today = new Date().getDay();
-        this.limitType = this.limits[0].limitType;
-        if(this.limits[0].limitType == "daily") {
-          this.dailyH = this.setHourLimitForToday(today, this.limits[0]);
-          this.dailyM = this.setMinuteLimitForToday(today, this.limits[0]);
-          console.log("Today's hours: " + this.dailyH + " Today's Minutes: " + this.dailyM);
-        } else if(this.limits[0].limitType == "weekly") {
-            this.weeklyH = this.limits[0].weeklyLimitH;
-            this.weeklyM = this.limits[0].weeklyLimitM;
-            //today is sunday and user has not logged in today
-            if(today == 0 && localStorage.getItem('lastLogin') != "0") {
-              //reset weekly
-              this.accountService.resetWeeklyLimit();
-            }
-            else if(today != 0) {
-              //set local weekly usage variable from firebase
-              this.weeklyUsage = this.limits[0].weeklyLimitH*3600 + this.limits[0].weeklyLimitM*60;
-            }
+        
+        this.dailyH = this.setHourLimitForToday(today, this.limits[0]);
+        this.dailyM = this.setMinuteLimitForToday(today, this.limits[0]);
+        this.weeklyH = this.limits[0].weeklyLimitH;
+        this.weeklyM = this.limits[0].weeklyLimitM;
+        
+        //today is sunday and user has not logged in today
+        if(today == 0 && localStorage.getItem('lastLogin') != "0") {
+          //reset weekly
+          this.accountService.resetWeeklyLimit();
+        }
+        else if(today != 0) {
+          //set local weekly usage variable from firebase
+          this.weeklyUsage = this.limits[0].weeklyLimitH*3600 + this.limits[0].weeklyLimitM*60;
         }
         
 
