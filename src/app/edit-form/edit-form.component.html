@@ -63,9 +63,7 @@
     <mat-error *ngIf="editForm.errors?.warning3Before1Or2">Warnings 1 and 2 must be complete before adding a third warning</mat-error>
 
     <br>
-    <br>
-    <br>
-    <mat-dialog-actions>
+    <mat-dialog-actions align="end">
       <button mat-raised-button color="warn" (click)="exitWithoutSave()">Cancel</button>
       <button mat-raised-button color="accent" [disabled]=!editForm.valid (click)="saveChanges()">Save</button>
     </mat-dialog-actions>

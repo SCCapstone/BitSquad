@@ -1,10 +1,6 @@
-<br>
-<mat-card class="border">
-  <mat-card class="add-process-page">
-    <h1 mat-card-title>Add Process</h1>
+    <h1 mat-dialog-title>Add Process</h1>
 
-    <mat-card-content>
-      <form [formGroup]="processForm">
+    <mat-dialog-content [formGroup]="processForm">
 
         <mat-form-field>
           <input matInput type="text" formControlName='processName' class = 'form-control'  placeholder="Process Name" required>
@@ -68,12 +64,10 @@
         <mat-error *ngIf="processForm.errors?.warning3Before1Or2">Warnings 1 and 2 must be complete before adding a third warning</mat-error>
 
         <br>
-        <br>
-        <button mat-raised-button color="accent" [disabled]="!processForm.valid"
+        <mat-dialog-actions align="end">
+          <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+          <button mat-raised-button color="accent" [disabled]="!processForm.valid"
           (click)="onSubmit()">Create Process
-        </button>
-
-      </form>
-    </mat-card-content>
-  </mat-card>
-</mat-card>
+          </button>
+        </mat-dialog-actions>
+    </mat-dialog-content>

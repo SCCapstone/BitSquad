@@ -6,12 +6,13 @@ import { UserPageComponent } from '../user-page/user-page.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditFormComponent} from '../edit-form/edit-form.component';
 import { CountdownEvent } from 'ngx-countdown';
-import { ValueTransformer } from '@angular/compiler/src/util';
 import { Usage } from '../model/usage';
 import { UsageService } from '../services/usage-service.service';
 import { RemoveDialogComponent } from '../remove-dialog/remove-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { ProcessFormComponent } from '../process-form/process-form.component';
+
 
 const KEY = 'time'
 const DEFAULT = '0'
@@ -90,7 +91,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   //allows for sorting data using Angular functions
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor (private accountService: AccountService, private dialog: MatDialog, private removeDialog:MatDialog, private processService: ProcessService, private userPage: UserPageComponent, private usageService: UsageService
+  constructor (private accountService: AccountService, private editDialog: MatDialog, private removeDialog:MatDialog, private addDialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent, private usageService: UsageService, private router: Router
      ) {
 
   }
@@ -255,7 +256,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
       ...p   //copies data from given process
     };
 
-    this.dialog.open(EditFormComponent, dialogConfig)
+    this.editDialog.open(EditFormComponent, dialogConfig)
     .afterClosed()
       .subscribe(values => {
 
@@ -394,6 +395,14 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     }
   }
 
+  onAddProcess() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.closeOnNavigation = true;
+    dialogConfig.disableClose = true;
+    dialogConfig.width = "500px";
+    this.addDialog.open(ProcessFormComponent, dialogConfig); 
+  }
   /**
    * Injects the process associated with the row on which the trash can button is clicked to the 
    * RemoveDialogComponent, which either cancels or performs the delete
