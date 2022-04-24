@@ -99,7 +99,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
 
   processRunning = false;
   realTime = 25;
-  cumulativeTime = 0
+  timeToAdd = 0
   cumulativeMins = 0
   cumulativeHours = 0 
   cumulativeHoursWeek = 0
@@ -200,10 +200,10 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
 
   testMethod2(time:string|null) {
     if(time == null) {
-      this.cumulativeTime = 0
+      this.timeToAdd = 0
     }
     else {
-      this.cumulativeTime = parseInt(time)
+      this.timeToAdd = parseInt(time)
     }
   }
 
@@ -493,9 +493,16 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   changeTime2()
   {
       // checks if user tries to start a process's timer that will run over the daily allowance
-      if(this.cumulativeTime + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
+      if(this.timeToAdd + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
-        this.realTime = this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM) - this.cumulativeTime;
+        this.realTime = this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM) - this.timeToAdd;
+        localStorage.setItem("timeToPush", this.realTime.toString())
+
+        // send notification that you only have (X) amount of valid time left and the timer has been adjusted
+        AdjustedTimerNotifyMe();
+      }
+      else if(this.timeToAdd + this.processService.getTimer() > this.getTotalSeconds(this.userPage.weeklyH, this.userPage.weeklyM)) {
+        this.realTime = this.getTotalSeconds(this.userPage.weeklyH, this.userPage.weeklyM) - this.timeToAdd;
         localStorage.setItem("timeToPush", this.realTime.toString())
 
         // send notification that you only have (X) amount of valid time left and the timer has been adjusted
@@ -548,8 +555,8 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     }
     if(this.getTotalSeconds(this.cumulativeHoursWeek, this.cumulativeMinsWeek) >= this.getTotalSeconds(this.userPage.weeklyH, this.userPage.weeklyM))
     {
-      //this.mycolor = '#f44336'
-      //return true;
+      this.mycolor = '#f44336'
+      return true;
     }
     else
     {
@@ -576,7 +583,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     if(event.action == 'done' && this.stop == false)
     {
       console.log(this.realTime);
-      // updates cumulativeTime, sends notifcation of time expiration, updates analytics
+      // updates cumulative hours and mins for day and week, sends notifcation of time expiration, updates analytics
       if(this.processService.getProcessName() != null) {// make sure there is a process currently been tracking
         console.log(this.processService.getProcessName())
         this.accountService.updateAnalytics() // update analytics data
@@ -588,11 +595,11 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
         console.log("DONE NOTIFY HERE")
         localStorage.getItem("timeToPush")
         this.testMethod2(localStorage.getItem("timeToPush"))
-        this.cumulativeHours += this.getHours(this.cumulativeTime)
-        this.cumulativeMins += this.getMinutes(this.cumulativeTime)
+        this.cumulativeHours += this.getHours(this.timeToAdd)
+        this.cumulativeMins += this.getMinutes(this.timeToAdd)
 
-        this.cumulativeHoursWeek += this.getHours(this.cumulativeTime)
-        this.cumulativeMinsWeek += this.getMinutes(this.cumulativeTime)
+        this.cumulativeHoursWeek += this.getHours(this.timeToAdd)
+        this.cumulativeMinsWeek += this.getMinutes(this.timeToAdd)
 
         this.usageService.updateUsage(localStorage.getItem('uid'), this.cumulativeHours, this.cumulativeMins,
                             this.cumulativeHoursWeek, this.cumulativeMinsWeek, this.lastLogin, this.lastLoginWeek)
