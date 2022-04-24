@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AccountService } from '../services/account-service.service';
 import { Process } from '../model/process';
 import { ProcessService } from '../services/process.service';
@@ -10,6 +10,8 @@ import { ValueTransformer } from '@angular/compiler/src/util';
 import { Usage } from '../model/usage';
 import { UsageService } from '../services/usage-service.service';
 import { RemoveDialogComponent } from '../remove-dialog/remove-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 //import { DateTime } from 'luxon/src/datetime.js'
 
 
@@ -67,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 
-export class ProcessTableComponent implements OnInit{
+export class ProcessTableComponent implements OnInit, AfterViewInit{
   [x: string]: any;
   //currentProcess ="no process is running";
   //processRunning = false;
@@ -89,6 +91,9 @@ export class ProcessTableComponent implements OnInit{
   }
   stop = false;
   buttonPressed = false;
+  dataSource!: MatTableDataSource<any>;
+
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor (private accountService: AccountService, private dialog: MatDialog, private removeDialog:MatDialog, private processService: ProcessService, private userPage: UserPageComponent, private usageService: UsageService
      ) {
@@ -193,6 +198,18 @@ export class ProcessTableComponent implements OnInit{
     }
   }
 
+  ngAfterViewInit(): void {
+    this.processService.getProcessList(localStorage.getItem('uid')).subscribe(res => {
+      this.Process = res.map( e => {
+        return {
+        userID : e.payload.doc.id,
+        ...e.payload.doc.data() as{}
+      } as Process;
+    })
+    this.dataSource = new MatTableDataSource(this.Process);
+    this.dataSource.sort = this.sort;
+    });
+  }
 
   editProcess(p: Process) {
     const dialogConfig = new MatDialogConfig();
@@ -332,24 +349,7 @@ export class ProcessTableComponent implements OnInit{
   })
 
   }
-  sortAlphabetic(){
-
-    var temp = this.Process.sort(function(a, b){
-      if(a.processName[0].toLowerCase() < b.processName[0].toLowerCase()) { return -1; }
-      if(a.processName[0] > b.processName[0]) { return 1; }
-      return 0;
-  })
-
-
-  console.log(temp)
-  this.Process = [];
-  // you HAVE to do this step to make the above sorting applied to Process
-  temp.forEach(p =>{
-    this.Process.push(p)
-  })
-
-  }
-
+  
   searchByEnter(event: { key: string; }){ // key event so that press enter can call search function
     if(event.key == "Enter"){
       this.searchProcesses(this.searchKey);
