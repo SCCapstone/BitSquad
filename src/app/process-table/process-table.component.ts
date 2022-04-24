@@ -5,7 +5,15 @@ import { ProcessService } from '../services/process.service';
 import { UserPageComponent } from '../user-page/user-page.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditFormComponent} from '../edit-form/edit-form.component';
-;
+import { CountdownEvent } from 'ngx-countdown';
+import { ValueTransformer } from '@angular/compiler/src/util';
+import { Usage } from '../model/usage';
+import { UsageService } from '../services/usage-service.service';
+//import { DateTime } from 'luxon/src/datetime.js'
+
+
+const KEY = 'time'
+const DEFAULT = '0'
 
 document.addEventListener('DOMContentLoaded', function() {
   if (!Notification) {
@@ -28,12 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
  }
 }
 
- function WarningnNotifyMe(){
+ function WarningnNotifyMe(remaining:number){
   if (Notification.permission !== 'granted')
   Notification.requestPermission();
  else {
   var notification = new Notification('BitSquad Notfifier', {
-   body: 'Time is running out soon.....',
+   body: 'Time is running out soon:\n' + remaining + ':00 minute(s) left' 
   });
 
  }
@@ -59,12 +67,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 export class ProcessTableComponent implements OnInit{
   [x: string]: any;
-  currentProcess ="no process is running";
-  processRunning = false;
+  //currentProcess ="no process is running";
+  //processRunning = false;
   timerText = "Start a Process Timer";
   user = "";
   userID:any;
   Process: Process[] = [];
+  usage: Usage[] = [];
   replicateProcess: Process[] = [];
   columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings', 'actions'];
   limit:number = 0;
@@ -79,13 +88,51 @@ export class ProcessTableComponent implements OnInit{
   stop = false;
   buttonPressed = false;
 
-  constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent
+  constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent, private usageService: UsageService
      ) {
 
   }
 
+  //currentProcess ="no process is running";
+  processRunning = false;
+  realTime = 25;
+  cumulativeTime = 0
+  cumulativeMins = 0
+  cumulativeHours = 0 
+  cumulativeHoursWeek = 0
+  cumulativeMinsWeek = 0
 
+  lastLogin = ""
   ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
+    this.lastLogin = new Date().getMonth() + ", " + new Date().getDate()
+
+    let value:string | null = DEFAULT
+    //localStorage.setItem(KEY, DEFAULT);
+    if(localStorage.getItem(KEY) != null) {
+    value = localStorage.getItem(KEY)  
+    }
+    
+    this.testMethod(value)
+    //if (value < 0) value = DEFAULT
+    this.config = {...this.config, leftTime: value }
+
+    if(value != DEFAULT) {
+      //this.currentProcess = localStorage.getItem("process")
+      this.processService.setCurrentProccess(localStorage.getItem("process"))
+      
+      console.log("on it setting current process now to: " + localStorage.getItem("process"))
+      console.log(this.processService.getProcessName() + ": IS the new name")
+      console.log("CURRENT PROCESS: " + this.currentProcess)
+
+      this.buttonPressed = true
+
+      this.processRunning = true
+      this.currentProcess = this.processService.getProcessName()
+      this.setTimerText()
+    }
+  
+    
+
     this.user = this.accountService.getCurrentUserEmail();
     this.processService.getProcessList(localStorage.getItem('uid')).subscribe(res => {
       this.Process = res.map( e => {
@@ -96,7 +143,54 @@ export class ProcessTableComponent implements OnInit{
     })
     });
 
+    this.usageService.loadUsageByUserID(localStorage.getItem('uid'))
+    .subscribe(res => {
+      this.usage = res.map( e => {
+        return {
+          userID : e.payload.doc.id,
+          ...e.payload.doc.data() as {}
+        } as Usage;
+      })
+      console.log(localStorage.getItem('uid') + " IS THE ID")
+      console.log(this.usage)
+    
+      this.cumulativeHours = this.usage[0].dailyHours
+      this.cumulativeMins = this.usage[0].dailyMins
+      this.cumulativeHoursWeek = this.usage[0].weeklyHours
+      this.cumulativeMinsWeek = this.usage[0].weeklyMins
+
+      if(this.usage[0].lastLogin != this.lastLogin) {
+        
+        this.usageService.updateUsage(localStorage.getItem('uid'), 0, 0, this.cumulativeHoursWeek, this.cumulativeMinsWeek, this.lastLogin)
+      }
+      //const date = DateTime.now().weekNumber
+      //console.log(date)
+  
+      
+    });
+
+    //this.setCumulativeTime()
+    
   }
+
+  testMethod(time:string|null) {
+    if(time == null) {
+      time = DEFAULT
+    }
+    else {
+      this.changeTime(time)
+    }
+  }
+
+  testMethod2(time:string|null) {
+    if(time == null) {
+      this.cumulativeTime = 0
+    }
+    else {
+      this.cumulativeTime = parseInt(time)
+    }
+  }
+
 
   editProcess(p: Process) {
     const dialogConfig = new MatDialogConfig();
@@ -262,11 +356,13 @@ export class ProcessTableComponent implements OnInit{
   }
   setTimerText(){
     if (this.processRunning == true){
-      this.timerText = "Enjoy your Time on " + this.currentProcess + "!";
+      this.timerText = "Enjoy your Time on " + this.processService.getProcessName() + "!";
     } else {
       this.timerText = "Start a Process Timer";
     }
   }
+
+  
 
 
   searchProcesses(searchStr:string) {
@@ -318,10 +414,13 @@ export class ProcessTableComponent implements OnInit{
 
   }
 
-  onStart(time:number, name:any, p:Process): void {
+  onStart(time:number, name:string, p:Process): void {
+    localStorage.setItem("process", name)
+    localStorage.setItem("timeToPush", time.toString())
+
     this.processService.setTimer(time)
     this.processService.setCurrentProccess(name)
-    this.currentProcess = name;
+    //this.currentProcess = name;
     this.processRunning = true;
     this.setTimerText();
     //***THIS ACTUALLY STARTS TIMER***
@@ -351,7 +450,6 @@ export class ProcessTableComponent implements OnInit{
   }
   warnList:number[] = [];
 
-  realTime = 0;
   mycolor = '#00E676;'
   changeTime(val:string)
   {
@@ -370,6 +468,7 @@ export class ProcessTableComponent implements OnInit{
       else if(this.cumulativeTime + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.realTime = this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM) - this.cumulativeTime;
+        localStorage.setItem("timeToPush", this.realTime.toString())
         //send notification that you only have (X) amount of valid time left and the timer has been adjusted
         AdjustedTimerNotifyMe();
       }
@@ -382,7 +481,9 @@ export class ProcessTableComponent implements OnInit{
     console.log("called changeTime2");
     console.log(this.realTime);
   }
-
+  /**
+   * resets timer to initial states
+   */
   resetToZero()
   {
     this.realTime = 0;
@@ -400,15 +501,15 @@ export class ProcessTableComponent implements OnInit{
 
 
   //variable to keep track of cumulative usage
-  cumulativeTime = 0;
-  cumulativeMins = 0;
-  cumulativeHours = 0;
+  
+  temp = "";
+  
 
   //changes homepage appearance based on daily time limit being reached
   //sends notification
   changeDisplay(): boolean
   {
-    if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
+    if(this.getTotalSeconds(this.cumulativeHours, this.cumulativeMins) >= this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.mycolor = '#f44336'
         return true;
@@ -421,17 +522,28 @@ export class ProcessTableComponent implements OnInit{
   }
 
 
-  handleEvent1(event: { action: string; }){
+  handleEvent1(event: CountdownEvent){
+    console.log(event.action + " is the event")
+
+    if (event.action === 'notify') {
+      // Save current value
+      localStorage.setItem(KEY, `${event.left / 1000}`);
+      console.log(localStorage.getItem(KEY) + " is the key")
+    }
+
     console.log(event.action+" "+this.stop) // strange enough, when click cancel, the event.action actually is "done"
     if(event.action == 'done' && this.stop == false)
     {
       console.log(this.realTime);
       //updates cumulativeTime, sends notifcation of time expiration, updates analytics
-      this.cumulativeTime += this.realTime;
+      //this.cumulativetime += this.testMethod2(localStorage.getItem("timeToPush"))
+      //this.temp = localStorage.getItem("timeToPush")
+      //this.cumulativeTime = parseInt(this.temp)
+      //this.cumulativeTime += parseInt(localStorage.getItem("timeToPush"))
 
-      this.cumulativeHours = this.getHours(this.cumulativeTime);
-      this.cumulativeMins = this.getMinutes(this.cumulativeTime);
-      console.log(this.cumulativeTime);
+      //this.cumulativeHours = this.getHours(this.cumulativeTime);
+      //this.cumulativeMins = this.getMinutes(this.cumulativeTime);
+      //console.log(this.cumulativeTime);
       if(this.processService.getProcessName() != null) {// make sure there is a process currently been tracking
       console.log(this.processService.getProcessName())
       this.accountService.updateAnalytics() // update analytics data
@@ -440,6 +552,19 @@ export class ProcessTableComponent implements OnInit{
       if(this.buttonPressed == true)
       {
         notifyMe();
+        console.log("DONE NOTIFY HERE")
+        localStorage.getItem("timeToPush")
+        this.testMethod2(localStorage.getItem("timeToPush"))
+        this.cumulativeHours += this.getHours(this.cumulativeTime)
+        this.cumulativeMins += this.getMinutes(this.cumulativeTime)
+
+        this.cumulativeHoursWeek += this.getHours(this.cumulativeTime)
+        this.cumulativeMinsWeek += this.getMinutes(this.cumulativeTime)
+
+        this.usageService.updateUsage(localStorage.getItem('uid'), this.cumulativeHours, this.cumulativeMins,
+                            this.cumulativeHoursWeek, this.cumulativeMinsWeek, this.lastLogin)
+
+        
       }
       //this.sendNotification();
 
@@ -451,15 +576,15 @@ export class ProcessTableComponent implements OnInit{
       //alert("Process Finished");
 
 
-      if(this.cumulativeTime != this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
+      if(this.getTotalSeconds(this.cumulativeHours, this.cumulativeMins) < this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.resetToZero();
       }
       this.changeDisplay()
     }
-    else if(event.action === 'notify')
+    else if(event.action === 'notify' && this.warnList.includes(event.left/1000))
     {
-      WarningnNotifyMe();
+      WarningnNotifyMe(this.getMinutes(event.left/1000));
       console.log("warnings are going")
     }
 

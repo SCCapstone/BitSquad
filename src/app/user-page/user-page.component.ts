@@ -29,8 +29,10 @@ export class UserPageComponent implements OnInit {
     public accountService: AccountService, private limitsService: LimitsService) {
 
   }
-
+  
   ngOnInit(): void {
+    
+
     this.accountService.pullUserDataFromFireBase()
     this.user = this.accountService.getCurrentUserEmail();
 
