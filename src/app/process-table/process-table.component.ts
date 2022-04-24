@@ -12,8 +12,6 @@ import { UsageService } from '../services/usage-service.service';
 import { RemoveDialogComponent } from '../remove-dialog/remove-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-//import { DateTime } from 'luxon/src/datetime.js'
-
 
 const KEY = 'time'
 const DEFAULT = '0'
@@ -124,22 +122,24 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     this.lastLoginWeek = weekNumber.toString()
 
     let value:string | null = DEFAULT
-    //localStorage.setItem(KEY, DEFAULT);
+    
     if(localStorage.getItem(KEY) != null) {
     value = localStorage.getItem(KEY)  
     }
     
     this.testMethod(value)
-    //if (value < 0) value = DEFAULT
+    
     this.config = {...this.config, leftTime: value }
 
     if(value != DEFAULT) {
-      //this.currentProcess = localStorage.getItem("process")
+      
       this.processService.setCurrentProccess(localStorage.getItem("process"))
       
       console.log("on it setting current process now to: " + localStorage.getItem("process"))
       console.log(this.processService.getProcessName() + ": IS the new name")
       console.log("CURRENT PROCESS: " + this.currentProcess)
+
+      this.reloadWarnings()
 
       this.buttonPressed = true
 
@@ -204,6 +204,21 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     }
     else {
       this.timeToAdd = parseInt(time)
+    }
+  }
+
+  reloadWarnings() {
+    if(localStorage.getItem("warn1") != null) {
+      let warning1 = localStorage.getItem("warn1")
+      this.warnList.push(parseInt(warning1!) * 60)
+    }
+    if(localStorage.getItem("warn2") != null) {
+      let warning2 = localStorage.getItem("warn2")
+      this.warnList.push(parseInt(warning2!) * 60)
+    }
+    if(localStorage.getItem("warn3") != null) {
+      let warning3 = localStorage.getItem("warn3")
+      this.warnList.push(parseInt(warning3!) * 60)
     }
   }
 
@@ -442,12 +457,10 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
 
     this.processService.setTimer(time)
     this.processService.setCurrentProccess(name)
-    //this.currentProcess = name;
+    
     this.processRunning = true;
     this.setTimerText();
-    //***THIS ACTUALLY STARTS TIMER***
-
-    //this.changeTime2();
+    
     this.stop = false;
     this.buttonPressed = true;
 
@@ -455,15 +468,19 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     if(p.warning1 != null)
     {
       this.warnList.push(p.warning1 * 60);
+      localStorage.setItem("warn1", p.warning1.toString())
     }
     if(p.warning2 != null)
     {
       this.warnList.push(p.warning2 * 60);
+      localStorage.setItem("warn2", p.warning2.toString())
     }
     if(p.warning3 != null)
     {
       this.warnList.push(p.warning3 * 60);
+      localStorage.setItem("warn3", p.warning3.toString())
     }
+    //***THIS ACTUALLY STARTS TIMER***
     this.changeTime2();
   }
 
@@ -578,6 +595,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
       localStorage.setItem(KEY, `${event.left / 1000}`);
       console.log(localStorage.getItem(KEY) + " is the key")
       console.log(this.warnList[0] + " is the array")
+
       if(this.warnList.includes(event.left/1000)) {
         WarningnNotifyMe(this.getMinutes(event.left/1000));
         console.log("warnings are going")
@@ -620,7 +638,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
       this.processRunning = false;
       this.setTimerText();
 
-      //this.stop = true;
+      
   
       if(this.getTotalSeconds(this.cumulativeHours, this.cumulativeMins) < this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
