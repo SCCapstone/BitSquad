@@ -9,5 +9,6 @@ export interface Usage {
     weeklyMins: number;
 
     lastLogin: string;
+    lastLoginWeek: string;
 
 }

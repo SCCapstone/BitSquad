@@ -9,7 +9,7 @@ import { CountdownEvent } from 'ngx-countdown';
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { Usage } from '../model/usage';
 import { UsageService } from '../services/usage-service.service';
-//import { DateTime } from 'luxon/src/datetime.js'
+
 
 
 const KEY = 'time'
@@ -67,8 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 export class ProcessTableComponent implements OnInit{
   [x: string]: any;
-  //currentProcess ="no process is running";
-  //processRunning = false;
   timerText = "Start a Process Timer";
   user = "";
   userID:any;
@@ -93,7 +91,6 @@ export class ProcessTableComponent implements OnInit{
 
   }
 
-  //currentProcess ="no process is running";
   processRunning = false;
   realTime = 25;
   cumulativeTime = 0
@@ -103,8 +100,22 @@ export class ProcessTableComponent implements OnInit{
   cumulativeMinsWeek = 0
 
   lastLogin = ""
+  lastLoginWeek = ""
+  currentDate:any
+  startDate:any
+  
   ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
     this.lastLogin = new Date().getMonth() + ", " + new Date().getDate()
+
+    this.currentDate = new Date();
+    this.startDate = new Date(this.currentDate.getFullYear(), 0, 1);
+    var days = Math.floor((this.currentDate - this.startDate) /
+        (24 * 60 * 60 * 1000));
+          
+    var weekNumber = Math.ceil(
+        (this.currentDate.getDay() + 1 + days) / 7);
+    
+    this.lastLoginWeek = weekNumber.toString()
 
     let value:string | null = DEFAULT
     //localStorage.setItem(KEY, DEFAULT);
@@ -161,16 +172,15 @@ export class ProcessTableComponent implements OnInit{
 
       if(this.usage[0].lastLogin != this.lastLogin) {
         
-        this.usageService.updateUsage(localStorage.getItem('uid'), 0, 0, this.cumulativeHoursWeek, this.cumulativeMinsWeek, this.lastLogin)
+        this.usageService.updateUsage(localStorage.getItem('uid'), 0, 0, this.cumulativeHoursWeek, this.cumulativeMinsWeek, this.lastLogin, weekNumber.toString())
       }
-      //const date = DateTime.now().weekNumber
-      //console.log(date)
-  
+      if(this.usage[0].lastLoginWeek != this.lastLoginWeek) {
+
+        this.usageService.updateUsage(localStorage.getItem('uid'), 0, 0, 0, 0, this.lastLogin, weekNumber.toString())
+      }
       
     });
 
-    //this.setCumulativeTime()
-    
   }
 
   testMethod(time:string|null) {
@@ -191,7 +201,10 @@ export class ProcessTableComponent implements OnInit{
     }
   }
 
-
+  /**
+   * Edits a process
+   * @param p process to edit
+   */
   editProcess(p: Process) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
@@ -221,6 +234,7 @@ export class ProcessTableComponent implements OnInit{
     })
     });
   }
+
   setOption(boxName:string){
     if(boxName == 'less'){
       if(this.options.less == false)
@@ -240,6 +254,7 @@ export class ProcessTableComponent implements OnInit{
     }
     console.log(this.options)
   }
+
   filter(key:string){
     let temp: Process[] = [];
     let keys = key.split(":");
@@ -330,6 +345,10 @@ export class ProcessTableComponent implements OnInit{
   })
 
   }
+
+  /**
+   * Sorts process alphabetically
+   */
   sortAlphabetic(){
 
     var temp = this.Process.sort(function(a, b){
@@ -352,8 +371,11 @@ export class ProcessTableComponent implements OnInit{
     if(event.key == "Enter"){
       this.searchProcesses(this.searchKey);
     }
-
   }
+
+  /**
+   * Sets message display according to what process is active or not
+   */
   setTimerText(){
     if (this.processRunning == true){
       this.timerText = "Enjoy your Time on " + this.processService.getProcessName() + "!";
@@ -361,9 +383,6 @@ export class ProcessTableComponent implements OnInit{
       this.timerText = "Start a Process Timer";
     }
   }
-
-  
-
 
   searchProcesses(searchStr:string) {
     let results: Process[] = [];
@@ -377,10 +396,12 @@ export class ProcessTableComponent implements OnInit{
     });
     this.Process = results;
     }
-
-    
   }
 
+  /**
+   * Removes process 
+   * @param p process to be removed
+   */
   removeProcess (p:Process) {
     console.log("RemoveProcess called");
     if(confirm("Are you sure you want to delete "+ p.processName+ " ?")){
@@ -388,6 +409,11 @@ export class ProcessTableComponent implements OnInit{
     }
   }
 
+  /**
+   * Converts seconds into hours
+   * @param value seconds to convert
+   * @returns total hours 
+   */
   getHours(value:number): number {
     if (value >= 3600) {
       return Math.floor((value/3600));
@@ -397,6 +423,11 @@ export class ProcessTableComponent implements OnInit{
 
   }
 
+  /**
+   * Converts seconds into mintues
+   * @param value  seconds to convert
+   * @returns total minutes
+   */
   getMinutes(value:number): number {
     if (value >= 60) {
       return Math.floor((value % 3600 / 60));
@@ -405,15 +436,27 @@ export class ProcessTableComponent implements OnInit{
     }
   }
 
+  /**
+   * Converts a combination of hours and mins to total amount of seconds
+   * @param valueH hours to convert
+   * @param valueM mins to convert
+   * @returns total amount of seconds
+   */
   getTotalSeconds(valueH:number, valueM:number): number {
     if (valueH >= 0 && valueM >= 0 ) {
       return (valueH*3600) + (valueM*60);
     } else {
       return 0;
     }
-
   }
 
+  /**
+   * Sets data of process being ran upon clicking the start button
+   * Calls method to begin the countdown
+   * @param time the time set of a process
+   * @param name name of the process
+   * @param p the process object
+   */
   onStart(time:number, name:string, p:Process): void {
     localStorage.setItem("process", name)
     localStorage.setItem("timeToPush", time.toString())
@@ -428,6 +471,8 @@ export class ProcessTableComponent implements OnInit{
     this.changeTime2();
     this.stop = false;
     this.buttonPressed = true;
+
+    // adding user specified warnings to array
     if(p.warning1 != null)
     {
       this.warnList.push(p.warning1 * 60);
@@ -448,39 +493,45 @@ export class ProcessTableComponent implements OnInit{
     console.log(p.processName + " clicked to delete");
 
   }
+  // array of warning numbers in minutes
   warnList:number[] = [];
 
+  // green
   mycolor = '#00E676;'
+
+  /**
+   * Sets the clock time variable to a number taken in as a string
+   * @param val string representing a time limit in seconds
+   */
   changeTime(val:string)
   {
     this.realTime=this.getTime(val)
   }
 
+  /**
+   * Begins the countdown on the timer using the requested time of the process that the user chooses
+   */
   changeTime2()
   {
-    //this.realTime = this.processService.getTimer(); // get timer from service
-      //checks if user hasn't used more time than allowed for particular day
-      if(this.cumulativeTime == this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
-      {
-
-      }
-      //checks if user tries to start a process's timer that will run over the daily allowance
-      else if(this.cumulativeTime + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
+      // checks if user tries to start a process's timer that will run over the daily allowance
+      if(this.cumulativeTime + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.realTime = this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM) - this.cumulativeTime;
         localStorage.setItem("timeToPush", this.realTime.toString())
-        //send notification that you only have (X) amount of valid time left and the timer has been adjusted
+
+        // send notification that you only have (X) amount of valid time left and the timer has been adjusted
         AdjustedTimerNotifyMe();
       }
-      //otherwise set timer as normal
+      // otherwise set timer as normal by getting timer from service
       else
       {
         this.realTime = this.processService.getTimer(); // get timer from service
       }
-    //console.log(this.realTime)
+    
     console.log("called changeTime2");
     console.log(this.realTime);
   }
+
   /**
    * resets timer to initial states
    */
@@ -493,35 +544,46 @@ export class ProcessTableComponent implements OnInit{
     this.setTimerText();
 
   }
+  /**
+   * Converts a string of a time limit into a number
+   * @param val a time in seconds as a string
+   * @returns a number representing the time
+   */
   getTime(val:string)
   {
     console.warn(val)
     return parseInt(val)
   }
 
-
-  //variable to keep track of cumulative usage
-  
-  temp = "";
-  
-
-  //changes homepage appearance based on daily time limit being reached
+  /**
+   * Changes green timer-card appearance to red color based on daily time or weekly limit being reached
   //sends notification
+   * @returns true upon color being changed to red
+   */
   changeDisplay(): boolean
   {
     if(this.getTotalSeconds(this.cumulativeHours, this.cumulativeMins) >= this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
-      {
-        this.mycolor = '#f44336'
-        return true;
-      }
-      else{
-        this.mycolor = '#00E676;'
-
-      }
+    {
+      this.mycolor = '#f44336'
+      return true;
+    }
+    if(this.getTotalSeconds(this.cumulativeHoursWeek, this.cumulativeMinsWeek) >= this.getTotalSeconds(this.userPage.weeklyH, this.userPage.weeklyM))
+    {
+      //this.mycolor = '#f44336'
+      //return true;
+    }
+    else
+    {
+      this.mycolor = '#00E676;'
+    }
       return false;
   }
 
-
+  /**
+   * Handles all events/actions of the timer upon starting, stopping, and finishing
+   * Stores usage data based on process that has finished
+   * @param event events of the Timer (done, notify, start, restart)
+   */
   handleEvent1(event: CountdownEvent){
     console.log(event.action + " is the event")
 
@@ -535,18 +597,10 @@ export class ProcessTableComponent implements OnInit{
     if(event.action == 'done' && this.stop == false)
     {
       console.log(this.realTime);
-      //updates cumulativeTime, sends notifcation of time expiration, updates analytics
-      //this.cumulativetime += this.testMethod2(localStorage.getItem("timeToPush"))
-      //this.temp = localStorage.getItem("timeToPush")
-      //this.cumulativeTime = parseInt(this.temp)
-      //this.cumulativeTime += parseInt(localStorage.getItem("timeToPush"))
-
-      //this.cumulativeHours = this.getHours(this.cumulativeTime);
-      //this.cumulativeMins = this.getMinutes(this.cumulativeTime);
-      //console.log(this.cumulativeTime);
+      // updates cumulativeTime, sends notifcation of time expiration, updates analytics
       if(this.processService.getProcessName() != null) {// make sure there is a process currently been tracking
-      console.log(this.processService.getProcessName())
-      this.accountService.updateAnalytics() // update analytics data
+        console.log(this.processService.getProcessName())
+        this.accountService.updateAnalytics() // update analytics data
       }
 
       if(this.buttonPressed == true)
@@ -562,20 +616,16 @@ export class ProcessTableComponent implements OnInit{
         this.cumulativeMinsWeek += this.getMinutes(this.cumulativeTime)
 
         this.usageService.updateUsage(localStorage.getItem('uid'), this.cumulativeHours, this.cumulativeMins,
-                            this.cumulativeHoursWeek, this.cumulativeMinsWeek, this.lastLogin)
-
-        
+                            this.cumulativeHoursWeek, this.cumulativeMinsWeek, this.lastLogin, this.lastLoginWeek)
       }
-      //this.sendNotification();
+      
 
       this.currentProcess = "no process is running";
       this.processRunning = false;
       this.setTimerText();
 
       this.stop = true;
-      //alert("Process Finished");
-
-
+  
       if(this.getTotalSeconds(this.cumulativeHours, this.cumulativeMins) < this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.resetToZero();
@@ -587,7 +637,6 @@ export class ProcessTableComponent implements OnInit{
       WarningnNotifyMe(this.getMinutes(event.left/1000));
       console.log("warnings are going")
     }
-
 
   }
 

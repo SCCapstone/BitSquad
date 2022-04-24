@@ -26,14 +26,22 @@ export class UsageService {
        .snapshotChanges();
   }
 
-  createBlankUsage(userID: any, lastLogin:string) {
+  /**
+   * Creates a firestore document for a new user to add daily and weekly usage
+   * All usages initialized to zero
+   * @param userID the user's id
+   * @param lastLogin month, day of last login
+   * @param lastLoginWeek week number of last login
+   */
+  createBlankUsage(userID: any, lastLogin:string, lastLoginWeek:string) {
       this.afs.collection(this.afsPath).doc(userID).set({
           userID: userID,
           dailyHours: 0,
           dailyMins: 0,
           weeklyHours: 0,
           weeklyMins: 0,
-          lastLogin: lastLogin
+          lastLogin: lastLogin,
+          lastLoginWeek: lastLoginWeek
       })
   }
 
@@ -44,15 +52,19 @@ export class UsageService {
    * @param dM dailyMins to write to firebase
    * @param wH weeklyHours to write to firebase
    * @param wM weeklyMins to write to firebase
+   * @param lastLogin month, day to write to firebase
+   * @param lastLoginWeek week number of the year to write to firebase
    */
-   updateUsage(userID:any, dH:number, dM:number, wH:number, wM:number, lastLogin:string) { 
+   updateUsage(userID:any, dH:number, dM:number, wH:number, wM:number, lastLogin:string, lastLoginWeek:string) { 
     this.afs.collection(this.afsPath).doc(userID).set({
         userID: userID,
         dailyHours: dH,
         dailyMins: dM,
         weeklyHours: wH,
         weeklyMins: wM,
-        lastLogin: lastLogin
+        lastLogin: lastLogin,
+        lastLoginWeek: lastLoginWeek 
+
 
     })
   }
