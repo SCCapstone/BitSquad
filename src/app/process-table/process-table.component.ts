@@ -447,7 +447,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     this.setTimerText();
     //***THIS ACTUALLY STARTS TIMER***
 
-    this.changeTime2();
+    //this.changeTime2();
     this.stop = false;
     this.buttonPressed = true;
 
@@ -464,7 +464,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     {
       this.warnList.push(p.warning3 * 60);
     }
-
+    this.changeTime2();
   }
 
 
@@ -493,16 +493,16 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   changeTime2()
   {
       // checks if user tries to start a process's timer that will run over the daily allowance
-      if(this.timeToAdd + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
+      if(this.getTotalSeconds(this.cumulativeHours, this.cumulativeMins) + this.processService.getTimer() > this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
-        this.realTime = this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM) - this.timeToAdd;
+        this.realTime = this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM) - this.getTotalSeconds(this.cumulativeHours, this.cumulativeMins);
         localStorage.setItem("timeToPush", this.realTime.toString())
 
         // send notification that you only have (X) amount of valid time left and the timer has been adjusted
         AdjustedTimerNotifyMe();
       }
-      else if(this.timeToAdd + this.processService.getTimer() > this.getTotalSeconds(this.userPage.weeklyH, this.userPage.weeklyM)) {
-        this.realTime = this.getTotalSeconds(this.userPage.weeklyH, this.userPage.weeklyM) - this.timeToAdd;
+      else if(this.getTotalSeconds(this.cumulativeHoursWeek, this.cumulativeMinsWeek) + this.processService.getTimer() > this.getTotalSeconds(this.userPage.weeklyH, this.userPage.weeklyM)) {
+        this.realTime = this.getTotalSeconds(this.userPage.weeklyH, this.userPage.weeklyM) - this.getTotalSeconds(this.cumulativeHoursWeek, this.cumulativeMinsWeek);
         localStorage.setItem("timeToPush", this.realTime.toString())
 
         // send notification that you only have (X) amount of valid time left and the timer has been adjusted
@@ -577,6 +577,11 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
       // Save current value
       localStorage.setItem(KEY, `${event.left / 1000}`);
       console.log(localStorage.getItem(KEY) + " is the key")
+      console.log(this.warnList[0] + " is the array")
+      if(this.warnList.includes(event.left/1000)) {
+        WarningnNotifyMe(this.getMinutes(event.left/1000));
+        console.log("warnings are going")
+      }
     }
 
     console.log(event.action+" "+this.stop) // strange enough, when click cancel, the event.action actually is "done"
@@ -586,15 +591,20 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
       // updates cumulative hours and mins for day and week, sends notifcation of time expiration, updates analytics
       if(this.processService.getProcessName() != null) {// make sure there is a process currently been tracking
         console.log(this.processService.getProcessName())
-        this.accountService.updateAnalytics() // update analytics data
+        //this.accountService.updateAnalytics(this.timeToAdd) // update analytics data
       }
 
       if(this.buttonPressed == true)
       {
+        this.stop = true;
+
         notifyMe();
         console.log("DONE NOTIFY HERE")
         localStorage.getItem("timeToPush")
         this.testMethod2(localStorage.getItem("timeToPush"))
+
+        this.accountService.updateAnalytics(this.timeToAdd) // update analytics data
+
         this.cumulativeHours += this.getHours(this.timeToAdd)
         this.cumulativeMins += this.getMinutes(this.timeToAdd)
 
@@ -610,18 +620,13 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
       this.processRunning = false;
       this.setTimerText();
 
-      this.stop = true;
+      //this.stop = true;
   
       if(this.getTotalSeconds(this.cumulativeHours, this.cumulativeMins) < this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.resetToZero();
       }
       this.changeDisplay()
-    }
-    else if(event.action === 'notify' && this.warnList.includes(event.left/1000))
-    {
-      WarningnNotifyMe(this.getMinutes(event.left/1000));
-      console.log("warnings are going")
     }
 
   }

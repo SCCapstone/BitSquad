@@ -74,8 +74,8 @@ export class AccountService {
     return this.userData;
 
   }
-  updateAnalytics(){ // when timer is up, call this function to push timer data to firebase
-    var valueToPush = 0
+  updateAnalytics(timeToAdd:number){ // when timer is up, call this function to push timer data to firebase
+    var processUsage = 0
     let name: string = this.processService.getProcessName()
     var tmp = 'data.'+name
 
@@ -85,16 +85,16 @@ export class AccountService {
     else{
     Object.entries(this.userData.data).map(([key,value])=>{
       if(key == this.processService.getProcessName()){
-        valueToPush = value as number
+        processUsage = value as number
       }
     })
   }
 
     // this is how to update the document, this one is a little special because the userData has a map
-    console.log("pushing time: "+this.processService.getTimer()+" name: "+this.processService.getProcessName()+" to the uid: "+this.uid+" to the document: "+this.uid)
+    console.log("pushing time: "+timeToAdd+" name: "+this.processService.getProcessName()+" to the uid: "+this.uid+" to the document: "+this.uid)
     this.afs.collection('userData').doc(this.uid).update({
-      [tmp]:  valueToPush+this.processService.getTimer(), // map update, notice [] which allows you to use a varibale as the path
-      total: this.userData.total + this.processService.getTimer()
+      [tmp]:  processUsage+timeToAdd, // map update, notice [] which allows you to use a varibale as the path
+      total: this.userData.total + timeToAdd
     })
 
   }
