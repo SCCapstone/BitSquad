@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ProcessService } from '../services/process.service';
 import { FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccountService } from '../services/account-service.service';
 import { v4 as uuid} from 'uuid'
 import { createWholeNumberValidator } from '../validators/whole-number.validator';
 import { createUniqueWarningTimeValidator } from '../validators/unique-valid-warning-times.validator';
 import { createValidLimitValidator } from '../validators/valid-limit.validator';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 
 @Component({
@@ -17,10 +16,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
   styleUrls: ['./process-form.component.scss']
 })
 export class ProcessFormComponent implements OnInit {
-  public processForm: FormGroup;
+  processForm: FormGroup;
 
   constructor(
-    private router:Router,
+    private dialogRef: MatDialogRef<ProcessFormComponent>,
     public processService:ProcessService,
     public formBuilder:FormBuilder,
     public accountService:AccountService,
@@ -76,12 +75,15 @@ export class ProcessFormComponent implements OnInit {
       }
     });
   }
-  profile(){
+ 
+  /*profile(){
     this.router.navigate(['profile'])
   }
   home(){
     this.router.navigate(['user-page'])
-  }
+  }*/ 
+
+
   //getters allow html to use just the control name, cleaner and easier to read
   get processName() {
     return this.processForm.controls['processName'];
@@ -109,9 +111,10 @@ export class ProcessFormComponent implements OnInit {
 
   onSubmit() {
     this.processService.createProcess(this.processForm.value);
-    this.router.navigate(['user-page']);
+    this.dialogRef.close();
   }
-  onSetLimit() {
-    this.router.navigate(['user-page']);
+
+  onCancel() {
+    this.dialogRef.close();
   }
 }

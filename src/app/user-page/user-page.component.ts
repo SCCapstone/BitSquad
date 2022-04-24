@@ -73,9 +73,7 @@ export class UserPageComponent implements OnInit {
       console.log()
     }
 
-  onAddProcess() {
-    this.router.navigate(['process-form']);
-  }
+    
   profile(){
     this.router.navigate(['profile'])
   }
