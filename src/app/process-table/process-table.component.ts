@@ -70,19 +70,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 export class ProcessTableComponent implements OnInit, AfterViewInit{
+  //table variables
+  dataSource!: MatTableDataSource<any>;
+  columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings', 'actions'];
+
   [x: string]: any;
   //currentProcess ="no process is running";
   //processRunning = false;
   timerText = "Start a Process Timer";
-  user = "";
-  userID:any;
   Process: Process[] = [];
   usage: Usage[] = [];
-  replicateProcess: Process[] = [];
-  columnsToDisplay: string[] = ['processName', 'timeLimit', 'warnings', 'actions'];
+  
   limit:number = 0;
-  filterKey:any;
-  searchKey:any;
   sortByPopKey = "up";
   options = {
     greater: false,
@@ -91,8 +90,8 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   }
   stop = false;
   buttonPressed = false;
-  dataSource!: MatTableDataSource<any>;
-
+  
+  //allows for sorting data using Angular functions
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor (private accountService: AccountService, private dialog: MatDialog, private removeDialog:MatDialog, private processService: ProcessService, private userPage: UserPageComponent, private usageService: UsageService
@@ -198,6 +197,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     }
   }
 
+  //allows sorting and filtering of dynamic data without page refresh
   ngAfterViewInit(): void {
     this.processService.getProcessList(localStorage.getItem('uid')).subscribe(res => {
       this.Process = res.map( e => {
@@ -229,17 +229,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
         }
         );
   }
-  restore(){
-    this.user = this.accountService.getCurrentUserEmail();
-    this.processService.getProcessList(localStorage.getItem('uid')).subscribe(res => {
-      this.Process = res.map( e => {
-        return {
-        userID : e.payload.doc.id,
-        ...e.payload.doc.data() as{}
-      } as Process;
-    })
-    });
-  }
+
   setOption(boxName:string){
     if(boxName == 'less'){
       if(this.options.less == false)
@@ -259,6 +249,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     }
     console.log(this.options)
   }
+  
   filter(key:string){
     let temp: Process[] = [];
     let keys = key.split(":");
@@ -350,37 +341,20 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
 
   }
   
-  searchByEnter(event: { key: string; }){ // key event so that press enter can call search function
-    if(event.key == "Enter"){
-      this.searchProcesses(this.searchKey);
-    }
-
+  /**
+   * Dynamically filters process table by name based on user input
+   * @param input partial or full name of process
+   */
+  searchProcesses(input: string) {
+    this.dataSource.filter = input.trim().toLowerCase();
   }
+
   setTimerText(){
     if (this.processRunning == true){
       this.timerText = "Enjoy your Time on " + this.processService.getProcessName() + "!";
     } else {
       this.timerText = "Start a Process Timer";
     }
-  }
-
-  
-
-
-  searchProcesses(searchStr:string) {
-    let results: Process[] = [];
-    searchStr = searchStr.toLowerCase();
-    if(searchStr == ""){
-      this.restore();
-    }
-    else{
-    this.Process.forEach(p=> {
-      if (p.processName.toLowerCase().indexOf(searchStr) >= 0) results.push(p);
-    });
-    this.Process = results;
-    }
-
-    
   }
 
   /**
