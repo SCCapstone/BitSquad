@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { AccountService } from '../services/account-service.service';
 import { LimitsService } from '../services/limits.service'
+import { UsageService } from '../services/usage-service.service';
+
 
 @Component({
   selector: 'app-register',
@@ -17,7 +19,7 @@ export class RegisterComponent implements OnInit {
     password: ['',Validators.required]
   });
   constructor(private fb: FormBuilder, private accountService: AccountService
-    , private limitService: LimitsService, private router: Router) { }
+    , private limitService: LimitsService, private usageService: UsageService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -35,6 +37,7 @@ createUserWithEmailAndPassword(auth, this.registerForm.value.email, this.registe
     this.accountService.createUserData()
      console.log("register called")
     this.limitService.createBlankLimits(localStorage.getItem('uid'));
+    this.usageService.createBlankUsage(localStorage.getItem('uid'), new Date().getDay() + ", " + new Date().getMonth());
     this.router.navigate(['user-page']);
   }) 
   .catch((error) => {

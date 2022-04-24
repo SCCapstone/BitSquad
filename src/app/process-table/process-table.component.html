@@ -2,7 +2,7 @@
 <mat-card class="timer-card" style = "background-color: {{mycolor}}" >
   <mat-card-title class="timer-card-title">{{timerText}}</mat-card-title>
   <mat-card-content class="timer-card-body">
-      <countdown #cd [config]="{leftTime: realTime, notify: warnList}" (event)="handleEvent1($event)"></countdown>
+      <countdown #cd [config]="{leftTime: realTime, notify: 0}" (event)="handleEvent1($event)"></countdown>
   </mat-card-content>
     <span *ngIf="timerText != 'Start a Process Timer'">
       <button mat-mini-fab color="primary" (click)="cd.resume()">
@@ -16,6 +16,7 @@
       </button>
     </span>
     <p>Today's Usage: {{cumulativeHours}} hours and {{cumulativeMins}} minutes</p>
+    <p>Weekly Usage: {{cumulativeHoursWeek}} hours and {{cumulativeMinsWeek}} minutes</p>
 </mat-card>
 
 
@@ -81,7 +82,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>>
     <td mat-cell *matCellDef="let process">
-      <button mat-button [disabled] = 'changeDisplay() || currentProcess != "no process is running"'
+      <button mat-button [disabled] = 'changeDisplay() || timerText != "Start a Process Timer" '
           (click) = 'onStart(getTotalSeconds(process.timeLimitH, process.timeLimitM), process.processName, process)' class="table-button" mat-raised-button color="accent">
           <mat-icon class="table-icon">play_arrow</mat-icon>
       </button>
