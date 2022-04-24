@@ -17,7 +17,6 @@ export class LimitsFormComponent implements OnInit {
   limitsForm: FormGroup;
 
   //declarations for form variables
-  limitType: string;
   weeklyLimitH: number;
   weeklyLimitM: number;
   monLimitH: number;
@@ -43,7 +42,6 @@ export class LimitsFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data: Limits
   ) {
     /*sets dialog form variables with data from data object set in user-page.component.ts editLimits method*/
-    this.limitType = data.limitType;
     this.weeklyLimitH = data.weeklyLimitH;
     this.weeklyLimitM = data.weeklyLimitM;
     this.monLimitH = data.monLimitH;
@@ -64,7 +62,6 @@ export class LimitsFormComponent implements OnInit {
     //builds the form and injects above data
     this.limitsForm = this.formBuilder.group(
       {
-        limitType: [this.limitType, Validators.required],
 
         weeklyLimitH: [
           this.weeklyLimitH,

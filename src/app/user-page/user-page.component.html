@@ -1,23 +1,26 @@
 <div class="buttons">
-  <button mat-raised-button color="accent" (click)="onAddProcess()">New Process</button>
-  <button mat-raised-button color="accent" (click)="editLimits(this.limits[0])" > Set Limits</button>
+  <button mat-raised-button color="accent" (click)="onAddProcess()">
+    New Process
+  </button>
 </div>
 
-<br>
+<br />
 
 <mat-card class="limit-card">
-  <div *ngIf="this.limitType =='daily'"> 
-    <mat-card-title class="limit-card-title">Today's Limit</mat-card-title>
-  
-  
-    <mat-card-content class="limit-card-body">{{this.dailyH}} hours and {{this.dailyM}} minutes</mat-card-content>
-  </div>
+  <mat-card-actions align="end">
+    <button mat-mini-fab (click)="editLimits(this.limits[0])" color="primary">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </mat-card-actions>
+  <mat-card-title class="limit-card-title">Weekly Limit</mat-card-title>
+  <mat-card-content class="limit-card-body">
+    {{ this.weeklyH }} hours and {{ this.weeklyM }} minutes
+  </mat-card-content>
 
-  <div *ngIf="this.limitType =='weekly'">
-    <mat-card-title class="limit-card-title">Weekly Limit</mat-card-title>
-    <mat-card-content class="limit-card-body">{{this.weeklyH}} hours and {{this.weeklyM}} minutes</mat-card-content>
-  </div>
-
+  <mat-card-title class="limit-card-title">Today's Limit</mat-card-title>
+  <mat-card-content class="limit-card-body">
+    {{ this.dailyH }} hours and {{ this.dailyM }} minutes
+  </mat-card-content>
 </mat-card>
 
 <process-table></process-table>

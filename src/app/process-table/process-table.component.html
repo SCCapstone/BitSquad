@@ -21,17 +21,6 @@
 
 
 <div class ="grid-container">
-  <div class="grid-child">
-    <h2>Search for a Process by Name</h2>
-    <input type="text" [(ngModel)]="searchKey" (keydown)="searchByEnter($event)" class="searchTerm" placeholder="Enter process name here">
-    <button (click)="searchProcesses(searchKey)">Search</button>
-    <button (click)="restore()">Clear Search</button>
-
-  </div>
-<div class = "grid-child">
-  <h2>Sort</h2>
-  <button (click)="sortAlphabetic()">Sort A-Z</button>
-</div>
 <div class = "grid-child">
   <h2>Sort by Popularity</h2>
   <div>
@@ -57,11 +46,17 @@
   </div>
 </div>
 
+<div class="search-bar">
+  <mat-form-field>
+    <mat-icon matPrefix>search</mat-icon>
+    <input #searchBar matInput type="text" (keyup)="searchProcesses(searchBar.value)">
+  </mat-form-field>
+</div>
 
-<table mat-table [dataSource]="Process">
+<table mat-table [dataSource]="dataSource" matSort>
   <!-- Process Column -->
  <ng-container matColumnDef="processName">
-    <th mat-header-cell *matHeaderCellDef>Process Name</th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>Process Name</th>
     <td mat-cell *matCellDef="let process">{{ process.processName }}</td>
   </ng-container>
 

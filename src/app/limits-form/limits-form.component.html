@@ -1,15 +1,7 @@
 <div class="limits-form">
-  <h2 mat-dialog-title>Daily and Weekly Time Limits</h2>
-
   <mat-dialog-content [formGroup]="limitsForm">
-    <mat-form-field>
-      <mat-select #select name="choice" formControlName="limitType" placeholder="Limit Type Enabled">
-        <mat-option id="weekly" value="weekly" >Weekly</mat-option>
-        <mat-option id="daily" value="daily">Daily</mat-option>
-      </mat-select>
-    </mat-form-field>
-    
-    <div *ngIf="select.value == 'weekly'">
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Weekly Limits">
       <mat-form-field class = "weekly">
         <input matInput type="number" placeholder="Hours" formControlName="weeklyLimitH">
         <mat-error>Weekly hours must be a positive whole number from 0 to 168</mat-error>
@@ -26,10 +18,9 @@
       <mat-error *ngIf="limitsForm.errors?.over168Hours">
         Maximum weekly limit is 168 hours and 0 minutes
       </mat-error>
-    
-    </div>
+    </mat-tab>
 
-    <div *ngIf="select.value == 'daily'">
+    <mat-tab label="Daily Limits">
       <h4 class="week-day" >Monday</h4>
       
       <mat-form-field class = "daily">
@@ -141,16 +132,21 @@
       <mat-error *ngIf="limitsForm.errors?.over24Su">
         Maximum time for Sunday is 24 hours and 0 minutes
       </mat-error>
-       
-    </div>  
+    </mat-tab>
+  </mat-tab-group>
   </mat-dialog-content>
   
   <br>
   
-  <mat-dialog-actions>
+  <mat-dialog-actions align="end">
     <button mat-raised-button color="warn" (click)="closeLimitDialog()">Cancel</button>
-    <button mat-raised-button color="accent" [disabled]="!limitsForm.valid" 
-      (click)="saveLimitDialog()">Save</button>
+    <div matTooltip="Weekly and Daily limits must be valid" matTooltipPosition="above"   [matTooltipDisabled]="limitsForm.valid">
+      <button mat-raised-button color="accent" [disabled]="!limitsForm.valid" 
+        (click)="saveLimitDialog()">
+        Save
+      </button>
+    </div>
+    
   </mat-dialog-actions>
   
 </div>
