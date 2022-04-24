@@ -46,6 +46,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AboutComponent } from './about/about.component';
 import { MainComponent } from './main/main.component';
+import { RemoveDialogComponent } from './remove-dialog/remove-dialog.component';
 
 
 const firebaseConfig = {
@@ -75,6 +76,7 @@ const app = initializeApp(firebaseConfig);
     
     AboutComponent,
     MainComponent,
+    RemoveDialogComponent,
 
 
 

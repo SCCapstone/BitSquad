@@ -9,11 +9,13 @@ import { CountdownEvent } from 'ngx-countdown';
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { Usage } from '../model/usage';
 import { UsageService } from '../services/usage-service.service';
+import { RemoveDialogComponent } from '../remove-dialog/remove-dialog.component';
 //import { DateTime } from 'luxon/src/datetime.js'
 
 
 const KEY = 'time'
 const DEFAULT = '0'
+
 
 document.addEventListener('DOMContentLoaded', function() {
   if (!Notification) {
@@ -88,7 +90,7 @@ export class ProcessTableComponent implements OnInit{
   stop = false;
   buttonPressed = false;
 
-  constructor (private accountService: AccountService, private dialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent, private usageService: UsageService
+  constructor (private accountService: AccountService, private dialog: MatDialog, private removeDialog:MatDialog, private processService: ProcessService, private userPage: UserPageComponent, private usageService: UsageService
      ) {
 
   }
@@ -381,11 +383,18 @@ export class ProcessTableComponent implements OnInit{
     
   }
 
+  /**
+   * Injects the process associated with the row on which the trash can button is clicked to the 
+   * RemoveDialogComponent, which either cancels or performs the delete
+   * @param p the process to delete
+   */
   removeProcess (p:Process) {
-    console.log("RemoveProcess called");
-    if(confirm("Are you sure you want to delete "+ p.processName+ " ?")){
-      this.processService.deleteProcess(p);
-    }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.closeOnNavigation = true;
+    dialogConfig.disableClose = true;
+    dialogConfig.data = p;
+    
+    this.removeDialog.open(RemoveDialogComponent, dialogConfig);
   }
 
   getHours(value:number): number {
