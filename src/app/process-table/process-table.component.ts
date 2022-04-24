@@ -111,6 +111,10 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
     this.lastLogin = new Date().getMonth() + ", " + new Date().getDate()
 
+    /***********************************************************************
+     * Code snippet to find current week of the year
+     * https://www.geeksforgeeks.org/calculate-current-week-number-in-javascript/
+     */
     this.currentDate = new Date();
     this.startDate = new Date(this.currentDate.getFullYear(), 0, 1);
     var days = Math.floor((this.currentDate - this.startDate) /
@@ -118,7 +122,8 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
           
     var weekNumber = Math.ceil(
         (this.currentDate.getDay() + 1 + days) / 7);
-    
+    /********************************************************************* */
+
     this.lastLoginWeek = weekNumber.toString()
 
     let value:string | null = DEFAULT
