@@ -109,6 +109,25 @@ describe('ProcessTableComponent', () => {
   it('should return 0 hours if negative time is given', () => {
     const result = component.getHours(-3600);
     expect(result).toBe(0);
+  });
+/*
+  it('should read time from string', () => {
+
+    const result = component.getTime("5");
+    expect(result).toBe(5);
   })
+
+  it('reset (cancel button) to zero', () => {
+
+    const results = component.resetToZero();
+    expect(component.realTime).toBe(0);
+  })
+
+  it('read time from table', () => {
+
+    const results = component.changeTime2();
+    expect(component.realTime).toBe(0);
+  })
+  */
 
 });
