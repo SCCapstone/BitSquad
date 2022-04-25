@@ -342,13 +342,27 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
 
     }
     console.log(temp)
-    this.Process = temp
+    this.dataSource.data = temp;
+  }
+
+  restore(){
+    this.user = this.accountService.getCurrentUserEmail();
+    this.processService.getProcessList(localStorage.getItem('uid')).subscribe(res => {
+      this.Process = res.map( e => {
+        return {
+        userID : e.payload.doc.id,
+        ...e.payload.doc.data() as{}
+      } as Process;
+    })
+      this.dataSource.data = this.Process;
+    });
   }
 
   sortByPopularity(key:string){
     
     this.userData = this.accountService.getAnalytics();
     this.total = this.userData.total
+    
     if(key == "up"){
       // sort popularity from most to least
     var temp = this.Process.sort(function(a,b){
