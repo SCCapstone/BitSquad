@@ -1,15 +1,29 @@
-<h1>Sign In</h1>
-<div>current user email: {{currentUser}}</div>
-<div>
-    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
-    <label for="email">Email</label> <br/>
-    <input id ="email" type="email" formControlName = "email" >
-    <br/>
-    <label for="password">Password</label> <br/>
-    <input id ="password" type="password" formControlName = "password">
+<br>
+<mat-card class="border">
+  <mat-card class="sign-in">
+    <h1 mat-card-title>Sign In</h1>
+    <mat-card-content>
+      <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <input matInput id ="email" type="email" formControlName = "email" placeholder="Email" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput id ="password" type="password" formControlName = "password" placeholder="Password" required>  
+        </mat-form-field>
+        
+        <br/>
+        
+        <button mat-raised-button color="accent" type = "submit" [disabled]="!signInForm.valid">Sign In</button>
+      </form>
 
-    <br/>
-    <button type = "submit" [disabled]="!signInForm.valid">Sign In</button>
-</form>
-</div>
+      <br>
+      <br>
+      <p>
+        New user?
+        <button mat-button (click)="register()">Register</button>
+      </p>
+    </mat-card-content>
+  </mat-card>
+</mat-card>
 

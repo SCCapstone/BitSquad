@@ -1,8 +1,5 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
-import { from, Observable } from "rxjs";
-import { AccountService } from "./account-service.service";
-import { Usage } from "../model/usage";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +9,7 @@ export class UsageService {
   private afsPath = '/Usage';
 
 
-  constructor(private afs: AngularFirestore, private accountService: AccountService) {
+  constructor(private afs: AngularFirestore) {
   }
 
   /**

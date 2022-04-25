@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RemoveDialogComponent } from './remove-dialog.component';
+import { EditFormComponent } from '../../edit-form/edit-form.component';
 
-describe('RemoveDialogComponent', () => {
-  let component: RemoveDialogComponent;
-  let fixture: ComponentFixture<RemoveDialogComponent>;
+describe('EditFormComponent', () => {
+  let component: EditFormComponent;
+  let fixture: ComponentFixture<EditFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RemoveDialogComponent ]
+      declarations: [ EditFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RemoveDialogComponent);
+    fixture = TestBed.createComponent(EditFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ProcessService } from '../services/process.service';
-import { FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { AccountService } from '../services/account-service.service';
 import { v4 as uuid} from 'uuid'
+
+import { FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { createWholeNumberValidator } from '../validators/whole-number.validator';
 import { createUniqueWarningTimeValidator } from '../validators/unique-valid-warning-times.validator';
 import { createValidLimitValidator } from '../validators/valid-limit.validator';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+import { ProcessService } from '../services/process.service';
+import { AccountService } from '../services/account-service.service';
+
+import {MatDialogRef} from '@angular/material/dialog';
 
 
 @Component({
@@ -23,7 +25,6 @@ export class ProcessFormComponent implements OnInit {
     public processService:ProcessService,
     public formBuilder:FormBuilder,
     public accountService:AccountService,
-    public toolbar: MatToolbarModule
   ) {
     this.processForm = this.formBuilder.group({
       userID: [this.accountService.getUID()],
@@ -76,13 +77,6 @@ export class ProcessFormComponent implements OnInit {
     });
   }
  
-  /*profile(){
-    this.router.navigate(['profile'])
-  }
-  home(){
-    this.router.navigate(['user-page'])
-  }*/ 
-
 
   //getters allow html to use just the control name, cleaner and easier to read
   get processName() {
@@ -109,11 +103,17 @@ export class ProcessFormComponent implements OnInit {
     return this.processForm.controls['warning3'];
   }
 
+  /**
+   * Creates a new process with provided form values
+   */
   onSubmit() {
     this.processService.createProcess(this.processForm.value);
     this.dialogRef.close();
   }
 
+  /**
+   * Closes the add process form without creating a process
+   */
   onCancel() {
     this.dialogRef.close();
   }

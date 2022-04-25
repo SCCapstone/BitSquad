@@ -22,7 +22,8 @@
 
 <div class ="grid-container">
 <div class = "grid-child">
-  <h2>Sort by Popularity</h2>
+  <h2>Sort by Time Limit
+  </h2>
   <div>
   <mat-radio-group [(ngModel)] = "sortByPopKey">
     <mat-radio-button value="up">Most to least</mat-radio-button>
@@ -30,13 +31,19 @@
     <mat-radio-button value="down">Least to most</mat-radio-button>
   </mat-radio-group>
   </div>
+  <div>
+    <h2> </h2>
+  <button (click)="sortByUsage(sortByPopKey)">Sort</button>
+  &nbsp;
+  <button (click)="restore()">Clear Sort</button>
+  </div>
 
-  <button (click)="sortByPopularity(sortByPopKey)">Sort</button>
 </div>
   <div class ="grid-child">
     <h2>Filter by Time Limit</h2>
     <input type="text" [(ngModel)]="filterKey" class="searchTerm" placeholder="Enter a time limit (H:M)">
     <button (click)="filter(filterKey)">filter</button>
+    &nbsp;
     <button (click)="restore()">clear filter</button>
     <section>
       <mat-checkbox (change)="setOption('less')">less than</mat-checkbox>

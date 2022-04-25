@@ -341,11 +341,11 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     }
 
     }
-    console.log(temp)
+    //console.log(temp)
     this.dataSource.data = temp;
   }
 
-  restore(){
+  restore(){ // call this method to set the process table to default status
     this.user = this.accountService.getCurrentUserEmail();
     this.processService.getProcessList(localStorage.getItem('uid')).subscribe(res => {
       this.Process = res.map( e => {
@@ -358,23 +358,25 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     });
   }
 
-  sortByPopularity(key:string){
+  sortByUsage(key:string){
     
-    this.userData = this.accountService.getAnalytics();
-    this.total = this.userData.total
     
-    if(key == "up"){
+    if(key == "down"){
       // sort popularity from most to least
     var temp = this.Process.sort(function(a,b){
-      if(a.processName[0] < b.processName[0]) { return -1; }
-      if(a.processName[0] > b.processName[0]) { return 1; }
+      if(a.timeLimitH < b.timeLimitH) { return -1; }
+      else if(a.timeLimitH == b.timeLimitH && a.timeLimitM < b.timeLimitM) {return -1} 
+      if(a.timeLimitH > b.timeLimitH) { return 1; }
+      else if(a.timeLimitH == b.timeLimitH && a.timeLimitM > b.timeLimitM) {return 1} 
       return 0;
   });
     } else{
       // sort popularity from least to most
       var temp = this.Process.sort(function(a,b){
-        if(a.processName[0] < b.processName[0]) { return -1; }
-        if(a.processName[0] > b.processName[0]) { return 1; }
+        if(a.timeLimitH > b.timeLimitH) { return -1; }
+        else if(a.timeLimitH == b.timeLimitH && a.timeLimitM > b.timeLimitM) {return -1} 
+        if(a.timeLimitH < b.timeLimitH) { return 1; }
+        else if(a.timeLimitH == b.timeLimitH && a.timeLimitM < b.timeLimitM) {return 1} 
         return 0;
     });
     }
@@ -387,7 +389,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   temp.forEach((p: any) =>{
     this.Process.push(p)
   })
-
+  this.dataSource.data = this.Process;
   }
   
   /**

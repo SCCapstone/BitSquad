@@ -3,11 +3,9 @@ import { AccountService } from '../services/account-service.service';
 import { ChartConfiguration, ChartData, ChartType, Chart} from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
-import { userData } from '../model/userData';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import {MatRadioModule} from '@angular/material/radio';
-import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -17,7 +15,7 @@ export class ProfileComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public pieChartType: ChartType = 'pie';
   public barChartType: ChartType = 'bar';
-  public pieChartPlugins = [ DatalabelsPlugin ];
+  public chartPlugins = [ DatalabelsPlugin ];
   statement = "No data yet"
   total:any;
   showing = "seconds";
@@ -54,39 +52,6 @@ export class ProfileComponent implements OnInit {
       this.statement = "Total usage: " + this.total+" "+this.showing;
       this.visible = true;
     }
-
-    this.barChart = new Chart("canvas", {
-      type: "bar",
-      data: {
-        labels: this.labels,
-        datasets: [
-          {
-            
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(0, 17, 77, 0.08)",
-              "rgba(153, 102, 255, 0.2)",
-              "rgba(255, 159, 64, 0.2)"
-            ],
-            data: this.data,
-            borderWidth: 1
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio:true,
-        plugins: {
-          legend: {
-              display: false
-          }
-      }
-      }
-    });
-
-
   }
 
   home(){
@@ -96,6 +61,7 @@ export class ProfileComponent implements OnInit {
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
+    
     plugins: {
       legend: {
         display: true,
@@ -107,7 +73,35 @@ export class ProfileComponent implements OnInit {
       
     }
   };
+  public barChartOptions:ChartConfiguration['options']= {
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      datalabels: {
+        display:false // disabled the data label
+      },
+      
+    }
 
+  };
+  public barChartData:ChartData<'pie', number[], string | string[]> = {
+    labels: this.labels, // labels here
+    datasets: [ {
+      backgroundColor: [
+        "rgba(255, 99, 132, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(255, 206, 86, 0.2)",
+        "rgba(0, 17, 77, 0.08)",
+        "rgba(153, 102, 255, 0.2)",
+        "rgba(255, 159, 64, 0.2)"
+      ],
+      data: this.data // data, now is the real data
+    } ]
+
+  };
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
     labels: this.labels, // labels here
     datasets: [ {
