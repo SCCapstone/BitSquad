@@ -70,7 +70,7 @@ export class AccountService {
 
   }
   getAnalytics(){ //the the essential data for analytics use
-    console.log(this.userData)
+    //console.log(this.userData)
     return this.userData;
 
   }
@@ -80,7 +80,7 @@ export class AccountService {
     var tmp = 'data.'+name
 
     if(Object.keys(this.userData.data).length == 0){
-      console.log("empty")
+      //console.log("empty")
     }
     else{
     Object.entries(this.userData.data).map(([key,value])=>{
@@ -91,7 +91,7 @@ export class AccountService {
   }
 
     // this is how to update the document, this one is a little special because the userData has a map
-    console.log("pushing time: "+timeToAdd+" name: "+this.processService.getProcessName()+" to the uid: "+this.uid+" to the document: "+this.uid)
+    //console.log("pushing time: "+timeToAdd+" name: "+this.processService.getProcessName()+" to the uid: "+this.uid+" to the document: "+this.uid)
     this.afs.collection('userData').doc(this.uid).update({
       [tmp]:  processUsage+timeToAdd, // map update, notice [] which allows you to use a varibale as the path
       total: this.userData.total + timeToAdd

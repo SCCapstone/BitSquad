@@ -24,14 +24,18 @@
                 [data]="pieChartData"
                 [type]="pieChartType"
                 [options]="pieChartOptions"
-                [plugins]="pieChartPlugins">
+                [plugins]="chartPlugins">
         </canvas>
       </div>
     </div>
-    <canvas baseChart 
-            [data]="pieChartData"
+    <div>
+          <canvas baseChart 
+            [data]="barChartData"
             [type]="barChartType"
-            [legend]="false"
-            id="canvas" height="18" width="96">{{ chart }}</canvas>    
+            [options]="barChartOptions"
+            [plugins]="chartPlugins"
+            ></canvas>  
+    </div>
+  
     
     </mat-dialog-content>
