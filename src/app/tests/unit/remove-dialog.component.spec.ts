@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LimitsFormComponent } from './limits-form.component';
+import { RemoveDialogComponent } from '../../remove-dialog/remove-dialog.component';
 
-describe('ScheduleFormComponent', () => {
-  let component: LimitsFormComponent;
-  let fixture: ComponentFixture<LimitsFormComponent>;
+describe('RemoveDialogComponent', () => {
+  let component: RemoveDialogComponent;
+  let fixture: ComponentFixture<RemoveDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LimitsFormComponent ]
+      declarations: [ RemoveDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LimitsFormComponent);
+    fixture = TestBed.createComponent(RemoveDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

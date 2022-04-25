@@ -8,7 +8,6 @@ import { RegisterComponent } from './register/register.component';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from 'firebase/analytics';
 import { ProcessTableComponent } from './process-table/process-table.component';
-import { TimerStartComponent } from './timer-start/timer-start.component';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -68,7 +67,6 @@ const app = initializeApp(firebaseConfig);
     RegisterComponent,
     ProcessTableComponent,
     ProcessFormComponent,
-    TimerStartComponent,
     UserPageComponent,
     ProfileComponent,
     LimitsFormComponent,

@@ -1,10 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { Process } from '../model/process';
-import {Router, ActivatedRoute} from '@angular/router';
+
 import { AccountService } from '../services/account-service.service';
 import { ProcessService } from '../services/process.service';
+
 import { createWholeNumberValidator } from '../validators/whole-number.validator';
 import { createUniqueWarningTimeValidator } from '../validators/unique-valid-warning-times.validator';
 import { createValidLimitValidator } from '../validators/valid-limit.validator';
@@ -28,9 +30,7 @@ export class EditFormComponent implements OnInit {
   warning3?: any
 
 
-  constructor(private accountService: AccountService,
-    private processService: ProcessService, private route: ActivatedRoute,
-    private dialogRef: MatDialogRef<EditFormComponent>, private formBuilder: FormBuilder,
+  constructor(private dialogRef: MatDialogRef<EditFormComponent>, private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) data:Process) {
       this.processName = data.processName;
       this.timeLimitM = data.timeLimitM;
@@ -78,7 +78,7 @@ export class EditFormComponent implements OnInit {
       const warningsDisabled = warning1Control.disabled && warning2Control.disabled 
                               && warning3Control.disabled;
       
-      
+      //only allow input for warnings if process name, hours, and minutes are valid
       if (nameTimeValid && warningsDisabled) {
         warning1Control.enable({emitEvent: false});
         warning2Control.enable({emitEvent: false});
@@ -92,9 +92,17 @@ export class EditFormComponent implements OnInit {
   
   
   }
+
+  /**
+   * Updates the process with form values provided
+   */
   saveChanges(): void {
     this.dialogRef.close(this.editForm.value);
   }
+
+  /**
+   * Exits the dialog without updating the process
+   */
   exitWithoutSave(): void {
     this.dialogRef.close();
   }

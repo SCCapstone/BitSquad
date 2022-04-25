@@ -2,7 +2,6 @@ import { error } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Process } from '../model/process';
-import { TimerStartComponent } from '../timer-start/timer-start.component';
 
 @Injectable({
   providedIn: 'root',
