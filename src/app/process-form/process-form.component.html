@@ -62,6 +62,7 @@
         <mat-error *ngIf="processForm.errors?.duplicateWarning">Warnings must be unique</mat-error>
         <mat-error *ngIf="processForm.errors?.warning2Before1">Warning 1 must be complete before adding a second warning</mat-error>
         <mat-error *ngIf="processForm.errors?.warning3Before1Or2">Warnings 1 and 2 must be complete before adding a third warning</mat-error>
+        <mat-error *ngIf="processForm.errors?.descendingOrder">Please list warnings in decreasing order</mat-error>
 
         <br>
         <mat-dialog-actions align="end">

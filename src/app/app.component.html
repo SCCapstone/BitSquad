@@ -1,12 +1,6 @@
 
 <mat-toolbar color="primary" class="navbar">
   <div> BitSquad </div>
-  <div *ngIf="router.url === '/process-form'">
-    <button (click)="home()" mat-button color="accent">Home</button>
-    <button (click)="profile()" mat-button color="accent">Analytics</button>
-    <button (click) ="logOut()"mat-button color="accent">Log Out</button>
-  </div>
-
   <div *ngIf="router.url === '/user-page'">
     <button (click)="profile()" mat-button color="accent">Analytics</button>
     <button (click) ="logOut()"mat-button color="accent">Log Out</button>
@@ -24,10 +18,6 @@
     <button (click)="register()" mat-button color="accent">Register</button>
   </div>
 
-  <div *ngIf="router.url === '/profile'">
-    <button (click)="home()" mat-button color="accent">Home</button>
-    <button (click) ="logOut()"mat-button color="accent">Log Out</button>
-  </div>
 
   <div *ngIf="router.url === '/sign-in' || router.url === '/register'">
     <button (click)="main()"  mat-button color="accent">Main</button>

@@ -1,10 +1,23 @@
 
-
-<div>
-  <div>&nbsp;</div>
-  <div>&nbsp;</div>
-  <div>&nbsp;</div>
-    <h2>{{statement}}</h2>
+<h2 mat-dialog-title>
+  <mat-dialog-actions align="above" align="end">
+    <button mat-button color="warn" [mat-dialog-close]>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
+  {{statement}}
+  
+</h2>
+<mat-dialog-content *ngIf="this.total > 0"> 
+  <mat-radio-group aria-label="time unit" [(ngModel)]="timeUnit">
+    <mat-radio-button value="second">Seconds</mat-radio-button>
+    <mat-radio-button value="minute">Minutes</mat-radio-button>
+    <mat-radio-button value="hour">Hours</mat-radio-button>
+  </mat-radio-group>
+  <div class="button-row" *ngIf="this.visible" >
+    <button class="convert" mat-button mat-raised-button color="primary" (click)="convert(timeUnit)">Convert Time Unit</button>
+  </div>
+    
     <div>
       <div class="chart" >
         <canvas baseChart
@@ -15,17 +28,10 @@
         </canvas>
       </div>
     </div>
-    <canvas id="canvas" height="18" width="96">{{ chart }}</canvas>
-    <div>
-      <h2>Time unit</h2>
-    </div>
+    <canvas baseChart 
+            [data]="pieChartData"
+            [type]="barChartType"
+            [legend]="false"
+            id="canvas" height="18" width="96">{{ chart }}</canvas>    
     
-    <mat-radio-group aria-label="time unit" [(ngModel)]="timeUnit">
-      <mat-radio-button value="second">Second</mat-radio-button>
-      <mat-radio-button value="minute">Minute</mat-radio-button>
-      <mat-radio-button value="hour">Hour</mat-radio-button>
-    </mat-radio-group>
-    <div class="button-row" *ngIf="this.visible" >
-      <button mat-button mat-raised-button color="primary" (click)="convert(timeUnit)">Convert Time Unit</button>
-    </div>
-  </div>
+    </mat-dialog-content>

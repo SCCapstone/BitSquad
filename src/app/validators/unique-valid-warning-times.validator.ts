@@ -47,6 +47,16 @@ export function createUniqueWarningTimeValidator(): ValidatorFn {
       return {warning3Before1Or2: true}
     }
 
+    //check that warnings are listed in descending order
+    if(warning1 && warning2 && warning2 > warning1) {
+      return {descendingOrder: true}
+    }
+
+    if(warning1 && warning2 && warning3 
+        && (warning1 < warning2 || warning1 < warning3 || warning2 < warning3)) {
+        return {descendingOrder: true}
+    }
+
     //no errors detected
     return null; 
   }
