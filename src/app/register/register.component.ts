@@ -59,4 +59,8 @@ createUserWithEmailAndPassword(auth, this.registerForm.value.email, this.registe
     // ..
   });
   }
+
+  signIn() {
+    this.router.navigate(['sign-in'])
+  }
 }
