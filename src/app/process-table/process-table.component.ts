@@ -91,7 +91,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   //allows for sorting data using Angular functions
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor (private accountService: AccountService, private editDialog: MatDialog, private removeDialog:MatDialog, private addDialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent, private usageService: UsageService, private router: Router
+  constructor (private accountService: AccountService, private editDialog: MatDialog, private removeDialog:MatDialog, private addDialog: MatDialog, private processService: ProcessService, private userPage: UserPageComponent, private usageService: UsageService
      ) {
 
   }
