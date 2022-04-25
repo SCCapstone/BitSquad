@@ -89,12 +89,19 @@
       </button>
 
 
-      <button mat-button class="table-button" mat-raised-button color="primary" (click) = 'editProcess(this.process)'>
+      <button mat-button 
+              [disabled]="processRunning && 
+                          process.processName == this.processService.getProcessName()" 
+              class="table-button" mat-raised-button color="primary" 
+              (click) = 'editProcess(this.process)'>
         <mat-icon class="table-icon">edit</mat-icon>
       </button>
 
-      <button mat-button (click) = 'removeProcess(this.process)'
-        class="table-button" mat-raised-button color="warn" >
+      <button mat-button 
+              [disabled]="processRunning && 
+                          process.processName == this.processService.getProcessName()"
+              class="table-button" mat-raised-button color="warn"
+              (click) = 'removeProcess(this.process)'>
         <mat-icon class="table-icon">delete</mat-icon>
       </button>
     </td>
