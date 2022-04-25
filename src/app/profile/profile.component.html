@@ -8,7 +8,7 @@
   {{statement}}
   
 </h2>
-<mat-dialog-content> 
+<mat-dialog-content *ngIf="this.total > 0"> 
   <mat-radio-group aria-label="time unit" [(ngModel)]="timeUnit">
     <mat-radio-button value="second">Seconds</mat-radio-button>
     <mat-radio-button value="minute">Minutes</mat-radio-button>
@@ -28,6 +28,10 @@
         </canvas>
       </div>
     </div>
-    <canvas id="canvas" height="18" width="96">{{ chart }}</canvas>    
+    <canvas baseChart 
+            [data]="pieChartData"
+            [type]="barChartType"
+            [legend]="false"
+            id="canvas" height="18" width="96">{{ chart }}</canvas>    
     
     </mat-dialog-content>
