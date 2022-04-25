@@ -1,5 +1,5 @@
-
-<mat-card class="timer-card" style = "background-color: {{mycolor}}" >
+<div *ngIf="changeDisplay()"> 
+<mat-card class="timer-card" style = "background-color: #f44336" >
   <mat-card-title class="timer-card-title">{{timerText}}</mat-card-title>
   <mat-card-content class="timer-card-body">
       <countdown #cd [config]="{leftTime: realTime, notify: 0}" (event)="handleEvent1($event)"></countdown>
@@ -18,6 +18,29 @@
     <p class="usage">Weekly Usage: {{cumulativeHoursWeek}} hours and {{cumulativeMinsWeek}} minutes</p>
     <p class="usage">Today's Usage: {{cumulativeHours}} hours and {{cumulativeMins}} minutes</p>
 </mat-card>
+</div>
+
+<div *ngIf="!changeDisplay()"> 
+  <mat-card class="timer-card" style = "background-color: #00E676;" >
+    <mat-card-title class="timer-card-title">{{timerText}}</mat-card-title>
+    <mat-card-content class="timer-card-body">
+        <countdown #cd [config]="{leftTime: realTime, notify: 0}" (event)="handleEvent1($event)"></countdown>
+    </mat-card-content>
+      <span *ngIf="timerText != 'Start a Process Timer'">
+        <button mat-mini-fab color="primary" (click)="cd.resume()">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" (click)="cd.pause()">
+          <mat-icon>pause</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" (click)="resetToZero()">
+          <mat-icon>stop</mat-icon>
+        </button>
+      </span>
+      <p class="usage">Weekly Usage: {{cumulativeHoursWeek}} hours and {{cumulativeMinsWeek}} minutes</p>
+      <p class="usage">Today's Usage: {{cumulativeHours}} hours and {{cumulativeMins}} minutes</p>
+  </mat-card>
+  </div>
 
 
 <div class ="grid-container">

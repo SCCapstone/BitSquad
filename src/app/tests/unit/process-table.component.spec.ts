@@ -5,6 +5,7 @@ import { setUpProcessData } from 'src/setup-test-data';
 import { AppModule } from '../../app.module';
 
 import { ProcessTableComponent } from '../../process-table/process-table.component';
+import { UserPageComponent } from '../../user-page/user-page.component';
 
 describe('ProcessTableComponent', () => {
   let component: ProcessTableComponent;
@@ -13,6 +14,7 @@ describe('ProcessTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [UserPageComponent],
       imports: [AppModule]
     })
     
@@ -91,14 +93,9 @@ describe('ProcessTableComponent', () => {
     expect(result).toBe(5);
   });
 
-  it('should determine seconds remaining after determining hours and minutes', () => {
-    const result = component.getSeconds(3930);
-    expect(result).toBe(30);
-  });
-
-  it('should return 0 seconds if negative time is given', () => {
-    const result = component.getSeconds(-1);
-    expect(result).toBe(0);
+  it('should convert hours, mins to seconds', () => {
+    const result = component.getTotalSeconds(1,1);
+    expect(result).toBe(3660);
   });
 
   it('should return 0 minutes if negative time is given', () => {
@@ -110,7 +107,7 @@ describe('ProcessTableComponent', () => {
     const result = component.getHours(-3600);
     expect(result).toBe(0);
   });
-/*
+
   it('should read time from string', () => {
 
     const result = component.getTime("5");
@@ -128,6 +125,6 @@ describe('ProcessTableComponent', () => {
     const results = component.changeTime2();
     expect(component.realTime).toBe(0);
   })
-  */
+  
 
 });
