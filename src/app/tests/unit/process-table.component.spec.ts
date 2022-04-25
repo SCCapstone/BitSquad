@@ -114,10 +114,12 @@ describe('ProcessTableComponent', () => {
     expect(result).toBe(5);
   })
 
-  it('reset (cancel button) to zero', () => {
+  it('(cancel button) to zero', () => {
 
     const results = component.resetToZero();
     expect(component.realTime).toBe(0);
+    expect(component.stop).toBe(true);
+    expect(component.processRunning).toBe(false);
   })
 
   it('read time from table', () => {
