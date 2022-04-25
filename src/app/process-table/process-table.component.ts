@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
    Notification.requestPermission();
  });
 
+ /**
+  * Timer adjusted to remaining time allowance notification
+  */
  function AdjustedTimerNotifyMe(){
   if (Notification.permission !== 'granted')
   Notification.requestPermission();
@@ -38,7 +41,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
  }
 }
-
+  /**
+   * User time limit warning notification message
+   * @param remaining remaining minutes left on timer
+   */
  function WarningnNotifyMe(remaining:number){
   if (Notification.permission !== 'granted')
   Notification.requestPermission();
@@ -50,6 +56,9 @@ document.addEventListener('DOMContentLoaded', function() {
  }
 }
 
+  /**
+   * Timer finished notification
+   */
  function notifyMe() {
   if (Notification.permission !== 'granted')
    Notification.requestPermission();
@@ -110,6 +119,9 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   currentDate:any
   startDate:any
   
+  /**
+   * Loads process data from Firebase and sets current date, week
+   */
   ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
     this.lastLogin = new Date().getMonth() + ", " + new Date().getDate()
 
@@ -195,7 +207,10 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     });
 
   }
-
+  /**
+   * Ensure time value is not null before attempting to use value
+   * @param time time in seconds as a string
+   */
   testMethod(time:string|null) {
     if(time == null) {
       time = DEFAULT
@@ -205,6 +220,10 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     }
   }
 
+  /**
+   * Ensure time value is not null before attempting to add value
+   * @param time time in seconds as a string
+   */
   testMethod2(time:string|null) {
     if(time == null) {
       this.timeToAdd = 0
@@ -213,7 +232,9 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
       this.timeToAdd = parseInt(time)
     }
   }
-
+  /**
+   * Ensures user's time warnings remain in place after page reload
+   */
   reloadWarnings() {
     if(localStorage.getItem("warn1") != null) {
       let warning1 = localStorage.getItem("warn1")
