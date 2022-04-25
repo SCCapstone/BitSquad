@@ -16,6 +16,7 @@ import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 export class ProfileComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public pieChartType: ChartType = 'pie';
+  public barChartType: ChartType = 'bar';
   public pieChartPlugins = [ DatalabelsPlugin ];
   statement = "No data yet"
   total:any;
@@ -91,8 +92,6 @@ export class ProfileComponent implements OnInit {
   home(){
     this.router.navigate(['user-page'])
   }
-
-
 
   public pieChartOptions: ChartConfiguration['options'] = {
     responsive: true,
