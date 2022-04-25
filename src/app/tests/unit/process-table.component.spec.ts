@@ -42,22 +42,6 @@ describe('ProcessTableComponent', () => {
 
   });
 
-  it('should display 3 rows', () => {
-    component.Process = setUpProcessData();
-    fixture.detectChanges();
-    const rows = element.queryAll(By.css(".mat-row"));
-    expect(rows.length).toBe(3);
-  
-  });
-
-  it('should display 3 buttons per row', () => {
-    component.Process = setUpProcessData();
-    fixture.detectChanges();
-    const buttons = element.queryAll(By.css(".mat-button"));
-    const rows = element.queryAll(By.css(".mat-row"));
-    expect(buttons.length/rows.length).toBe(3);
-  });
-
   it('should convert seconds > 3600 to hours', () => {
     const result = component.getHours(7201);
     expect(result).toBe(2);

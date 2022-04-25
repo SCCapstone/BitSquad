@@ -3,6 +3,7 @@ import { AppModule } from '../../app.module';
 import { Router } from '@angular/router';
 import {Location} from "@angular/common";
 import { ProcessFormComponent } from '../../process-form/process-form.component';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 describe('ProcessFormComponent', () => {
   let component: ProcessFormComponent;
@@ -12,7 +13,9 @@ describe('ProcessFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppModule]
+      imports: [AppModule],
+      providers: [{ provide: MatDialogRef, useValue: {} }, { provide: MAT_DIALOG_DATA, useValue: {}
+      }]
     })
     .compileComponents();
   });
@@ -28,16 +31,12 @@ describe('ProcessFormComponent', () => {
   });
 
   it('should have defult values', () => {
-    expect(component.processForm.value.userID).toEqual(null);
     expect(component.processForm.value.processName).toEqual('');
-    expect(component.processForm.value.timeLimit).toEqual('');
-    expect(component.processForm.value.warnings).toEqual('');
+    expect(component.processForm.value.timeLimitH).toEqual(null);
+    expect(component.processForm.value.timeLimitM).toEqual(null);
+
   });
 
-  // it('navigate to /user-page', () => {
-  //   router.navigate(['']);
-  //   expect(location.path()).toBe('/user-page');
-  // });
 
   // it('should update process name', () => {
   //   component.processService.createProcess(userID = null, processName = 'test',
