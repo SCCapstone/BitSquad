@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { getAuth, signOut } from 'firebase/auth';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -12,7 +14,7 @@ import { getAuth, signOut } from 'firebase/auth';
 })
 
 export class AppComponent implements OnInit{
-  constructor(public router: Router){}
+  constructor(public router: Router, private analyticsDialog: MatDialog){}
   title = "bitsquad"
   ngOnInit(): void {
     console.log("navigated to main")
@@ -20,7 +22,13 @@ export class AppComponent implements OnInit{
   }
 
 profile(){
-  this.router.navigate(['profile'])
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.autoFocus = false;
+  dialogConfig.closeOnNavigation = true;
+  dialogConfig.disableClose = true;
+  dialogConfig.width = "300%";
+  dialogConfig.height = "max-content"
+  this.analyticsDialog.open(ProfileComponent, dialogConfig)
 }
 home(){
   this.router.navigate(['user-page'])

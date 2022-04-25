@@ -87,9 +87,7 @@ export class ProfileComponent implements OnInit {
 
 
   }
-  profile(){
-    this.router.navigate(['profile'])
-  }
+
   home(){
     this.router.navigate(['user-page'])
   }
