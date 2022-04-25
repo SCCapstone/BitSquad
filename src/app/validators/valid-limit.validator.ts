@@ -2,7 +2,8 @@ import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms'
 
 /**
  * Factory function for time limit validator
- * @returns validator function that returns an error if user enters 0 hrs and 0 minutes or a time greater than 24 hours
+ * @returns validator function that returns an error if user enters 0 hrs and 0 minutes or a time 
+ * greater than 24 hours or null if no errors detected
  */
 export function createValidLimitValidator(): ValidatorFn {
   return (form:AbstractControl) : ValidationErrors | null => {

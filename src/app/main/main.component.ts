@@ -23,12 +23,18 @@ export class MainComponent implements OnInit {
     }
   }
 
+  /**
+   * Routes to sign-in page
+   */
   toSignIn(){
-    this.router.navigate(['sign-in']) // this line redirect to sign in page
-    //argument of function above must exists in Route in app-routing-module.ts
+    this.router.navigate(['sign-in'])
   }
+
+  /**
+   * Routes to registration page
+   */
   toRegPage(){
-    this.router.navigate(['register'])// redirect to sign in page
+    this.router.navigate(['register'])
   }
 
 }

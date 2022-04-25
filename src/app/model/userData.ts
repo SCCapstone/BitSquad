@@ -1,5 +1,10 @@
 export interface userData{
-    uid:string;
-    data:Map<String,Number>;
-    total:Number
+  //userID
+  uid:string;
+  
+  //total time spent per process in seconds
+  data:Map<String,Number>;
+  
+  //total time spent on app in seconds
+  total:Number
 }

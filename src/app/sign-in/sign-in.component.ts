@@ -18,29 +18,36 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  onSubmit(){ // sign in method
+
+  /**
+   * sign in method, authenticated by firebase auth 
+   */
+  onSubmit(){
     const auth = getAuth();
-signInWithEmailAndPassword(auth, this.signInForm.value.email, this.signInForm.value.password)
-  .then((userCredential) => {
-    // Signed in 
-    console.log(this.accountService.userData)
-    const user = userCredential.user;
-    this.accountService.setCurrentUser(this.signInForm.value.email)
-    this.currentUser = this.accountService.getCurrentUserEmail()
-    this.accountService.setuid(user.uid);
-    localStorage.setItem('email',this.currentUser) // stores user email into local stoarge
-    localStorage.setItem('uid',user.uid);
-    this.router.navigate(['user-page']);
-    
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alert(errorMessage)
-  });
+    signInWithEmailAndPassword(auth, this.signInForm.value.email, this.signInForm.value.password)
+      .then((userCredential) => {
+        // Signed in 
+        console.log(this.accountService.userData)
+        const user = userCredential.user;
+        this.accountService.setCurrentUser(this.signInForm.value.email)
+        this.currentUser = this.accountService.getCurrentUserEmail()
+        this.accountService.setuid(user.uid);
+        localStorage.setItem('email',this.currentUser) // stores user email into local stoarge
+        localStorage.setItem('uid',user.uid);
+        this.router.navigate(['user-page']);
+        
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage)
+      });
 
   }
 
+  /**
+   * Routes to register page
+   */
   register() {
     this.router.navigate(['register'])
   }

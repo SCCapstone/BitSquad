@@ -6,7 +6,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AccountService } from '../services/account-service.service';
 import { Limits } from '../model/limits';
 import { LimitsService } from '../services/limits.service';
-import { ProcessTableComponent } from '../process-table/process-table.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
@@ -67,27 +66,20 @@ export class UserPageComponent implements OnInit {
 
       });
 
-    }
-
-    filterByTime(){
-      console.log()
-    }
-
-    
-  profile(){
-    this.router.navigate(['profile'])
   }
-  home(){
-    this.router.navigate(['user-page'])
-  }
+  
+  /**
+   * Logs the user out, empties local storage, routes to splash page
+   */
   logOut(){
-    console.log("called logout")
     const auth = getAuth();
-    signOut(auth).then(()=>{
+    signOut(auth)
+    .then(()=>{
       // clean local storage and route back to main page
       localStorage.clear();
       this.router.navigate(['main']);
-    }).catch((error) =>{
+    })
+    .catch((error) =>{
       console.log(error)
     });
     window.location.reload(); // need to reload the webpage to reset everything

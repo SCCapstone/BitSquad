@@ -2,7 +2,9 @@ import { ValidatorFn, ValidationErrors, AbstractControl} from "@angular/forms";
 
 /**
  * Factory function for warning validators
- * @returns validator function that returns errors if warnings are not at least one minute less than total time limit, if warnings are entered out of order, or if duplicate warnings are present.
+ * @returns validator function that returns errors if warnings are not at least one minute less 
+ * than total time limit, if warnings are entered out of order, or if duplicate warnings are 
+ * present; otherwise returns null.
  */
 export function createUniqueWarningTimeValidator(): ValidatorFn {
   return (form: AbstractControl): ValidationErrors | null => {
