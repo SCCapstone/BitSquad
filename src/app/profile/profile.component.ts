@@ -3,11 +3,9 @@ import { AccountService } from '../services/account-service.service';
 import { ChartConfiguration, ChartData, ChartType, Chart} from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
-import { userData } from '../model/userData';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import {MatRadioModule} from '@angular/material/radio';
-import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',

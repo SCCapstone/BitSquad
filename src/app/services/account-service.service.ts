@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Account } from 'src/account';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { userData } from '../model/userData';
+import { AngularFirestore} from '@angular/fire/compat/firestore';
 import { ProcessService } from './process.service';
 
 @Injectable({
@@ -30,27 +28,6 @@ export class AccountService {
       this.userData = data
     })
 
-    // below is not useful because found a way to set the user uid to document uid
-    // but the method below is still useful if you do not know the uid of the document that you want to query
-     // so I left them as comments here for reference
-
-        //below is the way that I found viable to get documents by its field
-        /*this.afs.collection('userData',ref =>ref.where('uid', '==',this.uid)).valueChanges().subscribe(data =>{
-          console.log(this.uid)
-          console.log(data)
-          this.userData = data[0] // this actually returns a array of documents although in this case the size of array is one
-        });*/
-
-    // basically the snapshotChanges will return an array of DocumentChangeAction which are actually the metadata of your document
-    // notice that afs.collection('userData', ref => ref.where('uid', '==', this.uid)) returns not a single document but an array of documents
-    // in this case the it will return an array with size of 1
-    // be aware that each element of the array that snapshotChanges() return is also an array which actually I did not understand
-    // but I looked into the data structure and find out the following way to get the id of the document you want
-    /*
-    this.afs.collection('userData', ref => ref.where('uid', '==', this.uid)).snapshotChanges().forEach(a =>{
-      this.docId = a[0].payload.doc.id
-    })
-    */
   }
   setuid(uid: any){ // method to set user uid
     this.uid = uid
@@ -58,6 +35,7 @@ export class AccountService {
   getUID(){// method to get use uid
     return this.uid;
   }
+  // set variable currentUser
   setCurrentUser(email:string){
     this.currentUser = email
   }
@@ -74,6 +52,10 @@ export class AccountService {
     return this.userData;
 
   }
+  /**
+   * 
+   * @param timeToAdd how many second need to be added to the usage data
+   */ 
   updateAnalytics(timeToAdd:number){ // when timer is up, call this function to push timer data to firebase
     var processUsage = 0
     let name: string = this.processService.getProcessName()

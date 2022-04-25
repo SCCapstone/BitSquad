@@ -12,7 +12,6 @@ import { RemoveDialogComponent } from '../remove-dialog/remove-dialog.component'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { ProcessFormComponent } from '../process-form/process-form.component';
-import { setUserId } from 'firebase/analytics';
 
 
 const KEY = 'time'

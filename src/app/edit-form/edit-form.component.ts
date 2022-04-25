@@ -1,12 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
 import { Process } from '../model/process';
-
-import { AccountService } from '../services/account-service.service';
-import { ProcessService } from '../services/process.service';
-
 import { createWholeNumberValidator } from '../validators/whole-number.validator';
 import { createUniqueWarningTimeValidator } from '../validators/unique-valid-warning-times.validator';
 import { createValidLimitValidator } from '../validators/valid-limit.validator';
