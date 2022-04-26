@@ -79,7 +79,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   usage: Usage[] = [];
   
   limit:number = 0;
-  sortByPopKey = "up";
+  sortByTimeLimitKey = "up";
   options = {
     greater: false,
     equal:false,
@@ -358,7 +358,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     });
   }
 
-  sortByUsage(key:string){
+  sortByTimeLimit(key:string){
     
     
     if(key == "down"){
