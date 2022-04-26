@@ -28,9 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
    Notification.requestPermission();
  });
 
- /**
-  * Timer adjusted to remaining time allowance notification
-  */
  function AdjustedTimerNotifyMe(){
   if (Notification.permission !== 'granted')
   Notification.requestPermission();
@@ -41,10 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
  }
 }
-  /**
-   * User time limit warning notification message
-   * @param remaining remaining minutes left on timer
-   */
+
  function WarningnNotifyMe(remaining:number){
   if (Notification.permission !== 'granted')
   Notification.requestPermission();
@@ -56,9 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
  }
 }
 
-  /**
-   * Timer finished notification
-   */
  function notifyMe() {
   if (Notification.permission !== 'granted')
    Notification.requestPermission();
@@ -84,7 +75,6 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
 
   [x: string]: any;
   timerText = "Start a Process Timer";
-  //mycolor = '#00E676;'
   Process: Process[] = [];
   usage: Usage[] = [];
   
@@ -119,9 +109,6 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   currentDate:any
   startDate:any
   
-  /**
-   * Loads process data from Firebase and sets current date, week
-   */
   ngOnInit(): void { // a basic use of service page. each time user enter this page it will obtain user info from accountService
     this.lastLogin = new Date().getMonth() + ", " + new Date().getDate()
 
@@ -207,10 +194,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     });
 
   }
-  /**
-   * Ensure time value is not null before attempting to use value
-   * @param time time in seconds as a string
-   */
+
   testMethod(time:string|null) {
     if(time == null) {
       time = DEFAULT
@@ -220,10 +204,6 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     }
   }
 
-  /**
-   * Ensure time value is not null before attempting to add value
-   * @param time time in seconds as a string
-   */
   testMethod2(time:string|null) {
     if(time == null) {
       this.timeToAdd = 0
@@ -232,9 +212,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
       this.timeToAdd = parseInt(time)
     }
   }
-  /**
-   * Ensures user's time warnings remain in place after page reload
-   */
+
   reloadWarnings() {
     if(localStorage.getItem("warn1") != null) {
       let warning1 = localStorage.getItem("warn1")
@@ -363,11 +341,11 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
     }
 
     }
-    console.log(temp)
+    //console.log(temp)
     this.dataSource.data = temp;
   }
 
-  restore(){
+  restore(){ // call this method to set the process table to default status
     this.user = this.accountService.getCurrentUserEmail();
     this.processService.getProcessList(localStorage.getItem('uid')).subscribe(res => {
       this.Process = res.map( e => {
@@ -382,21 +360,23 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
 
   sortByTimeLimit(key:string){
     
-    this.userData = this.accountService.getAnalytics();
-    this.total = this.userData.total
     
-    if(key == "up"){
+    if(key == "down"){
       // sort popularity from most to least
     var temp = this.Process.sort(function(a,b){
-      if(a.processName[0] < b.processName[0]) { return -1; }
-      if(a.processName[0] > b.processName[0]) { return 1; }
+      if(a.timeLimitH < b.timeLimitH) { return -1; }
+      else if(a.timeLimitH == b.timeLimitH && a.timeLimitM < b.timeLimitM) {return -1} 
+      if(a.timeLimitH > b.timeLimitH) { return 1; }
+      else if(a.timeLimitH == b.timeLimitH && a.timeLimitM > b.timeLimitM) {return 1} 
       return 0;
   });
     } else{
       // sort popularity from least to most
       var temp = this.Process.sort(function(a,b){
-        if(a.processName[0] < b.processName[0]) { return -1; }
-        if(a.processName[0] > b.processName[0]) { return 1; }
+        if(a.timeLimitH > b.timeLimitH) { return -1; }
+        else if(a.timeLimitH == b.timeLimitH && a.timeLimitM > b.timeLimitM) {return -1} 
+        if(a.timeLimitH < b.timeLimitH) { return 1; }
+        else if(a.timeLimitH == b.timeLimitH && a.timeLimitM < b.timeLimitM) {return 1} 
         return 0;
     });
     }
@@ -409,7 +389,7 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   temp.forEach((p: any) =>{
     this.Process.push(p)
   })
-
+  this.dataSource.data = this.Process;
   }
   
   /**
@@ -617,17 +597,17 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
   {
     if(this.getTotalSeconds(this.cumulativeHours, this.cumulativeMins) >= this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
     {
-      //this.mycolor = '#f44336'
+      this.mycolor = '#f44336'
       return true;
     }
     if(this.getTotalSeconds(this.cumulativeHoursWeek, this.cumulativeMinsWeek) >= this.getTotalSeconds(this.userPage.weeklyH, this.userPage.weeklyM))
     {
-      //this.mycolor = '#f44336'
+      this.mycolor = '#f44336'
       return true;
     }
     else
     {
-      //this.mycolor = '#00E676;'
+      this.mycolor = '#00E676;'
     }
       return false;
   }
@@ -690,13 +670,11 @@ export class ProcessTableComponent implements OnInit, AfterViewInit{
 
       
   
-      //if(this.getTotalSeconds(this.cumulativeHours, this.cumulativeMins) < this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
+      if(this.getTotalSeconds(this.cumulativeHours, this.cumulativeMins) < this.getTotalSeconds(this.userPage.dailyH, this.userPage.dailyM))
       {
         this.resetToZero();
       }
-      if(this.buttonPressed) {
-        this.changeDisplay()
-      }
+      this.changeDisplay()
     }
 
   }
