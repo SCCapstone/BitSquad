@@ -6,7 +6,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AccountService } from '../services/account-service.service';
 import { Limits } from '../model/limits';
 import { LimitsService } from '../services/limits.service';
-import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-user-page',
@@ -24,7 +23,7 @@ export class UserPageComponent implements OnInit {
   limitType = '';
   user = '';
 
-  constructor(public toolbar: MatToolbarModule, private router: Router, private dialog: MatDialog,
+  constructor(private router: Router, private dialog: MatDialog,
     public accountService: AccountService, private limitsService: LimitsService) {
 
   }

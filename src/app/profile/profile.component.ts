@@ -2,9 +2,7 @@ import { Component, OnInit , ViewChild} from '@angular/core';
 import { AccountService } from '../services/account-service.service';
 import { ChartConfiguration, ChartData, ChartType, Chart} from 'chart.js';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
-import { BaseChartDirective } from 'ng2-charts';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import { Router } from '@angular/router';
+import { BaseChartDirective } from 'ng2-charts';;
 import {MatRadioModule} from '@angular/material/radio';
 @Component({
   selector: 'app-profile',
@@ -28,7 +26,7 @@ export class ProfileComponent implements OnInit {
   timeUnit = "second";
   public barChart: Chart | undefined;
   visible = false; // this boolean variable controls the visibility of unit convert button
-  constructor(private router: Router,private toolbar:MatToolbarModule, private accountService: AccountService, private radioModule: MatRadioModule) {
+  constructor(private accountService: AccountService, private radioModule: MatRadioModule) {
     
   }
 
@@ -52,10 +50,6 @@ export class ProfileComponent implements OnInit {
       this.statement = "Total usage: " + this.total+" "+this.showing;
       this.visible = true;
     }
-  }
-
-  home(){
-    this.router.navigate(['user-page'])
   }
 
   public pieChartOptions: ChartConfiguration['options'] = {

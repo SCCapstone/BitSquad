@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { AppModule } from 'src/app/app.module';
 
 import { AccountService } from '../../services/account-service.service';
 
@@ -6,7 +7,9 @@ describe('AccountServiceService', () => {
   let service: AccountService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [AppModule]
+    });
     service = TestBed.inject(AccountService);
   });
 
@@ -21,7 +24,7 @@ describe('AccountServiceService', () => {
   
   it('should set through local storage', ()=> {
     localStorage.setItem('email',"test")
-    localStorage.setItem('userID',"testID")
+    localStorage.setItem('uid',"testID")
     service.setViaLocalStorage()
     expect(service.getCurrentUserEmail()).toContain("test")
     expect(service.getUID()).toContain("testID")
